@@ -9,13 +9,23 @@ import {
     ScrollView,
     Pressable,
 } from "react-native";
+import { DataTable } from "react-native-paper";
+import Table from "./DataTable";
+import LeagueStandings from "./RankingTable";
 
 export const Home = () => {
     return (
-        <View>
-            <Text> Hello World!</Text>
+        <View style={styles.view}>
+            <Text> Hello World! Pene Africano</Text>
+            <LeagueStandings>
+                
+            </LeagueStandings>
         </View>
     );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    view: {
+        width: '100%'
+    }
+});

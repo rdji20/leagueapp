@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
       item: {
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'baseline',
         justifyContent: 'center',
         marginHorizontal: 18,
         marginBottom:15
@@ -107,4 +108,9 @@ const styles = StyleSheet.create({
         fontWeight:'700',
         marginTop: 8,
       },
+      container: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        borderRadius: 8,
+        paddingBottom: 25,
+    }
     })

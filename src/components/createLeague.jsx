@@ -57,25 +57,18 @@ export function CreateLeague(){
                 />
                 <Text> {uri}</Text>
             </View>
-
+            <Text style={styles.h2}>League Name</Text>
             <TextInput
-                placeholder="Name"
+                placeholder="e.g. Fifa League"
                 placeholderTextColor='rgba(256, 256, 256, 0.5)'
                 value={name}
                 onChangeText={setName}
                 style={styles.input}
             />
-            <TextInput
-                placeholder="League Size"
-                placeholderTextColor='rgba(256, 256, 256, 0.5)'
-                value={size}
-                onChangeText={setSize}
-                style={styles.input}
-            />
             {!players[0] ? <Text style={styles.h2}> No Players Added</Text> : <Text style={styles.h2}> League Players </Text> }
-            <DisplayNewUsers
+            {players[0] ?<DisplayNewUsers
                 players = {players}
-            ></DisplayNewUsers>
+            ></DisplayNewUsers> : ''}
             <View style={styles.addContainer}>
                 <TextInput
                     placeholder="Add Player"
@@ -103,14 +96,14 @@ export function CreateLeague(){
 
 const styles = StyleSheet.create({
     view: {
-        width: '100%',
+        width: '100%'
     },
     h2: {
         color: 'rgba(256,256,256,1)',
-        fontSize: '20',
+        fontSize: '18 ',
         fontWeight: '600',
         marginTop: 30,
-        marginBottom: 0,
+        marginBottom: 5,
         marginHorizontal:5,
     },
     h1: {
@@ -145,9 +138,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
         display:'flex', 
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
-        marginTop: 50
+        marginTop: 200
     },
     input:{
         placeHolderTextColor:'white',
@@ -183,7 +176,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     createContainer: {
-        marginTop: 100,
+        marginTop: 70,
         marginHorizontal: 50
     },
     inputPlayers: {
@@ -194,12 +187,17 @@ const styles = StyleSheet.create({
     },
     addButton: {
         color: '#DBFF00',
-        fontSize: 32,
+        fontSize: 46,
     },
     addContainer: {
         display:'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        marginTop: 20,
+    },
+    labels: {
+        color: 'white',
+        fontSize: 16
     }
 
 });

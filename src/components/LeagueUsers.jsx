@@ -72,6 +72,16 @@ const SECTIONS = [
           name: 'Max',
           uri: 'https://media.licdn.com/dms/image/C5603AQFI24okpCiJRg/profile-displayphoto-shrink_800_800/0/1618847906137?e=1678924800&v=beta&t=I1ADXlyb_SBqHe3oywa2CJTYeSum591wVi9aEj1vvIA',
         },
+        {
+          key: '4',
+          name: 'Weo',
+          uri: 'https://pbs.twimg.com/profile_images/1420610977683419137/LlWNgDux_400x400.jpg',
+        },
+        {
+          key: '5',
+          name: 'Daniela',
+          uri: 'https://i.pinimg.com/280x280_RS/06/32/6f/06326f6ac9f847c9528ce73cdffee0da.jpg',
+        },
       ],
     }
   ];

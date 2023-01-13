@@ -9,50 +9,47 @@ import {
     ScrollView,
     Pressable,
     TouchableOpacity,
-    TextInput
+    TextInput,
 } from "react-native";
 import DisplayNewUsers from "./addUserList";
 
+export function CreateLeague({ navigation }) {
+    const [uri, setUri] = useState("");
+    const [name, setName] = useState("");
+    const [size, setSize] = useState(0);
+    const [players, setPlayers] = useState([]);
+    const [newName, setNewName] = useState("");
 
-
-export function CreateLeague(){
-
-    const [uri, setUri] = useState('')
-    const [name, setName] = useState('')
-    const [size, setSize] = useState(0)
-    const [players, setPlayers] = useState([])
-    const [newName, setNewName] = useState('')
-
-    function handleCreate(){
+    function handleCreate() {
         const league = {
             name,
             uri,
             size,
-            matches:[],
-            players
-        }
-        console.log(league)
+            matches: [],
+            players,
+        };
+        console.log(league);
         //redirect
     }
 
-    function handleAddPlayer(){
-        console.log(newName)
-        if (newName){
-            console.log(players)
-            const newPlayers = [...players]
-            newPlayers.unshift({name:newName})
-            setPlayers(newPlayers)
-            setNewName('')
+    function handleAddPlayer() {
+        console.log(newName);
+        if (newName) {
+            console.log(players);
+            const newPlayers = [...players];
+            newPlayers.unshift({ name: newName });
+            setPlayers(newPlayers);
+            setNewName("");
         }
     }
 
     return (
         <View style={styles.createContainer}>
             <View style={styles.container}>
-                <Image 
-                    style={styles.itemPhoto} 
+                <Image
+                    style={styles.itemPhoto}
                     source={{
-                        uri: ''
+                        uri: "",
                     }}
                 />
                 <Text> {uri}</Text>
@@ -60,30 +57,39 @@ export function CreateLeague(){
             <Text style={styles.h2}>League Name</Text>
             <TextInput
                 placeholder="e.g. Fifa League"
-                placeholderTextColor='rgba(256, 256, 256, 0.5)'
+                placeholderTextColor="rgba(256, 256, 256, 0.5)"
                 value={name}
                 onChangeText={setName}
                 style={styles.input}
             />
-            {!players[0] ? <Text style={styles.h2}> No Players Added</Text> : <Text style={styles.h2}> League Players </Text> }
-            {players[0] ?<DisplayNewUsers
-                players = {players}
-            ></DisplayNewUsers> : ''}
+            {!players[0] ? (
+                <Text style={styles.h2}> No Players Added</Text>
+            ) : (
+                <Text style={styles.h2}> League Players </Text>
+            )}
+            {players[0] ? (
+                <DisplayNewUsers players={players}></DisplayNewUsers>
+            ) : (
+                ""
+            )}
             <View style={styles.addContainer}>
                 <TextInput
                     placeholder="Add Player"
-                    placeholderTextColor='#8983C4'
+                    placeholderTextColor="#8983C4"
                     value={newName}
                     onChangeText={setNewName}
                     style={styles.inputPlayers}
                 />
                 <TouchableOpacity onPress={handleAddPlayer}>
-                    <Text style={styles.addButton}>  +  </Text>
+                    <Text style={styles.addButton}> + </Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button2}>
+                <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => navigation.navigate("Home")}
+                >
                     <Text style={styles.buttonText2}> Cancel </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button1} onPress={handleCreate}>
@@ -92,112 +98,111 @@ export function CreateLeague(){
             </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     view: {
-        width: '100%'
+        width: "100%",
     },
     h2: {
-        color: 'rgba(256,256,256,1)',
-        fontSize: '18 ',
-        fontWeight: '600',
+        color: "rgba(256,256,256,1)",
+        fontSize: "18 ",
+        fontWeight: "600",
         marginTop: 30,
         marginBottom: 5,
-        marginHorizontal:5,
+        marginHorizontal: 5,
     },
     h1: {
-        fontSize:46,
-        fontWeight:'800',
-        color: 'white',
+        fontSize: 46,
+        fontWeight: "800",
+        color: "white",
         height: 40,
-        margin:10,
+        margin: 10,
         padding: 0,
-        height:60
+        height: 60,
     },
     button1: {
         marginTop: 20,
-        marginBottom:10,
+        marginBottom: 10,
         padding: 15,
-        color: '#DCDCDC',
+        color: "#DCDCDC",
 
-        borderRadius: '5px',
-        alignItems: 'center',
+        borderRadius: "5px",
+        alignItems: "center",
         flex: 1,
-      },
-    buttonText1:{
-        fontWeight: '700',
-        color: 'white',
-        fontSize:16
     },
-    buttonText2:{
-        fontWeight: '700',
-        color: '#8983C4',
-        fontSize:16
+    buttonText1: {
+        fontWeight: "700",
+        color: "white",
+        fontSize: 16,
+    },
+    buttonText2: {
+        fontWeight: "700",
+        color: "#8983C4",
+        fontSize: 16,
     },
     buttonContainer: {
-        display:'flex', 
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginTop: 200
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        marginTop: 200,
     },
-    input:{
-        placeHolderTextColor:'white',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+    input: {
+        placeHolderTextColor: "white",
+        backgroundColor: "rgba(0,0,0,0.5)",
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
         marginVertical: 5,
-        color: 'white',
+        color: "white",
         width: 278,
-        height:61,
-        borderRadius:5,
-        height:40
+        height: 61,
+        borderRadius: 5,
+        height: 40,
     },
     button2: {
         borderRadius: 10,
         height: 40,
         marginTop: 10,
-        alignItems:"center",
-        justifyContent:"center",
-        flex:1
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
     },
     itemPhoto: {
-        width: 100, 
-        height: 100, 
-        borderRadius: 100/ 2,
-        borderColor:'rgba(256, 256, 256, 0.5)',
-        borderWidth:1,
-        backgroundColor: 'rgba(0,0,0,0.5)'
-      },
+        width: 100,
+        height: 100,
+        borderRadius: 100 / 2,
+        borderColor: "rgba(256, 256, 256, 0.5)",
+        borderWidth: 1,
+        backgroundColor: "rgba(0,0,0,0.5)",
+    },
     container: {
-        alignItems: 'center',
-        marginBottom: 10
+        alignItems: "center",
+        marginBottom: 10,
     },
     createContainer: {
         marginTop: 70,
-        marginHorizontal: 50
+        marginHorizontal: 50,
     },
     inputPlayers: {
-        backgroundColor:'transparent',
+        backgroundColor: "transparent",
         fontSize: 24,
-        fontWeight:'600',
-        color: 'white'
+        fontWeight: "600",
+        color: "white",
     },
     addButton: {
-        color: '#DBFF00',
+        color: "#DBFF00",
         fontSize: 46,
     },
     addContainer: {
-        display:'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
         marginTop: 20,
     },
     labels: {
-        color: 'white',
-        fontSize: 16
-    }
-
+        color: "white",
+        fontSize: 16,
+    },
 });

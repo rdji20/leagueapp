@@ -164,8 +164,14 @@ export default function App() {
                 </>
             ) : (
                 <>
-                    <Text style={styles.text}>Please log in</Text>
-                    <SafeAreaView>
+                    <SafeAreaView
+                        style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Text style={styles.text}>Please log in</Text>
                         <TextInput
                             placeholder="Email"
                             autoCapitalize="none"

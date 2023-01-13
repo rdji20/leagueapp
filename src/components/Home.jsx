@@ -50,6 +50,10 @@ export const Home = ({ navigation, userProp }) => {
             <View>
                 <Button
                     title="Create New League"
+                    onPress={() => navigation.navigate("NewLeague")}
+                />
+                <Button
+                    title="[Profile]"
                     onPress={() => navigation.navigate("Profile")}
                 />
             </View>

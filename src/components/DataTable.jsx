@@ -7,27 +7,31 @@ export default function Table() {
     <View style={styles.container}>
       <DataTable>
         <DataTable.Header>
+          <DataTable.Title>Rank</DataTable.Title>
           <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>Age</DataTable.Title>
-          <DataTable.Title numeric>Status</DataTable.Title>
+          <DataTable.Title>Record</DataTable.Title>
+          <DataTable.Title numeric>Score</DataTable.Title>
         </DataTable.Header>
 
         <DataTable.Row>
+          <DataTable.Cell>1</DataTable.Cell>
           <DataTable.Cell>Claudio</DataTable.Cell>
-          <DataTable.Cell>25</DataTable.Cell>
-          <DataTable.Cell >UnFuckable</DataTable.Cell>
+          <DataTable.Cell>10-1</DataTable.Cell>
+          <DataTable.Cell >3.2</DataTable.Cell>
         </DataTable.Row>
 
         <DataTable.Row>
+          <DataTable.Cell>2</DataTable.Cell>
           <DataTable.Cell>Octavio</DataTable.Cell>
-          <DataTable.Cell>25</DataTable.Cell>
-          <DataTable.Cell >Fuckable</DataTable.Cell>
+          <DataTable.Cell>8-3</DataTable.Cell>
+          <DataTable.Cell >2.1</DataTable.Cell>
         </DataTable.Row>
 
         <DataTable.Row>
+          <DataTable.Cell>3</DataTable.Cell>
           <DataTable.Cell>Roberto</DataTable.Cell>
-          <DataTable.Cell>24</DataTable.Cell>
-          <DataTable.Cell >MIA</DataTable.Cell>
+          <DataTable.Cell>5-6</DataTable.Cell>
+          <DataTable.Cell >0.8</DataTable.Cell>
         </DataTable.Row>
 
       </DataTable>

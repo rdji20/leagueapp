@@ -27,6 +27,7 @@ const firebaseConfig = {
 };
 
 import { Home } from "./src/components/Home";
+import { CreateLeague } from "./src/components/createLeague";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -82,7 +83,9 @@ export default function App() {
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user)
                 setIsLoggedIn(true);
             })
             .catch((error) => {
@@ -120,7 +123,7 @@ export default function App() {
         <View style={styles.container}>
             {isLoggedIn ? (
                 <>
-                    <Home />
+                    <Home/>
                     <Button title="Logout" onPress={handleLogout} />
                 </>
             ) : (

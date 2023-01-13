@@ -7,33 +7,33 @@ const LeagueStandings = () => {
         <View>
             <DataTable>
                 <DataTable.Header>
-                <DataTable.Title>Name</DataTable.Title>
-                <DataTable.Title>Age</DataTable.Title>
-                <DataTable.Title style={styles.status}>Status</DataTable.Title>
+                    <DataTable.Title style={styles.title}><Text style={styles.status}>Rank</Text></DataTable.Title>
+                    <DataTable.Title style={styles.title}><Text style={styles.status}>Name</Text></DataTable.Title>
+                    <DataTable.Title style={styles.title}><Text style={styles.status}>Record</Text></DataTable.Title>
+                    <DataTable.Title style={styles.title}><Text style={styles.status}>Win Pct</Text></DataTable.Title>
                 </DataTable.Header>
 
                 <DataTable.Row>
-                <DataTable.Cell>Claudio</DataTable.Cell>
-                <DataTable.Cell>25</DataTable.Cell>
-                <DataTable.Cell style={styles.status}>UnFuckable</DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>1</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Claudio</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.record}>10-0</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.score}>3.2</Text></DataTable.Cell>
                 </DataTable.Row>
-
                 <DataTable.Row>
-                <DataTable.Cell>Octavio</DataTable.Cell>
-                <DataTable.Cell>25</DataTable.Cell>
-                <DataTable.Cell style={styles.status}>Fuckable</DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>2</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Roberto</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.record}>8-2</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.score}>2.1</Text></DataTable.Cell>
                 </DataTable.Row>
-
                 <DataTable.Row>
-                <DataTable.Cell>Roberto</DataTable.Cell>
-                <DataTable.Cell>24</DataTable.Cell>
-                <DataTable.Cell style={styles.status}>MIA</DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>3</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Octavio</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.record}>6-4</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.9</Text></DataTable.Cell>
                 </DataTable.Row>
 
             </DataTable>
-            <TouchableOpacity style={styles.button}>
-                <Text> Create New Match </Text>
-             </TouchableOpacity>
+
         </View>
     )
 }
@@ -42,18 +42,49 @@ export default LeagueStandings
 
 const styles = StyleSheet.create({
     button: {
+      marginTop: 10,
       padding: 15,
       color: '#DCDCDC',
-      backgroundColor: 'red',
+      fontWeight:'700',
+      backgroundColor: '#DBFF00',
       borderRadius: '5px',
       alignItems: 'center'
     },
     tableHeader: {
       backgroundColor: '#DCDCDC',
     },
-    status: {
+    cell: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'baseline',
+        color: 'white'
+    },
+    title: {
+        display: 'flex',
+        alignItems: 'baseline',
+        justifyContent: 'baseline',
+        color: 'white',
+        fontWeight: '700'
+    },
+
+    status:{
+        color:'white',
+        fontSize: 14,
+        fontWeight: '700'
+    },
+
+    rank: {
+        color:'white'
+    },
+    name: {
+        color: 'white'
+    },
+    record: {
+        color: 'white'
+    },
+    score: {
+        color: 'white'
     }
+    
+
   });

@@ -6,7 +6,7 @@ import {
     TextInput,
     StyleSheet,
     SafeAreaView,
-    TouchableOpacity
+    TouchableOpacity,
 } from "react-native";
 
 import { initializeApp } from "firebase/app";
@@ -28,6 +28,9 @@ const firebaseConfig = {
 
 import { Home } from "./src/components/Home";
 import { CreateLeague } from "./src/components/createLeague";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Profile } from "./src/screens/Profile";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -85,7 +88,7 @@ export default function App() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user)
+                console.log(user);
                 setIsLoggedIn(true);
             })
             .catch((error) => {
@@ -102,6 +105,7 @@ export default function App() {
                 console.error(error);
             });
     };
+    const Stack = createStackNavigator();
 
     return (
         // <SafeAreaView>
@@ -123,7 +127,21 @@ export default function App() {
         <View style={styles.container}>
             {isLoggedIn ? (
                 <>
-                    <Home/>
+                    <NavigationContainer>
+                        <Stack.Navigator screenOptions={{ headerShown: false }}>
+                            <Stack.Screen
+                                options={{
+                                    cardStyle: {
+                                        backgroundColor: "#363073",
+                                    },
+                                    title: "Home",
+                                }}
+                                name="Home"
+                                component={Home}
+                            />
+                            <Stack.Screen name="Profile" component={Profile} />
+                        </Stack.Navigator>
+                    </NavigationContainer>
                     <Button title="Logout" onPress={handleLogout} />
                 </>
             ) : (
@@ -133,25 +151,33 @@ export default function App() {
                         <TextInput
                             placeholder="Email"
                             autoCapitalize="none"
-                            placeholderTextColor='white'
+                            placeholderTextColor="white"
                             value={email}
                             onChangeText={setEmail}
                             style={styles.input}
                         />
                         <TextInput
                             placeholder="Password"
-                            placeholderTextColor='white'
+                            placeholderTextColor="white"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry
                             style={styles.input}
                         />
-                        <TouchableOpacity title="Log In" onPress={handleLogin} style={styles.login}>
+                        <TouchableOpacity
+                            title="Log In"
+                            onPress={handleLogin}
+                            style={styles.login}
+                        >
                             <Text style={styles.loginText}>Login</Text>
-                        </TouchableOpacity> 
-                        <TouchableOpacity title="or Sign Up" onPress={handleSignUp} style={styles.register}>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            title="or Sign Up"
+                            onPress={handleSignUp}
+                            style={styles.register}
+                        >
                             <Text style={styles.registerText}>Register</Text>
-                        </TouchableOpacity> 
+                        </TouchableOpacity>
                         {error && <Text>{error}</Text>}
                     </SafeAreaView>
                 </>
@@ -164,59 +190,55 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#363073",
-        alignItems: "center",
-        justifyContent: "center",
     },
-    input:{
-        placeHolderTextColor:'white',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+    input: {
+        placeHolderTextColor: "white",
+        backgroundColor: "rgba(0,0,0,0.5)",
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
-        color: 'white',
+        color: "white",
         width: 278,
-        height:61,
-        borderRadius:5,
-        
-        height:40
+        height: 61,
+        borderRadius: 5,
+
+        height: 40,
     },
 
     login: {
-        borderRadius: 10,    
+        borderRadius: 10,
         height: 40,
         marginTop: 10,
         width: 200,
-        alignItems:"center",
-        justifyContent:"center",
-        backgroundColor:'#DBFF00',
-
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#DBFF00",
     },
     register: {
         borderRadius: 10,
         borderWidth: 0.5,
-        borderColor: '#DBFF00',
+        borderColor: "#DBFF00",
         height: 40,
         marginTop: 10,
         width: 200,
-        alignItems:"center",
-        justifyContent:"center",
-        backgroundColor:'white'
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "white",
     },
 
     loginText: {
-        color: 'black',
+        color: "black",
         fontSize: 16,
-        fontWeight: '600'
-
+        fontWeight: "600",
     },
     registerText: {
-        color: 'black',
+        color: "black",
         fontSize: 16,
-        fontWeight: '600'
+        fontWeight: "600",
     },
 
     text: {
-        color: 'white'
-    }
+        color: "white",
+    },
 });

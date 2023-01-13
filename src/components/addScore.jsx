@@ -12,11 +12,8 @@ import {
     SafeAreaView,
 } from "react-native";
 import { DataTable } from "react-native-paper";
-import Table from "./DataTable";
-import DisplayUsers from "./LeagueUsers";
-import LeagueStandings from "./RankingTable";
 
-export const Home = ({ navigation }) => {
+export const AddScore = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.view}>
             <Text style={styles.h1}>2k League</Text>
@@ -48,7 +45,7 @@ export const Home = ({ navigation }) => {
             <LeagueStandings />
             <View>
                 <Button
-                    title="Create New League"
+                    title="Go to Profile"
                     onPress={() => navigation.navigate("Profile")}
                 />
             </View>

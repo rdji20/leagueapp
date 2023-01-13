@@ -16,26 +16,22 @@ import {
 const ListItem = ({ item }) => {
   return (
     <View style={styles.item}>
-        <Image 
-        style={styles.itemPhoto} 
-        source={{
-            uri: item.uri
-        }}
-        />
         <Text style={styles.itemText}>{item.name}</Text>
     </View>
   );
 };
 
-export default function DisplayUsers() {
+export default function DisplayNewUsers({players}) {
+    players = [{data:[...players]}]
   return (
     <View style={styles.container}>
       <SectionList
           contentContainerStyle={{ paddingHorizontal: 10 }}
           stickySectionHeadersEnabled={false}
-          sections={SECTIONS}
+          sections={players}
           renderSectionHeader={({ section }) => (
             <>
+              <Text style={styles.sectionHeader}>{section.title}</Text>
               <FlatList
                 horizontal
                 data={section.data}
@@ -45,7 +41,8 @@ export default function DisplayUsers() {
             </>
           )}
           renderItem={({ item, section }) => {
-            return null
+            return null;
+            // return <ListItem item={item} />;
           }}
         />
     </View>
@@ -58,19 +55,24 @@ const SECTIONS = [
       data: [
         {
           key: '1',
-          name: 'Roberto',
-          uri: 'https://media-exp1.licdn.com/dms/image/C5603AQHRX8cZTM9RQw/profile-displayphoto-shrink_200_200/0/1611796969932?e=1674691200&v=beta&t=_z7G_Mzv9BeCVEmKw5c_owLyULXYNT0Y-OtGq3Fa8N0',
+          name: 'Roberto'
         },
         {
           key: '2',
           name: 'Octavia',
-          uri: 'https://media.licdn.com/dms/image/C5603AQFsHOwly1yfKA/profile-displayphoto-shrink_800_800/0/1540257823299?e=1678924800&v=beta&t=tYXL893KTMmflebzL8lVI5j_yCZO-mUKc56FNgZ_83I',
         },
   
         {
           key: '3',
           name: 'Max',
-          uri: 'https://media.licdn.com/dms/image/C5603AQFI24okpCiJRg/profile-displayphoto-shrink_800_800/0/1618847906137?e=1678924800&v=beta&t=I1ADXlyb_SBqHe3oywa2CJTYeSum591wVi9aEj1vvIA',
+        },
+        {
+          key: '3',
+          name: 'Max',
+        },
+        {
+          key: '3',
+          name: 'Max',
         },
       ],
     }
@@ -100,9 +102,9 @@ const styles = StyleSheet.create({
         
       },
       itemText: {
-        textAlign:'center',
+        textAlign:'baseline',
         color: 'rgba(256, 256, 256, 0.5)',
         fontWeight:'700',
         marginTop: 8,
       },
-  });
+    })

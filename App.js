@@ -131,12 +131,32 @@ export default function App() {
                                 userProp={user}
                             />
                             <Stack.Screen
+                                options={{
+                                    cardStyle: {
+                                        backgroundColor: "#363073",
+                                    },
+                                    title: "ADD ",
+                                }}
+                                name="NewLeague"
+                                component={CreateLeague}
                                 initialParams={{
                                     prop1: user,
                                     prop2: "another value",
                                 }}
+                            />
+                            <Stack.Screen
+                                options={{
+                                    cardStyle: {
+                                        backgroundColor: "#363073",
+                                    },
+                                    title: "Profile ",
+                                }}
                                 name="Profile"
                                 component={Profile}
+                                initialParams={{
+                                    prop1: user,
+                                    prop2: "another value",
+                                }}
                             />
                         </Stack.Navigator>
                     </NavigationContainer>
@@ -144,14 +164,8 @@ export default function App() {
                 </>
             ) : (
                 <>
-                    <SafeAreaView
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Text style={styles.text}>Please log in</Text>
+                    <Text style={styles.text}>Please log in</Text>
+                    <SafeAreaView>
                         <TextInput
                             placeholder="Email"
                             autoCapitalize="none"

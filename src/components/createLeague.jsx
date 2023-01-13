@@ -11,30 +11,48 @@ import {
     TouchableOpacity,
     TextInput
 } from "react-native";
+import DisplayNewUsers from "./addUserList";
+
+
+
 export function CreateLeague(){
 
     const [uri, setUri] = useState('')
     const [name, setName] = useState('')
     const [size, setSize] = useState(0)
+    const [players, setPlayers] = useState([])
+    const [newName, setNewName] = useState('')
 
     function handleCreate(){
         const league = {
             name,
             uri,
             size,
-            matches:[]
+            matches:[],
+            players
         }
         console.log(league)
         //redirect
     }
 
+    function handleAddPlayer(){
+        console.log(newName)
+        if (newName){
+            console.log(players)
+            const newPlayers = [...players]
+            newPlayers.unshift({name:newName})
+            setPlayers(newPlayers)
+            setNewName('')
+        }
+    }
+
     return (
-        <View>
+        <View style={styles.createContainer}>
             <View style={styles.container}>
                 <Image 
                     style={styles.itemPhoto} 
                     source={{
-                        uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/2K_Sports_Logo.svg/1200px-2K_Sports_Logo.svg.png'
+                        uri: ''
                     }}
                 />
                 <Text> {uri}</Text>
@@ -54,19 +72,29 @@ export function CreateLeague(){
                 onChangeText={setSize}
                 style={styles.input}
             />
-            <TextInput
-                placeholder="League Icon URL"
-                placeholderTextColor='rgba(256, 256, 256, 0.5)'
-                value={uri}
-                onChangeText={setUri}
-                style={styles.input}
-            />
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={handleCreate}>
-                    <Text style={styles.buttonText}> Create League </Text>
+            {!players[0] ? <Text style={styles.h2}> No Players Added</Text> : <Text style={styles.h2}> League Players </Text> }
+            <DisplayNewUsers
+                players = {players}
+            ></DisplayNewUsers>
+            <View style={styles.addContainer}>
+                <TextInput
+                    placeholder="Add Player"
+                    placeholderTextColor='#8983C4'
+                    value={newName}
+                    onChangeText={setNewName}
+                    style={styles.inputPlayers}
+                />
+                <TouchableOpacity onPress={handleAddPlayer}>
+                    <Text style={styles.addButton}>  +  </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.register}>
-                    <Text style={styles.buttonText}> Cancel </Text>
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button2}>
+                    <Text style={styles.buttonText2}> Cancel </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button1} onPress={handleCreate}>
+                    <Text style={styles.buttonText1}> Done </Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -78,12 +106,12 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     h2: {
-        color: 'rgba(256,256,256,0.5)',
+        color: 'rgba(256,256,256,1)',
         fontSize: '20',
         fontWeight: '600',
-        marginBottom: 2,
-        marginTop: 5,
-        marginHorizontal:10,
+        marginTop: 30,
+        marginBottom: 0,
+        marginHorizontal:5,
     },
     h1: {
         fontSize:46,
@@ -94,21 +122,32 @@ const styles = StyleSheet.create({
         padding: 0,
         height:60
     },
-    button: {
+    button1: {
         marginTop: 20,
         marginBottom:10,
         padding: 15,
         color: '#DCDCDC',
-        backgroundColor: '#DBFF00',
+
         borderRadius: '5px',
         alignItems: 'center',
-        width: 300
+        flex: 1,
       },
-      buttonText:{
-          fontWeight: '700'
-      },
+    buttonText1:{
+        fontWeight: '700',
+        color: 'white',
+        fontSize:16
+    },
+    buttonText2:{
+        fontWeight: '700',
+        color: '#8983C4',
+        fontSize:16
+    },
     buttonContainer: {
-        alignItems: 'center'
+        display:'flex', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 50
     },
     input:{
         placeHolderTextColor:'white',
@@ -116,23 +155,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
-        marginTop: 5,
+        marginVertical: 5,
         color: 'white',
         width: 278,
         height:61,
         borderRadius:5,
-        
         height:40
     },
-    register: {
+    button2: {
         borderRadius: 10,
-        borderWidth: 0.5,
         height: 40,
         marginTop: 10,
-        width: 200,
         alignItems:"center",
         justifyContent:"center",
-        backgroundColor:'white'
+        flex:1
     },
     itemPhoto: {
         width: 100, 
@@ -145,6 +181,25 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         marginBottom: 10
+    },
+    createContainer: {
+        marginTop: 100,
+        marginHorizontal: 50
+    },
+    inputPlayers: {
+        backgroundColor:'transparent',
+        fontSize: 24,
+        fontWeight:'600',
+        color: 'white'
+    },
+    addButton: {
+        color: '#DBFF00',
+        fontSize: 32,
+    },
+    addContainer: {
+        display:'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
     }
 
 });

@@ -44,6 +44,7 @@ export default function App() {
     const [error, setError] = useState(null);
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
 
     // useEffect(() => {
     //     signInWithEmailAndPassword("email@uw.edu", "password")
@@ -61,7 +62,8 @@ export default function App() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
-                const user = userCredential.user;
+                const thisUser = userCredential.user;
+                setUser(userCredential.user);
                 // ...
             })
             .catch((error) => {
@@ -70,25 +72,10 @@ export default function App() {
                 // ..
             });
     };
-
-    const handleSignIn = () => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
-    };
-
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
+                setUser(userCredential.user);
                 setIsLoggedIn(true);
             })
             .catch((error) => {
@@ -138,16 +125,33 @@ export default function App() {
                                 }}
                                 name="Home"
                                 component={Home}
+                                initialParams={{
+                                    prop1: user,
+                                }}
+                                userProp={user}
                             />
-                            <Stack.Screen name="Profile" component={Profile} />
+                            <Stack.Screen
+                                initialParams={{
+                                    prop1: user,
+                                    prop2: "another value",
+                                }}
+                                name="Profile"
+                                component={Profile}
+                            />
                         </Stack.Navigator>
                     </NavigationContainer>
                     <Button title="Logout" onPress={handleLogout} />
                 </>
             ) : (
                 <>
-                    <Text style={styles.text}>Please log in</Text>
-                    <SafeAreaView>
+                    <SafeAreaView
+                        style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Text style={styles.text}>Please log in</Text>
                         <TextInput
                             placeholder="Email"
                             autoCapitalize="none"

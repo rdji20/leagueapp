@@ -31,6 +31,8 @@ import { CreateLeague } from "./src/components/createLeague";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Profile } from "./src/screens/Profile";
+import RegisterForm from "./src/components/Register";
+import LoginForm from "./src/components/Login";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -45,6 +47,8 @@ export default function App() {
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState({});
+    const [loginScreen, setLoginScreen] = useState(true);//Switches between login and signup 
+    const [newUserName, setNewUserName] = useState('');//Switches between login and signup 
 
     // useEffect(() => {
     //     signInWithEmailAndPassword("email@uw.edu", "password")
@@ -63,12 +67,16 @@ export default function App() {
             .then((userCredential) => {
                 // Signed in
                 const thisUser = userCredential.user;
+                console.log(thisUser)
                 setUser(userCredential.user);
+                setIsLoggedIn(true)
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(errorMessage)
+                console.log(errorCode)
                 // ..
             });
     };
@@ -92,25 +100,38 @@ export default function App() {
                 console.error(error);
             });
     };
+
+    const logOnForm = () => {
+        return loginScreen ? 
+        (                
+        <>
+            <LoginForm
+            email={email}
+            setEmail = {setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            setLoginScreen={setLoginScreen}
+            ></LoginForm>
+            </>)
+        
+        : (                
+        <>
+            <RegisterForm
+            email={email}
+            setEmail = {setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleSignUp={handleSignUp}
+            setLoginScreen={setLoginScreen}
+            setNewUserName={setNewUserName}
+            newUserName={newUserName}
+            ></RegisterForm>
+         </>)
+    }
     const Stack = createStackNavigator();
 
     return (
-        // <SafeAreaView>
-        //     <TextInput
-        //         placeholder="Email"
-        //         value={email}
-        //         onChangeText={setEmail}
-        //     />
-        //     <TextInput
-        //         placeholder="Password"
-        //         value={password}
-        //         onChangeText={setPassword}
-        //         secureTextEntry
-        //     />
-        //     <Button title="Sign Up" onPress={handleSignUp} />
-        //     <Button title="Sign In" onPress={handleSignIn} />
-        //     {error && <Text>{error}</Text>}
-        // </SafeAreaView>
         <View style={styles.container}>
             {isLoggedIn ? (
                 <>
@@ -162,50 +183,7 @@ export default function App() {
                     </NavigationContainer>
                     <Button title="Logout" onPress={handleLogout} />
                 </>
-            ) : (
-                <>
-                    <SafeAreaView
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Text style={styles.text}>Please log in</Text>
-                        <TextInput
-                            placeholder="Email"
-                            autoCapitalize="none"
-                            placeholderTextColor="white"
-                            value={email}
-                            onChangeText={setEmail}
-                            style={styles.input}
-                        />
-                        <TextInput
-                            placeholder="Password"
-                            placeholderTextColor="white"
-                            value={password}
-                            onChangeText={setPassword}
-                            secureTextEntry
-                            style={styles.input}
-                        />
-                        <TouchableOpacity
-                            title="Log In"
-                            onPress={handleLogin}
-                            style={styles.login}
-                        >
-                            <Text style={styles.loginText}>Login</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            title="or Sign Up"
-                            onPress={handleSignUp}
-                            style={styles.register}
-                        >
-                            <Text style={styles.registerText}>Register</Text>
-                        </TouchableOpacity>
-                        {error && <Text>{error}</Text>}
-                    </SafeAreaView>
-                </>
-            )}
+            ) : ( logOnForm())}
         </View>
     );
 }

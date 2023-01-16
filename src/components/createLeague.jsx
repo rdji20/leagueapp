@@ -14,7 +14,6 @@ import {
 import DisplayNewUsers from "./addUserList";
 
 export function CreateLeague({ navigation }) {
-    const [uri, setUri] = useState("");
     const [name, setName] = useState("");
     const [size, setSize] = useState(0);
     const [players, setPlayers] = useState([]);
@@ -48,9 +47,7 @@ export function CreateLeague({ navigation }) {
             <View style={styles.container}>
                 <Image
                     style={styles.itemPhoto}
-                    source={{
-                        uri: "",
-                    }}
+
                 />
                 <Text> {uri}</Text>
             </View>
@@ -63,7 +60,7 @@ export function CreateLeague({ navigation }) {
                 style={styles.input}
             />
             {!players[0] ? (
-                <Text style={styles.h2}> No Players Added</Text>
+                ''
             ) : (
                 <Text style={styles.h2}> League Players </Text>
             )}

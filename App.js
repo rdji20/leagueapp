@@ -64,7 +64,7 @@ export default function App() {
                 // Signed in
                 const thisUser = userCredential.user;
                 setUser(userCredential.user);
-                // ...
+                /* Send data to api so that we can create a user */
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -72,6 +72,7 @@ export default function App() {
                 // ..
             });
     };
+
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {

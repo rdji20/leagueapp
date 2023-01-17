@@ -34,6 +34,7 @@ import { Profile } from "./src/screens/Profile";
 import RegisterForm from "./src/components/Register";
 import LoginForm from "./src/components/Login";
 import axios from "axios";
+import { LeagueHome } from "./src/screens/Home";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -167,11 +168,10 @@ export default function App() {
                                     title: "Home",
                                 }}
                                 name="Home"
-                                component={Home}
+                                component={LeagueHome}
                                 initialParams={{
-                                    prop1: user,
+                                    user:user
                                 }}
-                                userProp={user}
                             />
                             <Stack.Screen
                                 options={{
@@ -195,6 +195,20 @@ export default function App() {
                                     title: "Profile ",
                                 }}
                                 name="Profile"
+                                component={Profile}
+                                initialParams={{
+                                    prop1: user,
+                                    prop2: "another value",
+                                }}
+                            />
+                            <Stack.Screen
+                                options={{
+                                    cardStyle: {
+                                        backgroundColor: "#363073",
+                                    },
+                                    title: "Home ",
+                                }}
+                                name="leagueHome"
                                 component={Profile}
                                 initialParams={{
                                     prop1: user,

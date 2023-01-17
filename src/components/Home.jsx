@@ -19,7 +19,6 @@ import LeagueStandings from "./RankingTable";
 export const Home = ({ navigation, userProp }) => {
     return (
         <SafeAreaView style={styles.view}>
-            <Text>{userProp ? userProp.apiKey : "NoUser"}</Text>
             <Text style={styles.h1}>2k League</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button}>

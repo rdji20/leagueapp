@@ -33,6 +33,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Profile } from "./src/screens/Profile";
 import RegisterForm from "./src/components/Register";
 import LoginForm from "./src/components/Login";
+import axios from "axios";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -102,6 +103,21 @@ export default function App() {
             });
     };
 
+    const testApi = async () => {
+        // const response = await axios.get('http://192.168.100.64:3000/')
+        // console.log(response.data);
+        axios.post('http://192.168.100.64:3000/create_user', {
+            user_id: 'john1904',
+            displayName: 'spiderman'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
     const logOnForm = () => {
         return loginScreen ? (
             <>
@@ -113,6 +129,12 @@ export default function App() {
                     handleLogin={handleLogin}
                     setLoginScreen={setLoginScreen}
                 ></LoginForm>
+                <TouchableOpacity
+                    title="Test"
+                    onPress={testApi}
+                    style={styles.login}>
+                    <Text style={styles.loginText}>Test Api</Text>
+                </TouchableOpacity>
             </>
         ) : (
             <>

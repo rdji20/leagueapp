@@ -11,22 +11,28 @@ import {
     Button,
     SafeAreaView,
 } from "react-native";
-import { LeagueHome } from "../components/leagueHome";
-import { NoLeagues } from "../components/noLeagues";
 
-export const Home = ({ navigation, route}) => {
-    const {user} = route.params
-    console.log(user.uid)
+export const NoLeagues = ({ navigation, userProp }) => {
     return (
-        <SafeAreaView style={styles.view}>
-            {!user.uid ? <LeagueHome navigation={navigation} route={route}/>: <NoLeagues navigation={navigation} route={route}/>}
-        </SafeAreaView>
+        <View style={styles.view}>
+            <Text style={styles.h1}> No Leagues Yet </Text>
+            <TouchableOpacity
+                onPress={() => navigation.navigate("NewLeague")}
+                style={styles.button}
+            >
+                <Text style={styles.buttonText}> Create League</Text>
+            </TouchableOpacity>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     view: {
-        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems:'center',
+        flex: 1
     },
     h2: {
         color: "rgba(256,256,256,1)",
@@ -37,7 +43,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     h1: {
-        fontSize: 46,
+        fontSize: 28,
         fontWeight: "800",
         color: "white",
         height: 40,

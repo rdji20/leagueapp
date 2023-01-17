@@ -16,9 +16,9 @@ import Table from "./DataTable";
 import DisplayUsers from "./LeagueUsers";
 import LeagueStandings from "./RankingTable";
 
-export const Home = ({ navigation, userProp }) => {
+export const LeagueHome = ({ navigation, userProp }) => {
     return (
-        <SafeAreaView style={styles.view}>
+        <View style={styles.view}>
             <Text style={styles.h1}>2k League</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button}>
@@ -56,7 +56,7 @@ export const Home = ({ navigation, userProp }) => {
                     onPress={() => navigation.navigate("Profile")}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     );
 };
 

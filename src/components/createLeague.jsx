@@ -63,7 +63,7 @@ export function CreateLeague({ navigation }) {
             {!players[0] ? (
                 ''
             ) : (
-                <Text style={styles.h2}> League Players </Text>
+                <Text style={styles.h2}> Players </Text>
             )}
             {players[0] ? (
                 <DisplayNewUsers players={players}></DisplayNewUsers>

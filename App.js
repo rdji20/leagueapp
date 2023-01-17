@@ -26,7 +26,7 @@ const firebaseConfig = {
     measurementId: "G-9HWLSYE15H",
 };
 
-import { Home } from "./src/components/Home";
+
 import { CreateLeague } from "./src/components/createLeague";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -34,7 +34,7 @@ import { Profile } from "./src/screens/Profile";
 import RegisterForm from "./src/components/Register";
 import LoginForm from "./src/components/Login";
 import axios from "axios";
-import { LeagueHome } from "./src/screens/Home";
+import { Home } from "./src/screens/Home";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -168,7 +168,7 @@ export default function App() {
                                     title: "Home",
                                 }}
                                 name="Home"
-                                component={LeagueHome}
+                                component={Home}
                                 initialParams={{
                                     user:user
                                 }}

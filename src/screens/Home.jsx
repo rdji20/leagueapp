@@ -19,7 +19,7 @@ export const Home = ({ navigation, route}) => {
     console.log(user.uid)
     return (
         <SafeAreaView style={styles.view}>
-            {!user.uid ? <LeagueHome navigation={navigation} route={route}/>: <NoLeagues navigation={navigation} route={route}/>}
+            {user.uid ? <LeagueHome navigation={navigation} route={route}/>: <NoLeagues navigation={navigation} route={route}/>}
         </SafeAreaView>
     );
 };

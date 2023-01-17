@@ -18,6 +18,7 @@ export function CreateLeague({ navigation }) {
     const [size, setSize] = useState(0);
     const [players, setPlayers] = useState([]);
     const [newName, setNewName] = useState("");
+    const [uri, setUri] =useState('')
 
     function handleCreate() {
         const league = {

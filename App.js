@@ -33,6 +33,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Profile } from "./src/screens/Profile";
 import RegisterForm from "./src/components/Register";
 import LoginForm from "./src/components/Login";
+import axios from "axios";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -47,8 +48,8 @@ export default function App() {
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState({});
-    const [loginScreen, setLoginScreen] = useState(true);//Switches between login and signup 
-    const [newUserName, setNewUserName] = useState('');//Switches between login and signup 
+    const [loginScreen, setLoginScreen] = useState(true); //Switches between login and signup
+    const [newUserName, setNewUserName] = useState(""); //Switches between login and signup
 
     // useEffect(() => {
     //     signInWithEmailAndPassword("email@uw.edu", "password")
@@ -67,19 +68,20 @@ export default function App() {
             .then((userCredential) => {
                 // Signed in
                 const thisUser = userCredential.user;
-                console.log(thisUser)
+                console.log(thisUser);
                 setUser(userCredential.user);
-                setIsLoggedIn(true)
+                setIsLoggedIn(true);
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
-                console.log(errorCode)
+                console.log(errorMessage);
+                console.log(errorCode);
                 // ..
             });
     };
+
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -101,34 +103,54 @@ export default function App() {
             });
     };
 
-    const logOnForm = () => {
-        return loginScreen ? 
-        (                
-        <>
-            <LoginForm
-            email={email}
-            setEmail = {setEmail}
-            password={password}
-            setPassword={setPassword}
-            handleLogin={handleLogin}
-            setLoginScreen={setLoginScreen}
-            ></LoginForm>
-            </>)
-        
-        : (                
-        <>
-            <RegisterForm
-            email={email}
-            setEmail = {setEmail}
-            password={password}
-            setPassword={setPassword}
-            handleSignUp={handleSignUp}
-            setLoginScreen={setLoginScreen}
-            setNewUserName={setNewUserName}
-            newUserName={newUserName}
-            ></RegisterForm>
-         </>)
+    const testApi = async () => {
+        // const response = await axios.get('http://192.168.100.64:3000/')
+        // console.log(response.data);
+        axios.post('http://192.168.100.64:3000/create_user', {
+            user_id: 'john1904',
+            displayName: 'spiderman'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
+
+    const logOnForm = () => {
+        return loginScreen ? (
+            <>
+                <LoginForm
+                    email={email}
+                    setEmail={setEmail}
+                    password={password}
+                    setPassword={setPassword}
+                    handleLogin={handleLogin}
+                    setLoginScreen={setLoginScreen}
+                ></LoginForm>
+                <TouchableOpacity
+                    title="Test"
+                    onPress={testApi}
+                    style={styles.login}>
+                    <Text style={styles.loginText}>Test Api</Text>
+                </TouchableOpacity>
+            </>
+        ) : (
+            <>
+                <RegisterForm
+                    email={email}
+                    setEmail={setEmail}
+                    password={password}
+                    setPassword={setPassword}
+                    handleSignUp={handleSignUp}
+                    setLoginScreen={setLoginScreen}
+                    setNewUserName={setNewUserName}
+                    newUserName={newUserName}
+                ></RegisterForm>
+            </>
+        );
+    };
     const Stack = createStackNavigator();
 
     return (
@@ -183,7 +205,9 @@ export default function App() {
                     </NavigationContainer>
                     <Button title="Logout" onPress={handleLogout} />
                 </>
-            ) : ( logOnForm())}
+            ) : (
+                logOnForm()
+            )}
         </View>
     );
 }

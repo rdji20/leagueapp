@@ -48,12 +48,8 @@ export default function LoginForm({email, setEmail, password, setPassword, handl
         <TouchableOpacity
             title="or Sign Up"
             onPress={() => {setLoginScreen(false)}}
-            style={styles.register}>
-        <TouchableOpacity
-            title="or Sign Up"
-            onPress={() => {setLoginScreen(false)}}
             style={styles.register}
-        ></TouchableOpacity>
+        >
             <Text style={styles.alreadyText}> Don't have an account yet?</Text>
             <Text style={styles.registerText}>Sign Up</Text>
         </TouchableOpacity>
@@ -99,7 +95,7 @@ const styles = StyleSheet.create({
     },
 
     loginText: {
-        color: "#8983C4",
+        color: "black",
         fontSize: 16,
         fontWeight: "600",
     },

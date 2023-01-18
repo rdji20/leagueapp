@@ -18,21 +18,46 @@ import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Octicons from 'react-native-vector-icons/Octicons'
 
+import axios from "axios";
+
 
 export const Home = ({ navigation, route}) => {
     const {user} = route.params
     console.log(user.uid)
+    useEffect(() => {
+        console.log('Use Effect')
+        get_leagues(user.uid)
+    })
+
+    const get_leagues = (uid) => {
+        console.log("1 test", uid)
+        axios.get('http://192.168.100.64:3000/leagues', {
+            params: {
+                user_id: uid,
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+
+
+
     return (
         <SafeAreaView style={styles.view}>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
                     <Text>
-                        <FontAwesome5 name='user-circle' style={{color:'white', fontSize: 30}}></FontAwesome5>
+                        <FontAwesome5 name='user-circle' style={{color:'white', fontSize: 26}}></FontAwesome5>
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate("NewLeague")}>
                     <Text>
-                        <Octicons name='diff-added' style={{color:'white', fontSize: 30}}></Octicons>
+                        <Octicons name='diff-added' style={{color:'#DBFF00', fontSize: 26}}></Octicons>
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -80,7 +105,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: 'space-between',
-        marginHorizontal: 20,
-        marginTop: 20
+        marginHorizontal: 30,
+        marginTop: 10
     },
 });

@@ -112,8 +112,9 @@ const styles = StyleSheet.create({
       itemText: {
         textAlign:'center',
         color: 'rgba(256, 256, 256, 1)',
-        fontWeight:'400',
+        fontWeight:'300',
         marginTop: 8,
+        fontSize: 12
       },
       container: {
         backgroundColor: "transparent",

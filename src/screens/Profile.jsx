@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, Button, SafeAreaView, StyleSheet} from "react-native";
 
 export const Profile = ({ navigation, route }) => {
-    const { prop1, prop2 } = route.params;
+    const { prop1, prop2, logout} = route.params;
     console.log(prop1)
-    //console.log({prop1})
+    console.log(logout.handleLogout)
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
@@ -16,6 +16,7 @@ export const Profile = ({ navigation, route }) => {
                     title="Go to Home"
                     onPress={() => navigation.navigate("Home")}
                 />
+                <Button title="Logout" onPress={logout.handleLogout} />
             </View>
         </SafeAreaView>
     );

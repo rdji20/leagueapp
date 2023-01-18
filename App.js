@@ -26,7 +26,7 @@ const firebaseConfig = {
     measurementId: "G-9HWLSYE15H",
 };
 
-import { Home } from "./src/components/Home";
+
 import { CreateLeague } from "./src/components/createLeague";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -34,7 +34,7 @@ import { Profile } from "./src/screens/Profile";
 import RegisterForm from "./src/components/Register";
 import LoginForm from "./src/components/Login";
 import axios from "axios";
-import { LeagueHome } from "./src/screens/Home";
+import { Home } from "./src/screens/Home";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -52,25 +52,17 @@ export default function App() {
     const [loginScreen, setLoginScreen] = useState(true); //Switches between login and signup
     const [newUserName, setNewUserName] = useState(""); //Switches between login and signup
 
-    // useEffect(() => {
-    //     signInWithEmailAndPassword("email@uw.edu", "password")
-    //         .then((user) => {
-    //             console.log(user);
-    //             setAuthenticated(true);
-    //             console.log(isAuthenticated);
-    //         })
-    //         .catch((e) => {
-    //             console.log(e);
-    //         });
-    // });
-
+    /**
+    * Signs new user up with firebase auth and adds user to firebase using 
+    * a call to Usercreation api function.
+    */
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const thisUser = userCredential.user;
-                console.log(thisUser);
                 setUser(userCredential.user);
+                userCreation(thisUser) //Calls Api
                 setIsLoggedIn(true);
                 // ...
             })
@@ -83,6 +75,9 @@ export default function App() {
             });
     };
 
+    /**
+    * Logs in new user up with firebase auth.
+    */
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -104,12 +99,16 @@ export default function App() {
             });
     };
 
-    const testApi = async () => {
+    /**
+    * Makes a POST call to the backend that adds new user info to firebase.
+    * @param thisUser - User object
+    */
+    const userCreation = async (thisUser) => {
         // const response = await axios.get('http://192.168.100.64:3000/')
         // console.log(response.data);
         axios.post('http://192.168.100.64:3000/create_user', {
-            user_id: 'john1904',
-            displayName: 'spiderman'
+            user_id: user.uid,
+            displayName: newUserName
         })
         .then(function (response) {
             console.log(response);
@@ -130,12 +129,6 @@ export default function App() {
                     handleLogin={handleLogin}
                     setLoginScreen={setLoginScreen}
                 ></LoginForm>
-                <TouchableOpacity
-                    title="Test"
-                    onPress={testApi}
-                    style={styles.login}>
-                    <Text style={styles.loginText}>Test Api</Text>
-                </TouchableOpacity>
             </>
         ) : (
             <>
@@ -163,12 +156,12 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#1B1C1E",
                                     },
                                     title: "Home",
                                 }}
                                 name="Home"
-                                component={LeagueHome}
+                                component={Home}
                                 initialParams={{
                                     user:user
                                 }}
@@ -176,7 +169,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#1B1C1E",
                                     },
                                     title: "ADD ",
                                 }}
@@ -190,7 +183,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#1B1C1E",
                                     },
                                     title: "Profile ",
                                 }}
@@ -199,6 +192,7 @@ export default function App() {
                                 initialParams={{
                                     prop1: user,
                                     prop2: "another value",
+                                    logout:{handleLogout}
                                 }}
                             />
                             <Stack.Screen
@@ -217,7 +211,6 @@ export default function App() {
                             />
                         </Stack.Navigator>
                     </NavigationContainer>
-                    <Button title="Logout" onPress={handleLogout} />
                 </>
             ) : (
                 logOnForm()

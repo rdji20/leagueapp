@@ -14,8 +14,8 @@ export default function Table() {
         </DataTable.Header>
 
         <DataTable.Row>
-          <DataTable.Cell>1</DataTable.Cell>
-          <DataTable.Cell>Claudio</DataTable.Cell>
+          <DataTable.Cell>2</DataTable.Cell>
+          <DataTable.Cell>Claudio P</DataTable.Cell>
           <DataTable.Cell>10-1</DataTable.Cell>
           <DataTable.Cell >3.2</DataTable.Cell>
         </DataTable.Row>
@@ -27,7 +27,7 @@ export default function Table() {
           <DataTable.Cell >2.1</DataTable.Cell>
         </DataTable.Row>
 
-        <DataTable.Row>
+        <DataTable.Row styles={styles.row}>
           <DataTable.Cell>3</DataTable.Cell>
           <DataTable.Cell>Roberto</DataTable.Cell>
           <DataTable.Cell>5-6</DataTable.Cell>
@@ -47,6 +47,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginHorizontal: 10,
+    backgroundColor:'red'
   },
+
+
+
 });

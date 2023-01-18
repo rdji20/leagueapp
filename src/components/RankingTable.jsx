@@ -4,7 +4,7 @@ import { DataTable} from 'react-native-paper'
 
 const LeagueStandings = () => {
     return (
-        <View>
+        <View style={styles.container}>
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Rank</Text></DataTable.Title>
@@ -13,19 +13,19 @@ const LeagueStandings = () => {
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Win Pct</Text></DataTable.Title>
                 </DataTable.Header>
 
-                <DataTable.Row>
+                <DataTable.Row style={styles.row}>
                 <DataTable.Cell style={styles.cell}><Text style={styles.rank}>1</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.name}>Claudio</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.record}>10-0</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.score}>3.2</Text></DataTable.Cell>
                 </DataTable.Row>
-                <DataTable.Row>
+                <DataTable.Row  style={styles.row}>
                 <DataTable.Cell style={styles.cell}><Text style={styles.rank}>2</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.name}>Roberto</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.record}>8-2</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.score}>2.1</Text></DataTable.Cell>
                 </DataTable.Row>
-                <DataTable.Row>
+                <DataTable.Row style={styles.row}>
                 <DataTable.Cell style={styles.cell}><Text style={styles.rank}>3</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.name}>Octavio</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.record}>6-4</Text></DataTable.Cell>
@@ -84,6 +84,13 @@ const styles = StyleSheet.create({
     },
     score: {
         color: 'white'
+    },
+    row: {
+        borderBottomColor: 'transparent'
+    },
+    container: {
+        marginHorizontal:10,
+        marginTop: 0
     }
     
 

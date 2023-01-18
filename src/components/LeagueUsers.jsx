@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        marginHorizontal: 18,
+        marginHorizontal: 10,
         marginBottom:15
       },
       itemPhoto: {
@@ -111,8 +111,11 @@ const styles = StyleSheet.create({
       },
       itemText: {
         textAlign:'center',
-        color: 'rgba(256, 256, 256, 0.5)',
-        fontWeight:'700',
+        color: 'rgba(256, 256, 256, 1)',
+        fontWeight:'400',
         marginTop: 8,
       },
+      container: {
+        backgroundColor: "transparent",
+      }
   });

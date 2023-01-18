@@ -156,7 +156,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#1B1C1E",
                                     },
                                     title: "Home",
                                 }}
@@ -169,7 +169,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#1B1C1E",
                                     },
                                     title: "ADD ",
                                 }}
@@ -183,7 +183,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#1B1C1E",
                                     },
                                     title: "Profile ",
                                 }}
@@ -192,6 +192,7 @@ export default function App() {
                                 initialParams={{
                                     prop1: user,
                                     prop2: "another value",
+                                    logout:{handleLogout}
                                 }}
                             />
                             <Stack.Screen
@@ -210,7 +211,6 @@ export default function App() {
                             />
                         </Stack.Navigator>
                     </NavigationContainer>
-                    <Button title="Logout" onPress={handleLogout} />
                 </>
             ) : (
                 logOnForm()

@@ -63,7 +63,6 @@ export default function App() {
                 const thisUser = userCredential.user;
                 setUser(userCredential.user);
                 userCreation(thisUser) //Calls Api
-                setIsLoggedIn(true);
                 // ...
             })
             .catch((error) => {
@@ -106,12 +105,13 @@ export default function App() {
     const userCreation = async (thisUser) => {
         // const response = await axios.get('http://192.168.100.64:3000/')
         // console.log(response.data);
+        console.log("test creation user", thisUser.uid);
         axios.post('http://192.168.100.64:3000/create_user', {
-            user_id: user.uid,
+            user_id: thisUser.uid,
             displayName: newUserName
         })
         .then(function (response) {
-            console.log(response);
+            setIsLoggedIn(true);
         })
         .catch(function (error) {
             console.log(error);

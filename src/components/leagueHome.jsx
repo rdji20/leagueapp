@@ -18,6 +18,9 @@ import LeagueStandings from "./RankingTable";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
+import Feather from 'react-native-vector-icons/Feather'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const LeagueHome = ({ navigation, userProp }) => {
     const players = 5
@@ -27,7 +30,13 @@ export const LeagueHome = ({ navigation, userProp }) => {
             <View style={styles.title}>
                 <Text style={styles.h1}><Entypo name='game-controller' style={{fontSize: 36}}/></Text>
                 <Text style={styles.h1}>2k League</Text>
-                <Text style={styles.h3}>{players} players - {matches} matches </Text>
+                <View style={styles.description}>
+                    <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather> {players} players</Text>
+                    <Text style={styles.h3}><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> {matches} matches </Text>
+                    <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> Claudio </Text>
+                </View>
+
+
             </View>
             <Text style={styles.h2}>League Players</Text>
             <View
@@ -80,7 +89,7 @@ const styles = StyleSheet.create({
         color: "rgba(256,256,256,1)",
         fontSize: "20",
         fontWeight: "600",
-        marginBottom: 2,
+        marginBottom: 0,
         marginTop: 5,
         marginHorizontal: 10,
     },
@@ -117,7 +126,8 @@ const styles = StyleSheet.create({
     },
     buttonTextMain: {
         color: 'white',
-        fontSize:14
+        fontSize:14,
+        fontWeight:'500'
     },
     buttonTextSecondary: {
         color: 'black',
@@ -135,9 +145,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     h3: {
-        color: "rgba(256,256,256,0.25)",
+        color: "rgba(256,256,256,0.30)",
         fontSize: 16,
         marginHorizontal: 10,
-        marginBottom:20
+        marginBottom:10
+    },
+    description: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom:10,
     }
 });

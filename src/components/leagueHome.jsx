@@ -70,7 +70,10 @@ export const LeagueHome = ({ navigation, userProp }) => {
                 }}
             ></View>
             <LeagueStandings />
-            <Text style={styles.h2}>Recent Matches</Text>
+            <View style={styles.recentMatches}>
+                <Text style={styles.h2}>Recent Matches</Text>
+                <TouchableOpacity style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>See All</Text></TouchableOpacity>
+            </View>
             <View
                 style={{
                     borderBottomColor: "rgba(256, 256, 256, 0.5)",
@@ -104,8 +107,8 @@ const styles = StyleSheet.create({
         height: 60,
         marginTop:0,
         shadowColor:'white',
-        shadowOpacity:0.3,
-        shadowRadius:28
+        shadowOpacity:0.2,
+        shadowRadius:10
     },
     buttonMain: {
         marginHorizontal: 10,
@@ -161,6 +164,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems:'center',
         marginBottom:10,
     },
     icon: {
@@ -171,5 +175,16 @@ const styles = StyleSheet.create({
         padding: 0,
         height: 60,
         marginTop:0,
+    },
+    recentMatches:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        marginRight: 20
+    },
+    seeAll: {
+        color:'rgba(256,256,256,0.3)'
     }
+
 });

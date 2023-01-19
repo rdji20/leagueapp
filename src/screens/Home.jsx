@@ -22,26 +22,30 @@ import axios from "axios";
 
 
 export const Home = ({ navigation, route}) => {
+    const [leagues, setLeagues] = useState([])
     const {user} = route.params
     console.log(user.uid)
     useEffect(() => {
-        console.log('Use Effect')
         get_leagues(user.uid)
-    })
+    }, [])
 
-    const get_leagues = (uid) => {
-        console.log("1 test", uid)
-        axios.get('http://192.168.100.64:3000/leagues', {
-            params: {
-                user_id: uid,
-            }
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    /**
+    * Makes a GET call to the backend once after the first mount. The response is stored in the state variable legagues. 
+    * @param uid - User id string
+    */
+    const get_leagues = async (uid) => {
+        try{
+            const res = await axios.get('http://192.168.100.64:3000/leagues', {
+                params: {
+                    user_id: uid,
+                }
+            })
+            console.log(res.data.leagues)
+            setLeagues(res.data.leagues)
+        }
+        catch(e){
+            console.log(e)
+        }
     }
 
 
@@ -61,7 +65,7 @@ export const Home = ({ navigation, route}) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            {user.uid ? <LeagueHome navigation={navigation} route={route}/>: <NoLeagues navigation={navigation} route={route}/>}
+            {leagues[0] ? <LeagueHome navigation={navigation} route={route}/>: <NoLeagues navigation={navigation} route={route}/>}
         </SafeAreaView>
     );
 };

@@ -118,5 +118,6 @@ const styles = StyleSheet.create({
       },
       container: {
         backgroundColor: "transparent",
+        marginTop:10
       }
   });

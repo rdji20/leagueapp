@@ -171,7 +171,7 @@ export default function App() {
                                     cardStyle: {
                                         backgroundColor: "#1B1C1E",
                                     },
-                                    title: "ADD ",
+                                    title: "NewLeague",
                                 }}
                                 name="NewLeague"
                                 component={CreateLeague}
@@ -200,9 +200,9 @@ export default function App() {
                                     cardStyle: {
                                         backgroundColor: "#363073",
                                     },
-                                    title: "Home ",
+                                    title: "Profile ",
                                 }}
-                                name="leagueHome"
+                                name="profile"
                                 component={Profile}
                                 initialParams={{
                                     prop1: user,
@@ -222,7 +222,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#363073",
+        backgroundColor: "#1B1C1E",
     },
     input: {
         placeHolderTextColor: "white",

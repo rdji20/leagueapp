@@ -31,6 +31,18 @@ const LeagueStandings = () => {
                 <DataTable.Cell style={styles.cell}><Text style={styles.record}>6-4</Text></DataTable.Cell>
                 <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.9</Text></DataTable.Cell>
                 </DataTable.Row>
+                <DataTable.Row style={styles.row}>
+                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>4</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Meo</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.record}>4-6</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.7</Text></DataTable.Cell>
+                </DataTable.Row>
+                <DataTable.Row style={styles.row}>
+                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>5</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Daniela</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.record}>0-10</Text></DataTable.Cell>
+                <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.4</Text></DataTable.Cell>
+                </DataTable.Row>
 
             </DataTable>
 

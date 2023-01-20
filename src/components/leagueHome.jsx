@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
     seeAll: {
-        color:'rgba(256,256,256,0.3)'
+        color:'rgba(256,256,256,0.5)'
     }
 
 });

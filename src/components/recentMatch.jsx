@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
         width:'100%'
     },
     h3: {
-        color: "rgba(256,256,256,0.25)",
+        color: "rgba(256,256,256,0.5)",
         fontSize: 12,
-        fontWeight: "600",
+        fontWeight: "300",
     },
     h2: {
         color: "rgba(256,256,256,1)",
         fontSize: "16",
-        fontWeight: "600",
+        fontWeight: "500",
     },
     date: {
         color: "rgba(256,256,256,0.25)",
@@ -152,12 +152,12 @@ const styles = StyleSheet.create({
         height:50, 
         borderRadius: 60/ 2,
         borderColor:'rgba(256, 256, 256, 0.5)',
-        borderWidth:1
-        
+        borderWidth:1,
+       
       },
     winner: {
         fontSize: 30,
-        fontWeight: "800",
+        fontWeight: "600",
         //color: "#DBFF00",
         color: "white",
         height: 40,
@@ -168,13 +168,16 @@ const styles = StyleSheet.create({
     },
     loser: {
         fontSize: 30,
-        fontWeight: "800",
+        fontWeight: "600",
         color: 'rgba(256,256,256,0.2)',
         height: 40,
     },
     picContainer: {
         height: 50,
-        marginHorizontal:10
+        marginHorizontal:20,
+        shadowColor:"black",
+        shadowOpacity:0.2,
+        shadowRadius:4, 
     },
     player:{
         display:'flex',

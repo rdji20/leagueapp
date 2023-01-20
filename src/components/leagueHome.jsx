@@ -24,16 +24,16 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatchesList } from "./recentMatches";
 
-export const LeagueHome = ({ navigation, userProp }) => {
+export const LeagueHome = ({ navigation, userProp, league}) => {
     const players = 5
     const matches = 0
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
-                <Text style={styles.icon}><Entypo name='game-controller' style={{fontSize: 36}}/></Text>
-                <Text style={styles.h1}>2k League</Text>
+                <Text style={styles.icon}><MaterialCommunityIcons name={league.iconId} style={{fontSize: 36}}/></Text>
+                <Text style={styles.h1}>{league.leagueName}</Text>
                 <View style={styles.description}>
-                    <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {players} players</Text>
+                    <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {league.players ? league.players.length: ''} players</Text>
                     <Text style={styles.h3}><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> {matches}  matches </Text>
                     <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons>  Claudio </Text>
                 </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         height: 60,
         marginTop:0,
         shadowColor:'white',
-        shadowOpacity:0.2,
+        shadowOpacity:0.1,
         shadowRadius:10
     },
     buttonMain: {
@@ -171,10 +171,10 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: "800",
         color: "white",
-        height: 40,
         padding: 0,
-        height: 60,
-        marginTop:0,
+        height: 40,
+        marginTop:10,
+        marginBottom:10
     },
     recentMatches:{
         display:'flex',

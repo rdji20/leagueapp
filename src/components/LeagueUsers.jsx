@@ -99,14 +99,19 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         marginHorizontal: 10,
-        marginBottom:15
+        marginBottom:15,
+        shadowColor:"black",
+        shadowOpacity:0.8,
+        shadowRadius:6,
+        paddingTop:15
       },
       itemPhoto: {
         width: 60, 
         height: 60, 
         borderRadius: 60/ 2,
         borderColor:'rgba(256, 256, 256, 0.5)',
-        borderWidth:1
+        borderWidth:1,
+
         
       },
       itemText: {

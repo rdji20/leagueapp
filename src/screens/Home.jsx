@@ -48,8 +48,9 @@ export const Home = ({ navigation, route}) => {
             })
             //console.log(res.data.leagues)
             setLeagues(res.data.leagues)
-            console.log('res:',res.data.leagues[0])
-            if (res.data.leagues[0]){
+            console.log('res:',res.data.leagues.ids[0])
+            console.log(res.data.leagues.data[0])
+            if (res.data.leagues.ids[0]){
                 console.log('Yes')
                 setLeague(leaguesMock[1])
                 setLeagues(leaguesMock)

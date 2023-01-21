@@ -16,35 +16,20 @@ import {
 const ListItem = ({ item }) => {
   return (
     <View style={styles.item}>
-        <Text style={styles.itemText}>{item.name}</Text>
+        <Text style={styles.itemText}>{item.displayName}</Text>
     </View>
   );
 };
 
 export default function DisplayNewUsers({players}) {
-    players = [{data:[...players]}]
   return (
     <View style={styles.container}>
-      <SectionList
-          contentContainerStyle={{ paddingHorizontal: 10 }}
-          stickySectionHeadersEnabled={false}
-          sections={players}
-          renderSectionHeader={({ section }) => (
-            <>
-              <Text style={styles.sectionHeader}>{section.title}</Text>
-              <FlatList
-                horizontal
-                data={section.data}
-                renderItem={({ item }) => <ListItem item={item} />}
-                showsHorizontalScrollIndicator={false}
-              />
-            </>
-          )}
-          renderItem={({ item, section }) => {
-            return null;
-            // return <ListItem item={item} />;
-          }}
-        />
+      <FlatList
+        horizontal
+        data={players}
+        renderItem={({ item }) => <ListItem item={item} />}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 };

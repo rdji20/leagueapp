@@ -12,32 +12,57 @@ import {
     TextInput,
 } from "react-native";
 import DisplayNewUsers from "./addUserList";
+import axios from "axios";
 
-export function CreateLeague({ navigation }) {
+
+export function CreateLeague({ navigation, route}) {
+    const { prop1, prop2, logout} = route.params;
     const [name, setName] = useState("");
-    const [size, setSize] = useState(0);
     const [players, setPlayers] = useState([]);
     const [newName, setNewName] = useState("");
-    const [uri, setUri] =useState('')
+    const [icon, setIcon] =useState('')
+
+    const createLeague = async (league) => {
+        axios.post('http://192.168.100.64:3000/create_league', {
+            uId: prop2.uid,
+            leagueName:league.name,
+            leagueType:'0',
+            users:league.players,
+            iconId:league.icon
+
+        })
+        .then(function (response) {
+            console.log('League Created')
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
 
     function handleCreate() {
         const league = {
+            icon,
             name,
-            uri,
-            size,
-            matches: [],
             players,
         };
         console.log(league);
         //redirect
+        createLeague(league)
     }
 
     function handleAddPlayer() {
+        const len = players.length.toString()
         console.log(newName);
         if (newName) {
             console.log(players);
             const newPlayers = [...players];
-            newPlayers.unshift({ name: newName });
+            newPlayers.unshift({ 
+                displayName: newName,
+                loses:0, 
+                wins:0,
+                userId: len,
+                picUri: ''
+            });
             setPlayers(newPlayers);
             setNewName("");
         }
@@ -50,7 +75,6 @@ export function CreateLeague({ navigation }) {
                     style={styles.itemPhoto}
 
                 />
-                <Text> {uri}</Text>
             </View>
             <Text style={styles.h2}>League Name</Text>
             <TextInput

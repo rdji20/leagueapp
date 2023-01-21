@@ -25,16 +25,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { RecentMatchesList } from "./recentMatches";
 
 export const LeagueHome = ({ navigation, userProp, league}) => {
-    const players = 5
-    const matches = 0
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
-                <Text style={styles.icon}><MaterialCommunityIcons name={league.iconId} style={{fontSize: 36}}/></Text>
-                <Text style={styles.h1}>{league.leagueName}</Text>
+                <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 36}}/></Text>
+                <Text style={styles.h1}>{league.l_name}</Text>
                 <View style={styles.description}>
-                    <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {league.players ? league.players.length: ''} players</Text>
-                    <Text style={styles.h3}><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> {matches}  matches </Text>
+                    <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {league.users ? league.users.length: ''} players</Text>
+                    <Text style={styles.h3}><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> {league.matches ? league.matches.length:'No matches'}  matches </Text>
                     <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons>  Claudio </Text>
                 </View>
             </View>
@@ -50,7 +48,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
             
             <Text style={styles.h2}>League Players</Text>
 
-            <DisplayUsers />
+            <DisplayUsers users={league.users}/>
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.buttonMain}>
@@ -102,13 +100,14 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: "800",
         color: "white",
-        height: 40,
         padding: 0,
-        height: 60,
         marginTop:0,
         shadowColor:'white',
         shadowOpacity:0.1,
-        shadowRadius:10
+        shadowRadius:10,
+        width: 200,
+        textAlign: 'center',
+        marginBottom: 30
     },
     buttonMain: {
         marginHorizontal: 10,
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
     seeAll: {
-        color:'rgba(256,256,256,0.5)'
+        color:"#8983C4"
     }
 
 });

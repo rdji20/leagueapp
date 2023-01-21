@@ -21,13 +21,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import axios from "axios";
 import { SelectList } from "react-native-dropdown-select-list";
+import { ActivityIndicator } from "react-native-paper";
 
 
 export const Home = ({ navigation, route}) => {
+    const [fetched, setFetched] = useState(false)
     const [leagues, setLeagues] = useState([])
     const [league, setLeague] = useState('')
     const [pene, setPene] = useState('')
     const [leagueNames, setLeagueNames] = useState([{}])
+    const [getError, setGetError] = useState(false)
+    const [leagueIds, setLeagueIds] = useState([])
 
     const {user} = route.params
     useEffect(() => {
@@ -46,15 +50,13 @@ export const Home = ({ navigation, route}) => {
                 }
             
             })
-            //console.log(res.data.leagues)
-            setLeagues(res.data.leagues)
-            console.log('res:',res.data.leagues.ids[0])
             console.log(res.data.leagues.data[0])
+            setLeagueIds(res.data.leagues.ids)//res.data is user data
             if (res.data.leagues.ids[0]){
                 console.log('Yes')
-                setLeague(leaguesMock[1])
-                setLeagues(leaguesMock)
-                setLeagueNames(getLeagueNames(leaguesMock))
+                setLeague(res.data.leagues.data[0])
+                setLeagues(res.data.leagues.data)
+                setLeagueNames(getLeagueNames(res.data))
             }else{
                 console.log('Nos')
                 setLeagueNames([{value:'No Leagues yet. Create or join a league', key:-1}])
@@ -62,19 +64,21 @@ export const Home = ({ navigation, route}) => {
         }
         catch(e){
             console.log(e)
+            setGetError(true)
+            setLeagueNames([{value:'No leagues to display.', key:-1}])
+            
         }
+        setFetched(true)
     }
 
     const getLeagueNames = (leagueArr) => {
-        const leagueNames = leagueArr.map((league) => {return {value:league.leagueName, key:league.leagueId}})
+        const leagueNames = leagueArr.leagues.data.map((element, index) => {return {value:element.l_name, key:leagueArr.leagues.ids[index]}})
         return leagueNames
     }
 
     const handleSelectLeague = (key) => {
-        console.log('looking for')
-        console.log(key)
         if (key){
-            const found = leagues.find(lg => lg.leagueId === key)
+            const found = leagues.find((el, index) => leagueIds[index] === key)
             setLeague(found)
             console.log(found)
         }
@@ -92,8 +96,59 @@ export const Home = ({ navigation, route}) => {
             </View>
         )
     }
+    /**
+     * Contains loading spinner displayed while the getLeagues function is called.
+     * @returns LoadingScreen - the loading screen component.
+     */
+    const LoadingScreen = () => {
+        return (
+            <View style={{display: 'flex', flexDirection: "column", alignItems:'center', marginTop:200}}>
+                <ActivityIndicator size={'medium'} style={{marginBottom: 20}}></ActivityIndicator>
+                <Text style={styles.h2}> Fetching your leagues!</Text>
+            </View>
+        )
+    }
 
+    /**Callback function used in try again button when an error occurs. 
+     * 
+     * Fetched variable is set to false so that the loading spinner loads then the error message is removed and finally the fetch function is called again.
+     */
+    const handleTryAgain = () => {
+        setFetched(false)
+        setGetError(false)
+        get_leagues(user.uid)
+    }
+    /**
+     * This component loads one of four things:
+     * - Loading screen if fetched variable is false
+     * - Error Screen if fetched variable is true but getError variable is false
+     * - No Leagues component if fetched is true but there are no leagues
+     * - League Home Page if fetch is true and leagues exist
+     * 
+     */
+    const LeagueScreen = () => {
+        if (!fetched){
+            return <LoadingScreen></LoadingScreen>
+        }
+        if (getError){
+            return <ErrorScreen/>
+        }
+        if(leagues[0]){
+            return <LeagueHome league={league} navigation={navigation} route={route}></LeagueHome>
+        }
+        return <NoLeagues navigation={navigation} route={route}></NoLeagues>
+    }
 
+    const ErrorScreen = () => {
+        return (
+            <View style={{display: 'flex', flexDirection: "column", alignItems:'center', marginTop:200}}>
+                <Text style={{marginBottom:10}}><MaterialCommunityIcons name='trophy-broken' style={{color:'white', fontSize:50}}/></Text>
+                <Text style={styles.h2}> Something went wrong. </Text>
+                <Text style={styles.h3}> Check your internet connection and try again. </Text>
+                <TouchableOpacity style={{marginTop: 30}} onPress={handleTryAgain}><Text style={styles.tryAgain}>Try Again</Text></TouchableOpacity>
+            </View>
+        )
+    }
 
 
     return (
@@ -126,7 +181,7 @@ export const Home = ({ navigation, route}) => {
                 />
             </View> 
             {/* <View > */}
-                {leagues[0] ? <LeagueHome league={league} navigation={navigation} route={route}/>: <NoLeagues navigation={navigation} route={route}/>}
+            <LeagueScreen/>
 
             {/* </View> */}
         </SafeAreaView>
@@ -154,6 +209,13 @@ const styles = StyleSheet.create({
         padding: 0,
         height: 60,
     },
+    h3: {
+        fontSize: 12,
+        fontWeight: "500",
+        color: "rgba(256, 256, 256, 0.5)",
+        width: 200,
+        textAlign:'center'
+    },
     button: {
         marginTop: 20,
         marginBottom: 10,
@@ -175,12 +237,15 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
         marginTop: 10
     },
+    tryAgain: {
+        color:"#8983C4"
+    }
 });
 
-const leaguesMock = [
+const leaguesMockCode = [
     {
-        leagueName:'2k League',
-        players:[
+        l_name:'2k League',
+        users:[
             {uId: 'ksjdlaskj', displayName:'Roberto', wins:10, losses:20},
             {uId: 'IOAJODIJ', displayName:'Octavio', wins:9, losses:21},
             {uId: 'asdaead', displayName:'Claudio', wins:30, losses:0},
@@ -188,11 +253,11 @@ const leaguesMock = [
         ],
         matches:[],
         leagueId:'kjashdadioe',
-        iconId: 'google-controller'
+        icon: 'google-controller'
     },
     {
-        leagueName:'Padel',
-        players:[
+        l_name:'Padel',
+        users:[
             {uId: 'afafedasf', displayName:'Kamila', wins:10, losses:20},
             {uId: 'IOAJODIJ', displayName:'Andrea', wins:9, losses:21},
             {uId: 'asdaead', displayName:'Claudio', wins:30, losses:0},
@@ -202,11 +267,11 @@ const leaguesMock = [
         ],
         matches:[],
         leagueId:'pasodpaoskdpo',
-        iconId: 'tennis-ball'
+        icon: 'tennis-ball'
     },
     {
-        leagueName:'Spike @ El Capitan',
-        players:[
+        l_name:'Spike @ El Capitan',
+        users:[
             {uId: 'afafedasf', displayName:'Kamila', wins:10, losses:20},
             {uId: 'IOAJODIJ', displayName:'Rolando', wins:9, losses:21},
             {uId: 'asdaead', displayName:'Claudio', wins:30, losses:0},
@@ -216,7 +281,7 @@ const leaguesMock = [
         ],
         matches:[],
         leagueId:'sfaeraesgf',
-        iconId: 'handball'
+        icon: 'handball'
     },
 ]
 

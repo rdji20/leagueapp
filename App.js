@@ -26,7 +26,6 @@ const firebaseConfig = {
     measurementId: "G-9HWLSYE15H",
 };
 
-
 import { CreateLeague } from "./src/components/createLeague";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -53,16 +52,16 @@ export default function App() {
     const [newUserName, setNewUserName] = useState(""); //Switches between login and signup
 
     /**
-    * Signs new user up with firebase auth and adds user to firebase using 
-    * a call to Usercreation api function.
-    */
+     * Signs new user up with firebase auth and adds user to firebase using
+     * a call to Usercreation api function.
+     */
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const thisUser = userCredential.user;
                 setUser(userCredential.user);
-                userCreation(thisUser) //Calls Api
+                userCreation(thisUser); //Calls Api
                 // ...
             })
             .catch((error) => {
@@ -75,8 +74,8 @@ export default function App() {
     };
 
     /**
-    * Logs in new user up with firebase auth.
-    */
+     * Logs in new user up with firebase auth.
+     */
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -99,24 +98,25 @@ export default function App() {
     };
 
     /**
-    * Makes a POST call to the backend that adds new user info to firebase.
-    * @param thisUser - User object
-    */
+     * Makes a POST call to the backend that adds new user info to firebase.
+     * @param thisUser - User object
+     */
     const userCreation = async (thisUser) => {
         // const response = await axios.get('http://192.168.100.64:3000/')
         // console.log(response.data);
         console.log("test creation user", thisUser.uid);
-        axios.post('http://192.168.100.64:3000/create_user', {
-            user_id: thisUser.uid,
-            displayName: newUserName
-        })
-        .then(function (response) {
-            setIsLoggedIn(true);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+        axios
+            .post("http://192.168.100.18:3000/create_user", {
+                user_id: thisUser.uid,
+                displayName: newUserName,
+            })
+            .then(function (response) {
+                setIsLoggedIn(true);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     const logOnForm = () => {
         return loginScreen ? (
@@ -163,7 +163,7 @@ export default function App() {
                                 name="Home"
                                 component={Home}
                                 initialParams={{
-                                    user:user
+                                    user: user,
                                 }}
                             />
                             <Stack.Screen
@@ -192,7 +192,7 @@ export default function App() {
                                 initialParams={{
                                     prop1: user,
                                     prop2: "another value",
-                                    logout:{handleLogout}
+                                    logout: { handleLogout },
                                 }}
                             />
                             <Stack.Screen

@@ -14,30 +14,31 @@ import {
 import DisplayNewUsers from "./addUserList";
 import axios from "axios";
 
-
-export function CreateLeague({ navigation, route}) {
-    const { prop1, prop2, logout} = route.params;
+export function CreateLeague({ navigation, route }) {
+    const { prop1, prop2, logout } = route.params;
     const [name, setName] = useState("");
     const [players, setPlayers] = useState([]);
     const [newName, setNewName] = useState("");
-    const [icon, setIcon] =useState('')
+    const [icon, setIcon] = useState("");
 
     const createLeague = async (league) => {
-        axios.post('http://192.168.100.64:3000/create_league', {
-            uId: prop2.uid,
-            leagueName:league.name,
-            leagueType:'0',
-            users:league.players,
-            iconId:league.icon
-
-        })
-        .then(function (response) {
-            console.log('League Created')
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+        console.log(prop1.uid);
+        axios
+            .post("http://192.168.100.18:3000/create_league", {
+                uId: prop1.uid,
+                leagueName: league.name,
+                leagueType: "0",
+                users: league.players,
+                iconId: league.icon,
+            })
+            .then(function (response) {
+                console.log("League Created");
+                navigation.navigate("Home");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     function handleCreate() {
         const league = {
@@ -47,21 +48,21 @@ export function CreateLeague({ navigation, route}) {
         };
         console.log(league);
         //redirect
-        createLeague(league)
+        createLeague(league);
     }
 
     function handleAddPlayer() {
-        const len = players.length.toString()
+        const len = players.length.toString();
         console.log(newName);
         if (newName) {
             console.log(players);
             const newPlayers = [...players];
-            newPlayers.unshift({ 
+            newPlayers.unshift({
                 displayName: newName,
-                loses:0, 
-                wins:0,
+                loses: 0,
+                wins: 0,
                 userId: len,
-                picUri: ''
+                picUri: "",
             });
             setPlayers(newPlayers);
             setNewName("");
@@ -71,10 +72,7 @@ export function CreateLeague({ navigation, route}) {
     return (
         <View style={styles.createContainer}>
             <View style={styles.container}>
-                <Image
-                    style={styles.itemPhoto}
-
-                />
+                <Image style={styles.itemPhoto} />
             </View>
             <Text style={styles.h2}>League Name</Text>
             <TextInput
@@ -84,11 +82,7 @@ export function CreateLeague({ navigation, route}) {
                 onChangeText={setName}
                 style={styles.input}
             />
-            {!players[0] ? (
-                ''
-            ) : (
-                <Text style={styles.h2}> Players </Text>
-            )}
+            {!players[0] ? "" : <Text style={styles.h2}> Players </Text>}
             {players[0] ? (
                 <DisplayNewUsers players={players}></DisplayNewUsers>
             ) : (

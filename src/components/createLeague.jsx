@@ -24,7 +24,7 @@ export function CreateLeague({ navigation, route}) {
 
     const createLeague = async (league) => {
         axios.post('http://192.168.100.64:3000/create_league', {
-            uId: prop2.uid,
+            uId: prop1.uid,
             leagueName:league.name,
             leagueType:'0',
             users:league.players,

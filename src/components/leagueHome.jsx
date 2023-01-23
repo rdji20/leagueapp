@@ -25,11 +25,21 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { RecentMatchesList } from "./recentMatches";
 
 export const LeagueHome = ({ navigation, userProp, league}) => {
+
+    const GenerateTitle = () => {
+        return (
+            <View style={{display: 'flex', flexDirection:'column', alignItems:'center', marginBottom:30}}>
+                {league.l_name.split(' ').map((str) => (<Text style={styles.h1}>{str.charAt(0).toUpperCase() + str.slice(1)}</Text>))}
+            </View>
+        )
+    }
+
+
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
                 <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 36}}/></Text>
-                <Text style={styles.h1}>{league.l_name}</Text>
+                <GenerateTitle/>
                 <View style={styles.description}>
                     <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {league.users ? league.users.length: ''} players</Text>
                     <Text style={styles.h3}><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> {league.matches ? league.matches.length:'No matches'}  matches </Text>
@@ -67,7 +77,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
                     marginTop: 5,
                 }}
             ></View>
-            <LeagueStandings />
+            <LeagueStandings users={league.users}/>
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>
                 <TouchableOpacity style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>See All</Text></TouchableOpacity>
@@ -103,11 +113,10 @@ const styles = StyleSheet.create({
         padding: 0,
         marginTop:0,
         shadowColor:'white',
-        shadowOpacity:0.1,
-        shadowRadius:10,
-        width: 200,
+        shadowOpacity:0.2,
+        shadowRadius:15,
+        width: 500,
         textAlign: 'center',
-        marginBottom: 30
     },
     buttonMain: {
         marginHorizontal: 10,

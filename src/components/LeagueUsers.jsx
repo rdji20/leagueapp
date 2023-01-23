@@ -9,6 +9,7 @@ import {
   Image,
   FlatList
 } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 
@@ -16,12 +17,12 @@ import {
 const ListItem = ({ item }) => {
   return (
     <View style={styles.item} key={item.userId}>
-        <Image 
+        {item.picUri != ''? <Image 
         style={styles.itemPhoto} 
         source={{
             uri: item.picUri
         }}
-        />
+        /> : <MaterialCommunityIcons name='account-circle' style={{color:'rgba(256, 256, 256, 0.5)', fontSize:65, marginBottom:0}}/>}
         <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? item.displayName.split(' ')[0] : 'User'}</Text>
     </View>
   );
@@ -90,20 +91,23 @@ const styles = StyleSheet.create({
       item: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        marginHorizontal: 12,
+        justifyContent: 'flex-end',
+        alignItems:'center',
+        marginHorizontal: 8,
         marginBottom:15,
         shadowColor:"black",
         shadowOpacity:0.8,
         shadowRadius:6,
-        paddingTop:15
+        paddingTop:15,
+        width:60
       },
       itemPhoto: {
         width: 55, 
         height: 55, 
         borderRadius: 60/ 2,
-        borderColor:'rgba(256, 256, 256, 0.5)',
+        borderColor:'rgba(256, 256, 256, 1)',
         borderWidth:1,
+        marginBottom:5
 
         
       },

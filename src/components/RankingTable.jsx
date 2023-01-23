@@ -2,7 +2,24 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import { DataTable} from 'react-native-paper'
 
-const LeagueStandings = () => {
+const LeagueStandings = ({users}) => {
+    const TableRows = () => {
+        console.log('Pene')
+        console.log(users.map((val) => val))
+        return (
+            users.map((user, index) => 
+                <DataTable.Row style={styles.row}>
+                    <DataTable.Cell style={styles.cell}><Text style={styles.rank}>{index + 1}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={styles.name}>{user.displayName.split(' ')[0]}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={styles.record}>{`${user.wins}-${user.loses}`}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={styles.score}>{user.loses}</Text></DataTable.Cell>
+                </DataTable.Row>
+            )
+
+        )
+    }
+
+
     return (
         <View style={styles.container}>
             <DataTable>
@@ -13,36 +30,7 @@ const LeagueStandings = () => {
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Win Pct</Text></DataTable.Title>
                 </DataTable.Header>
 
-                <DataTable.Row style={styles.row}>
-                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>1</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Claudio</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.record}>10-0</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.score}>3.2</Text></DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row  style={styles.row}>
-                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>2</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Roberto</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.record}>8-2</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.score}>2.1</Text></DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={styles.row}>
-                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>3</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Octavio</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.record}>6-4</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.9</Text></DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={styles.row}>
-                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>4</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Meo</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.record}>4-6</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.7</Text></DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={styles.row}>
-                <DataTable.Cell style={styles.cell}><Text style={styles.rank}>5</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.name}>Daniela</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.record}>0-10</Text></DataTable.Cell>
-                <DataTable.Cell style={styles.cell}><Text style={styles.score}>0.4</Text></DataTable.Cell>
-                </DataTable.Row>
+                <TableRows/>
 
             </DataTable>
 

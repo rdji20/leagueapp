@@ -34,6 +34,7 @@ import RegisterForm from "./src/components/Register";
 import LoginForm from "./src/components/Login";
 import axios from "axios";
 import { Home } from "./src/screens/Home";
+import * as RequestManager from "./src/utils/RequestManager";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -61,7 +62,10 @@ export default function App() {
                 // Signed in
                 const thisUser = userCredential.user;
                 setUser(userCredential.user);
-                userCreation(thisUser); //Calls Api
+                console.log("Test before rerquestManger", newUserName);
+                setIsLoggedIn(
+                    RequestManager.userCreation(thisUser, newUserName)
+                );
                 // ...
             })
             .catch((error) => {
@@ -94,27 +98,6 @@ export default function App() {
             })
             .catch((error) => {
                 console.error(error);
-            });
-    };
-
-    /**
-     * Makes a POST call to the backend that adds new user info to firebase.
-     * @param thisUser - User object
-     */
-    const userCreation = async (thisUser) => {
-        // const response = await axios.get('http://192.168.100.64:3000/')
-        // console.log(response.data);
-        console.log("test creation user", thisUser.uid);
-        axios
-            .post("http://192.168.100.64:3000/create_user", {
-                user_id: thisUser.uid,
-                displayName: newUserName,
-            })
-            .then(function (response) {
-                setIsLoggedIn(true);
-            })
-            .catch(function (error) {
-                console.log(error);
             });
     };
 

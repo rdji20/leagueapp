@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import DisplayNewUsers from "./addUserList";
 import axios from "axios";
+import * as RequestManager from "../utils/RequestManager";
 
 export function CreateLeague({ navigation, route }) {
     const { prop1, prop2, logout } = route.params;
@@ -21,34 +22,22 @@ export function CreateLeague({ navigation, route }) {
     const [newName, setNewName] = useState("");
     const [icon, setIcon] = useState("");
 
-    const createLeague = async (league) => {
-        console.log(prop1.uid);
-        axios
-            .post("http://192.168.100.64:3000/create_league", {
-                uId: prop1.uid,
-                leagueName: league.name,
-                leagueType: "0",
-                users: league.players,
-                iconId: league.icon,
-            })
-            .then(function (response) {
-                console.log("League Created");
-                navigation.navigate("Home");
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
     function handleCreate() {
         const league = {
             icon,
             name,
             players,
         };
-        console.log(league);
+        console.log("Before request manager", league);
+        console.log("Before request manager", prop1.uid);
         //redirect
-        createLeague(league);
+        RequestManager.createLeague(league, prop1.uid)
+            .then((res) => {
+                navigation.navigate("Home");
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     function handleAddPlayer() {

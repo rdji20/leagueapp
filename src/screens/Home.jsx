@@ -22,6 +22,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axios from "axios";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ActivityIndicator } from "react-native-paper";
+import * as RequestManager from "../utils/RequestManager";
 
 export const Home = ({ navigation, route }) => {
     const [fetched, setFetched] = useState(false);
@@ -34,43 +35,31 @@ export const Home = ({ navigation, route }) => {
 
     const { user } = route.params;
     useEffect(() => {
-        get_leagues(user.uid);
-    }, [user]);
-
-    /**
-     * Makes a GET call to the backend once after the first mount. The response is stored in the state variable legagues.
-     * @param uid - User id string
-     */
-    const get_leagues = async (uid) => {
-        try {
-            const res = await axios.get("http://192.168.100.64:3000/leagues", {
-                params: {
-                    user_id: uid,
-                },
+        RequestManager.getLeagues(user.uid)
+            .then((res) => {
+                console.log(res.data.leagues.data[0]);
+                setLeagueIds(res.data.leagues.ids); //res.data is user data
+                if (res.data.leagues.ids[0]) {
+                    console.log("Yes");
+                    setLeague(res.data.leagues.data[0]);
+                    setLeagues(res.data.leagues.data);
+                    setLeagueNames(getLeagueNames(res.data));
+                } else {
+                    console.log("Nos");
+                    setLeagueNames([
+                        {
+                            value: "No Leagues yet. Create or join a league",
+                            key: -1,
+                        },
+                    ]);
+                }
+            })
+            .catch((e) => {
+                setGetError(true);
+                setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
             });
-            console.log(res.data.leagues.data[0]);
-            setLeagueIds(res.data.leagues.ids); //res.data is user data
-            if (res.data.leagues.ids[0]) {
-                console.log("Yes");
-                setLeague(res.data.leagues.data[0]);
-                setLeagues(res.data.leagues.data);
-                setLeagueNames(getLeagueNames(res.data));
-            } else {
-                console.log("Nos");
-                setLeagueNames([
-                    {
-                        value: "No Leagues yet. Create or join a league",
-                        key: -1,
-                    },
-                ]);
-            }
-        } catch (e) {
-            console.log(e);
-            setGetError(true);
-            setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
-        }
         setFetched(true);
-    };
+    }, [user]);
 
     const getLeagueNames = (leagueArr) => {
         const leagueNames = leagueArr.leagues.data.map((element, index) => {
@@ -126,7 +115,30 @@ export const Home = ({ navigation, route }) => {
     const handleTryAgain = () => {
         setFetched(false);
         setGetError(false);
-        get_leagues(user.uid);
+        RequestManager.getLeagues(user.uid)
+            .then((res) => {
+                console.log(res.data.leagues.data[0]);
+                setLeagueIds(res.data.leagues.ids); //res.data is user data
+                if (res.data.leagues.ids[0]) {
+                    console.log("Yes");
+                    setLeague(res.data.leagues.data[0]);
+                    setLeagues(res.data.leagues.data);
+                    setLeagueNames(getLeagueNames(res.data));
+                } else {
+                    console.log("Nos");
+                    setLeagueNames([
+                        {
+                            value: "No Leagues yet. Create or join a league",
+                            key: -1,
+                        },
+                    ]);
+                }
+            })
+            .catch((e) => {
+                setGetError(true);
+                setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
+            });
+        setFetched(true);
     };
     /**
      * This component loads one of four things:

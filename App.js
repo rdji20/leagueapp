@@ -106,7 +106,7 @@ export default function App() {
         // console.log(response.data);
         console.log("test creation user", thisUser.uid);
         axios
-            .post("http://192.168.100.18:3000/create_user", {
+            .post("http://192.168.100.64:3000/create_user", {
                 user_id: thisUser.uid,
                 displayName: newUserName,
             })

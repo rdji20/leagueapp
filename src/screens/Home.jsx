@@ -43,7 +43,7 @@ export const Home = ({ navigation, route }) => {
      */
     const get_leagues = async (uid) => {
         try {
-            const res = await axios.get("http://192.168.100.18:3000/leagues", {
+            const res = await axios.get("http://192.168.100.64:3000/leagues", {
                 params: {
                     user_id: uid,
                 },

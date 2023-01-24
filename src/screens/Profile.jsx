@@ -23,19 +23,24 @@ export const Profile = ({ navigation, route }) => {
 export default Profile;
 
 const styles = StyleSheet.create({
+    h1:{
+        color:'white'
+    },
     h2: {
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        textAlign: 'center'
     },
     h3: {
         color: 'white',
-        fontSize: 14
+        fontSize: 14,
+        textAlign:'right'
     },
     container: {
         display: "flex",
         flexDirection: 'column',
         justifyContent: 'center',
         alignContent: 'center',
-        marginTop: 100
+        flex: 1
     }
 })

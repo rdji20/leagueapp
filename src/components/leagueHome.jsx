@@ -38,7 +38,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
-                <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 36}}/></Text>
+                <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 40}}/></Text>
                 <GenerateTitle/>
                 <View style={styles.description}>
                     <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {league.users ? league.users.length: ''} players</Text>

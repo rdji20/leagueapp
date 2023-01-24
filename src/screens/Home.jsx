@@ -40,12 +40,10 @@ export const Home = ({ navigation, route }) => {
                 console.log(res.data.leagues.data[0]);
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
-                    console.log("Yes");
                     setLeague(res.data.leagues.data[0]);
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
-                    console.log("Nos");
                     setLeagueNames([
                         {
                             value: "No Leagues yet. Create or join a league",
@@ -53,12 +51,13 @@ export const Home = ({ navigation, route }) => {
                         },
                     ]);
                 }
+                setFetched(true)
             })
             .catch((e) => {
                 setGetError(true);
                 setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
+                setFetched(true)
             });
-        setFetched(true);
     }, [user]);
 
     const getLeagueNames = (leagueArr) => {
@@ -133,12 +132,13 @@ export const Home = ({ navigation, route }) => {
                         },
                     ]);
                 }
+                setFetched(false)
             })
             .catch((e) => {
                 setGetError(true);
                 setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
+                setFetched(true)
             });
-        setFetched(true);
     };
     /**
      * This component loads one of four things:

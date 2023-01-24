@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems:'center',
-        marginHorizontal: 6,
+        marginHorizontal: 7,
         marginBottom:15,
         shadowColor:"black",
         shadowOpacity:0.8,

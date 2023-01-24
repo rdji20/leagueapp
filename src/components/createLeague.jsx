@@ -18,7 +18,7 @@ import * as RequestManager from "../utils/RequestManager";
 export function CreateLeague({ navigation, route }) {
     const { prop1, prop2, logout } = route.params;
     const [name, setName] = useState("");
-    const [players, setPlayers] = useState([]);
+    const [players, setPlayers] = useState([{displayName: 'Me', loses: 0, wins: 0, userId: prop1.uid, picUri: ""}]);
     const [newName, setNewName] = useState("");
     const [icon, setIcon] = useState("");
 

@@ -9,7 +9,6 @@ import {
     SafeAreaView,
     TouchableOpacity,
 } from "react-native";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default function LoginForm({email, setEmail, password, setPassword, handleLogin, handleSignUp, setLoginScreen}) {
   return (
@@ -20,8 +19,6 @@ export default function LoginForm({email, setEmail, password, setPassword, handl
             alignItems: "center",
         }}
     >
-        <MaterialCommunityIcons name='trophy' style={{color:'white', fontSize:60, marginBottom:5}}></MaterialCommunityIcons>
-        <Text style={styles.h1}>Rank'd</Text>
 
         <Text style={styles.text}>Sign in</Text>
         <TextInput

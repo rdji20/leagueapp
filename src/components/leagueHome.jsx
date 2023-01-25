@@ -12,7 +12,6 @@ import {
     SafeAreaView,
 } from "react-native";
 import { DataTable } from "react-native-paper";
-import Table from "./DataTable";
 import DisplayUsers from "./LeagueUsers";
 import { RecentMatches } from "./recentMatch";
 import LeagueStandings from "./RankingTable";
@@ -29,7 +28,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
     const GenerateTitle = () => {
         return (
             <View style={{display: 'flex', flexDirection:'column', alignItems:'center', marginBottom:30}}>
-                {league.l_name.split(' ').map((str) => (<Text style={styles.h1}>{str.charAt(0).toUpperCase() + str.slice(1)}</Text>))}
+                {league.l_name.split(' ').map((str, index) => (<Text key={index}style={styles.h1}>{str.charAt(0).toUpperCase() + str.slice(1)}</Text>))}
             </View>
         )
     }
@@ -61,7 +60,10 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
             <DisplayUsers users={league.users}/>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.buttonMain}>
+                <TouchableOpacity 
+                    style={styles.buttonMain}
+                    onPress={() => navigation.navigate("AddScore", {users:league.users})}
+                >
                     <Text style={styles.buttonTextMain}> <Ionicons name="add-circle" style={{color:'black', fontSize:16}}/> Add Score </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonSecondary}>

@@ -8,7 +8,7 @@ const LeagueStandings = ({users}) => {
         console.log(users.map((val) => val))
         return (
             users.map((user, index) => 
-                <DataTable.Row style={styles.row}>
+                <DataTable.Row key={index}style={styles.row}>
                     <DataTable.Cell style={styles.cell}><Text style={styles.rank}>{index + 1}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.cell}><Text style={styles.name}>{user.displayName.split(' ')[0]}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.cell}><Text style={styles.record}>{`${user.wins}-${user.loses}`}</Text></DataTable.Cell>

@@ -35,6 +35,7 @@ import LoginForm from "./src/components/Login";
 import axios from "axios";
 import { Home } from "./src/screens/Home";
 import * as RequestManager from "./src/utils/RequestManager";
+import { AddScoreScreen } from "./src/screens/AddScore";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -139,7 +140,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#1B1C1E",
+                                        backgroundColor: "#16161a",
                                     },
                                     title: "Home",
                                 }}
@@ -152,7 +153,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#1B1C1E",
+                                        backgroundColor: "#16161a",
                                     },
                                     title: "NewLeague",
                                 }}
@@ -166,7 +167,7 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#1B1C1E",
+                                        backgroundColor: "#16161a",
                                     },
                                     title: "Profile ",
                                 }}
@@ -181,12 +182,26 @@ export default function App() {
                             <Stack.Screen
                                 options={{
                                     cardStyle: {
-                                        backgroundColor: "#363073",
+                                        backgroundColor: "#16161a",
                                     },
                                     title: "Profile ",
                                 }}
                                 name="profile"
                                 component={Profile}
+                                initialParams={{
+                                    prop1: user,
+                                    prop2: "another value",
+                                }}
+                            />
+                            <Stack.Screen
+                                options={{
+                                    cardStyle: {
+                                        backgroundColor: "#16161a",
+                                    },
+                                    title: "AddScore",
+                                }}
+                                name="AddScore"
+                                component={AddScoreScreen}
                                 initialParams={{
                                     prop1: user,
                                     prop2: "another value",

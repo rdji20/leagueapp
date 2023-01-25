@@ -12,7 +12,6 @@ import {
     SafeAreaView,
 } from "react-native";
 import { DataTable } from "react-native-paper";
-import Table from "./DataTable";
 import DisplayUsers from "./LeagueUsers";
 import LeagueStandings from "./RankingTable";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'

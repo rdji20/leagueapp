@@ -2,14 +2,15 @@ import React from "react";
 import { View, Text, Button, SafeAreaView, StyleSheet} from "react-native";
 
 export const Profile = ({ navigation, route }) => {
-    const { prop1, prop2, logout} = route.params;
+    const { prop1, prop2, logout, displayName} = route.params;
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <Text style={styles.h2}>Hello Profile</Text>
-                <Text style={styles.h2}> UID, {prop1.uid}</Text>
-                <Text style={styles.h2}> Mail, {prop1.email}</Text>
-                <Text style={styles.h2}> Display Name:, {prop1.displayName}</Text>
+                <Text style={styles.h1}>Hi, {displayName.split(' ')[0]}</Text>
+                <Text style={styles.h2}> UID: {prop1.uid}</Text>
+                <Text style={styles.h2}> Mail: {prop1.email}</Text>
+                <Text style={styles.h2}> Display Name:c  {displayName}</Text>
+                <Text style={styles.h2}> Display Name:c  {displayName}</Text>
                 <Button
                     title="Go to Home"
                     onPress={() => navigation.navigate("Home")}
@@ -24,7 +25,9 @@ export default Profile;
 
 const styles = StyleSheet.create({
     h1:{
-        color:'white'
+        color:'white',
+        fontSize:40,
+        textAlign:'center'
     },
     h2: {
         color: 'white',

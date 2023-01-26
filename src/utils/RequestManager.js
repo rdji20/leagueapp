@@ -41,7 +41,19 @@ export async function getLeagues(uid) {
         return res;
     } catch (e) {
         console.log(e);
-        throw new Error("Something happend in server /leagues");
+        throw new Error("Something happened in server /leagues");
+    }
+}
+export async function getUser(uid) {
+    try {
+        const res = await axios.get(`http://${localIPAddress}:3000/get_user`, {
+        params:{
+            uId: uid}
+        });
+        return res;
+    } catch (e) {
+        console.log(e);
+        throw new Error("Something happened in server /get_user");
     }
 }
 

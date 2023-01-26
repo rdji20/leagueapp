@@ -9,6 +9,7 @@ import {
   Image,
   FlatList
 } from 'react-native';
+import { DefaultImage } from './defaultImage';
 
 
 
@@ -16,6 +17,7 @@ import {
 const ListItem = ({ item }) => {
   return (
     <View style={styles.item}>
+        <DefaultImage displayName={item.displayName}></DefaultImage>
         <Text style={styles.itemText}>{item.displayName}</Text>
     </View>
   );
@@ -34,35 +36,6 @@ export default function DisplayNewUsers({players}) {
   );
 };
 
-const SECTIONS = [
-    {
-      title: 'My Leagues',
-      data: [
-        {
-          key: '1',
-          name: 'Roberto'
-        },
-        {
-          key: '2',
-          name: 'Octavia',
-        },
-  
-        {
-          key: '3',
-          name: 'Max',
-        },
-        {
-          key: '3',
-          name: 'Max',
-        },
-        {
-          key: '3',
-          name: 'Max',
-        },
-      ],
-    }
-  ];
-  
 const styles = StyleSheet.create({
       sectionHeader: {
         fontWeight: '800',
@@ -74,7 +47,7 @@ const styles = StyleSheet.create({
       item: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'baseline',
+        alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 18,
         marginBottom:15
@@ -88,14 +61,21 @@ const styles = StyleSheet.create({
         
       },
       itemText: {
-        textAlign:'baseline',
-        color: 'rgba(256, 256, 256, 0.5)',
-        fontWeight:'700',
-        marginTop: 8,
+        color: 'rgba(256, 256, 256, 1)',
+        fontWeight:'300',
+        fontSize:10,
+        verticalAlign:'center',
+        marginTop:5
       },
       container: {
         backgroundColor: 'rgba(0,0,0,0.5)',
         borderRadius: 8,
-        paddingBottom: 25,
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+        height:150,
+        width:300,
+        marginBottom:5
     }
     })

@@ -24,6 +24,9 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { ActivityIndicator } from "react-native-paper";
 import * as RequestManager from "../utils/RequestManager";
 
+
+import { useIsFocused } from '@react-navigation/native'
+
 export const Home = ({ navigation, route }) => {
     const [fetched, setFetched] = useState(false);
     const [leagues, setLeagues] = useState([]);
@@ -32,12 +35,15 @@ export const Home = ({ navigation, route }) => {
     const [leagueNames, setLeagueNames] = useState([{}]);
     const [getError, setGetError] = useState(false);
     const [leagueIds, setLeagueIds] = useState([]);
+    const [displayName, setDisplayName] = useState('')
+    const [newLeagueCreated, setNewLeagueCreated] = useState(false)
+    const isFocused = useIsFocused()
 
     const { user } = route.params;
     useEffect(() => {
         RequestManager.getLeagues(user.uid)
             .then((res) => {
-                console.log(res.data.leagues.data[0]);
+                //console.log(res.data.leagues.data[0]);
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
                     setLeague(res.data.leagues.data[0]);
@@ -58,6 +64,12 @@ export const Home = ({ navigation, route }) => {
                 setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
                 setFetched(true)
             });
+            RequestManager.getUser(user.uid).then((res) =>{
+                console.log('This is the user displayName: ', res.data)
+                setDisplayName(res.data)
+            }).catch((e) => {
+                console.log(e)
+            })
     }, [user]);
 
     const getLeagueNames = (leagueArr) => {
@@ -71,7 +83,6 @@ export const Home = ({ navigation, route }) => {
         if (key) {
             const found = leagues.find((el, index) => leagueIds[index] === key);
             setLeague(found);
-            console.log(found);
         }
     };
 
@@ -116,15 +127,12 @@ export const Home = ({ navigation, route }) => {
         setGetError(false);
         RequestManager.getLeagues(user.uid)
             .then((res) => {
-                console.log(res.data.leagues.data[0]);
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
-                    console.log("Yes");
                     setLeague(res.data.leagues.data[0]);
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
-                    console.log("Nos");
                     setLeagueNames([
                         {
                             value: "No Leagues yet. Create or join a league",
@@ -132,7 +140,7 @@ export const Home = ({ navigation, route }) => {
                         },
                     ]);
                 }
-                setFetched(false)
+                setFetched(true)
             })
             .catch((e) => {
                 setGetError(true);
@@ -203,7 +211,7 @@ export const Home = ({ navigation, route }) => {
             {/*             <LeagueHomeView></LeagueHomeView> */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Profile")}
+                    onPress={() => navigation.navigate("Profile", {displayName})}
                 >
                     <Text>
                         <FontAwesome5
@@ -213,7 +221,7 @@ export const Home = ({ navigation, route }) => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("NewLeague")}
+                    onPress={() => navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})}
                 >
                     <Text>
                         <Octicons

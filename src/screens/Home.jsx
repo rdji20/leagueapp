@@ -31,6 +31,7 @@ export const Home = ({ navigation, route }) => {
     const [fetched, setFetched] = useState(false);
     const [leagues, setLeagues] = useState([]);
     const [league, setLeague] = useState("");
+    const [leagueId, setLeagueId] = useState('')
     const [pene, setPene] = useState("");
     const [leagueNames, setLeagueNames] = useState([{}]);
     const [getError, setGetError] = useState(false);
@@ -47,6 +48,7 @@ export const Home = ({ navigation, route }) => {
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
                     setLeague(res.data.leagues.data[0]);
+                    setLeagueId(res.data.leagues.ids[0])
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
@@ -65,7 +67,6 @@ export const Home = ({ navigation, route }) => {
                 setFetched(true)
             });
             RequestManager.getUser(user.uid).then((res) =>{
-                console.log('This is the user displayName: ', res.data)
                 setDisplayName(res.data)
             }).catch((e) => {
                 console.log(e)
@@ -82,7 +83,9 @@ export const Home = ({ navigation, route }) => {
     const handleSelectLeague = (key) => {
         if (key) {
             const found = leagues.find((el, index) => leagueIds[index] === key);
+            const index = leagues.findIndex((el, index) => leagueIds[index] === key);
             setLeague(found);
+            setLeagueId(leagueIds[index])
         }
     };
 
@@ -130,6 +133,7 @@ export const Home = ({ navigation, route }) => {
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
                     setLeague(res.data.leagues.data[0]);
+                    setLeagueId(res.data.leagues.ids[0])
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
@@ -167,12 +171,16 @@ export const Home = ({ navigation, route }) => {
             return (
                 <LeagueHome
                     league={league}
+                    leagueId={leagueId}
                     navigation={navigation}
                     route={route}
+                    user={user}
+                    setFetched={setFetched}
+                    handleTryAgain={handleTryAgain}
                 ></LeagueHome>
             );
         }
-        return <NoLeagues navigation={navigation} route={route}></NoLeagues>;
+        return <NoLeagues uId={user.uid} displayName={displayName} handleTryAgain={handleTryAgain} setFetched={setFetched}navigation={navigation} route={route}></NoLeagues>;
     };
 
     const ErrorScreen = () => {
@@ -213,21 +221,13 @@ export const Home = ({ navigation, route }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Profile", {displayName})}
                 >
-                    <Text>
-                        <FontAwesome5
-                            name="user-circle"
-                            style={{ color: "white", fontSize: 26 }}
-                        ></FontAwesome5>
-                    </Text>
+                    <Text style={{ color: "#DBFF00", fontSize: 16, fontWeight:'400'}}>Profile</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})}
                 >
-                    <Text>
-                        <Octicons
-                            name="diff-added"
-                            style={{ color: "#DBFF00", fontSize: 26 }}
-                        ></Octicons>
+                    <Text style={{ color: "#DBFF00", fontSize: 16, fontWeight:'400'}}>
+                        Create League
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -273,6 +273,25 @@ export const Home = ({ navigation, route }) => {
             </View>
             {/* <View > */}
             <LeagueScreen />
+            {leagueId ? <TouchableOpacity
+                style={{
+                    width: 60,  
+                    height: 60,   
+                    borderRadius: 30,            
+                    backgroundColor: '#DBFF00',                                    
+                    position: 'absolute',                                          
+                    bottom: 80,                                                    
+                    right: 40,
+                    shadowColor:"black",
+                    shadowOpacity:1,
+                    shadowRadius:10,
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center'
+                  }}
+                onPress={() => navigation.navigate("AddScore", {users:league.users, leagueId, user, handleTryAgain, setFetched})}>
+                    <Text><MaterialCommunityIcons name='plus' style={{fontSize:45, color:'black'}}/></Text>
+            </TouchableOpacity> : ''}
 
             {/* </View> */}
         </SafeAreaView>
@@ -333,50 +352,3 @@ const styles = StyleSheet.create({
     },
 });
 
-const leaguesMockCode = [
-    {
-        l_name: "2k League",
-        users: [
-            { uId: "ksjdlaskj", displayName: "Roberto", wins: 10, losses: 20 },
-            { uId: "IOAJODIJ", displayName: "Octavio", wins: 9, losses: 21 },
-            { uId: "asdaead", displayName: "Claudio", wins: 30, losses: 0 },
-            { uId: "twergwer", displayName: "Meo", wins: 0, losses: 30 },
-        ],
-        matches: [],
-        leagueId: "kjashdadioe",
-        icon: "google-controller",
-    },
-    {
-        l_name: "Padel",
-        users: [
-            { uId: "afafedasf", displayName: "Kamila", wins: 10, losses: 20 },
-            { uId: "IOAJODIJ", displayName: "Andrea", wins: 9, losses: 21 },
-            { uId: "asdaead", displayName: "Claudio", wins: 30, losses: 0 },
-            { uId: "defafasf", displayName: "Daniela", wins: 0, losses: 30 },
-            { uId: "hdfhdfh", displayName: "LG", wins: 0, losses: 30 },
-            { uId: "jymytm", displayName: "Victor Serna", wins: 0, losses: 30 },
-        ],
-        matches: [],
-        leagueId: "pasodpaoskdpo",
-        icon: "tennis-ball",
-    },
-    {
-        l_name: "Spike @ El Capitan",
-        users: [
-            { uId: "afafedasf", displayName: "Kamila", wins: 10, losses: 20 },
-            { uId: "IOAJODIJ", displayName: "Rolando", wins: 9, losses: 21 },
-            { uId: "asdaead", displayName: "Claudio", wins: 30, losses: 0 },
-            { uId: "twergwer", displayName: "Daniela", wins: 0, losses: 20 },
-            { uId: "twergwer", displayName: "LG", wins: 15, losses: 15 },
-            {
-                uId: "twergwer",
-                displayName: "Victor Serna",
-                wins: 0,
-                losses: 30,
-            },
-        ],
-        matches: [],
-        leagueId: "sfaeraesgf",
-        icon: "handball",
-    },
-];

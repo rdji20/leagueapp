@@ -7,9 +7,11 @@ import {
   SectionList,
   SafeAreaView,
   Image,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 import { DefaultImage } from './defaultImage';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 
@@ -17,15 +19,23 @@ import { DefaultImage } from './defaultImage';
 const ListItem = ({ item }) => {
   return (
     <View style={styles.item}>
-        <DefaultImage displayName={item.displayName}></DefaultImage>
+        <View>
+          <DefaultImage displayName={item.displayName}></DefaultImage>
+        </View>
         <Text style={styles.itemText}>{item.displayName}</Text>
     </View>
   );
 };
 
-export default function DisplayNewUsers({players}) {
+export default function DisplayNewUsers({players, setAddingPlayer, displayName}) {
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.item} onPress={() => setAddingPlayer(true)}>
+        <View style={{backgroundColor: "transparent", display:'flex', justifyContent:'center', alignItems:'center', width: 55, height: 55, borderRadius:55, borderColor:'white', borderWidth:0.5, borderStyle:'dashed'}}>
+          <MaterialCommunityIcons name='account-plus' style={{color:'white', fontSize:18}}/>
+        </View>
+        <Text style={{...styles.itemText, fontWeight:'600'}}>Add Player</Text>
+      </TouchableOpacity>
       <FlatList
         horizontal
         data={players}
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: 18,
+        marginHorizontal: 12,
         marginBottom:15
       },
       itemPhoto: {
@@ -75,7 +85,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         height:150,
-        width:300,
-        marginBottom:5
+        width:320,
     }
     })

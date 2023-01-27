@@ -44,7 +44,7 @@ export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setP
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType="fade"
+        animationType='fade'
         transparent={true}
         visible={selecting}
         onRequestClose={() => {

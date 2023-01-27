@@ -22,9 +22,18 @@ import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatchesList } from "./recentMatches";
+import { getMatches } from "../utils/RequestManager";
 
-export const LeagueHome = ({ navigation, userProp, league}) => {
+export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain, setFetched}) => {
 
+    useEffect(() =>{
+        console.log(leagueId)
+        getMatches(leagueId).then((res) => {
+            console.log(res.data)
+        }).catch((e) =>{
+            console.log(e)
+        })
+    }, [])
     const GenerateTitle = () => {
         return (
             <View style={{display: 'flex', flexDirection:'column', alignItems:'center', marginBottom:30}}>
@@ -32,6 +41,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
             </View>
         )
     }
+
 
 
     return (
@@ -45,6 +55,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
                     <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons>  Claudio </Text>
                 </View>
             </View>
+            <DisplayUsers users={league.users}/>
             <View
                 style={{
                     width: 150,
@@ -54,31 +65,7 @@ export const LeagueHome = ({ navigation, userProp, league}) => {
                     marginTop: 5,
                 }}
             ></View>
-            
-            <Text style={styles.h2}>League Players</Text>
-
-            <DisplayUsers users={league.users}/>
-
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity 
-                    style={styles.buttonMain}
-                    onPress={() => navigation.navigate("AddScore", {users:league.users})}
-                >
-                    <Text style={styles.buttonTextMain}> <Ionicons name="add-circle" style={{color:'black', fontSize:16}}/> Add Score </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonSecondary}>
-                    <Text style={styles.buttonTextSecondary}> <FontAwesome5 name="user-plus" style={{color:'black'}}> </FontAwesome5></Text>
-                </TouchableOpacity>
-            </View>
             <Text style={styles.h2}>Leaderboard</Text>
-            <View
-                style={{
-                    borderBottomColor: "rgba(256, 256, 256, 0.5)",
-/*                     borderBottomWidth: 1, */
-                    marginBottom: 20,
-                    marginTop: 5,
-                }}
-            ></View>
             <LeagueStandings users={league.users}/>
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>

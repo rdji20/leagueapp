@@ -12,12 +12,12 @@ import {
     SafeAreaView,
 } from "react-native";
 
-export const NoLeagues = ({ navigation, userProp }) => {
+export const NoLeagues = ({ navigation, userProp, uId, displayName, handleTryAgain, setFetched}) => {
     return (
         <View style={styles.view}>
             <Text style={styles.h1}> No Leagues Yet </Text>
             <TouchableOpacity
-                onPress={() => navigation.navigate("NewLeague")}
+                onPress={() => navigation.navigate("NewLeague", {displayName, uId, handleTryAgain, setFetched})}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}> Create League</Text>

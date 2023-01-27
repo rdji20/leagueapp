@@ -44,6 +44,19 @@ export async function getLeagues(uid) {
         throw new Error("Something happened in server /leagues");
     }
 }
+export async function getMatches(leagueId) {
+    try {
+        const res = await axios.get(`http://${localIPAddress}:3000/get_matches`, {
+            params: {
+                leagueId
+            },
+        });
+        return res;
+    } catch (e) {
+        console.log(e);
+        throw new Error("Something happened in server /get_matches");
+    }
+}
 export async function getUser(uid) {
     try {
         const res = await axios.get(`http://${localIPAddress}:3000/get_user`, {
@@ -58,8 +71,6 @@ export async function getUser(uid) {
 }
 
 export async function createLeague(league, uid) {
-    console.log(uid);
-    console.log("Test request maanger", league);
     axios
         .post(`http://${localIPAddress}:3000/create_league`, {
             uId: uid,
@@ -75,5 +86,19 @@ export async function createLeague(league, uid) {
         .catch((error) => {
             console.log(error);
             throw new Error("Error creating the league /create_league");
+        });
+}
+export async function postScore(matchObj) {
+    axios
+        .post(`http://${localIPAddress}:3000/add_score`, {
+            ...matchObj
+        })
+        .then((response) => {
+            console.log("Score Added");
+            return response;
+        })
+        .catch((error) => {
+            console.log(error);
+            throw new Error("Error adding the score /add_score");
         });
 }

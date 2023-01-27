@@ -4,8 +4,6 @@ import { DataTable} from 'react-native-paper'
 
 const LeagueStandings = ({users}) => {
     const TableRows = () => {
-        console.log('Pene')
-        console.log(users.map((val) => val))
         return (
             users.map((user, index) => 
                 <DataTable.Row key={index}style={styles.row}>
@@ -22,7 +20,7 @@ const LeagueStandings = ({users}) => {
 
     return (
         <View style={styles.container}>
-            <DataTable>
+            <DataTable style={{marginTop:0}}>
                 <DataTable.Header>
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Rank</Text></DataTable.Title>
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Name</Text></DataTable.Title>
@@ -64,34 +62,46 @@ const styles = StyleSheet.create({
         alignItems: 'baseline',
         justifyContent: 'baseline',
         color: 'white',
-        fontWeight: '700'
+        fontWeight: '500'
     },
 
     status:{
         color:'white',
         fontSize: 14,
-        fontWeight: '700'
+        fontWeight: '400'
     },
 
     rank: {
-        color:'white'
+        color:'white',
+        fontWeight:'300'
     },
     name: {
-        color: 'white'
+        color: 'white',
+        fontWeight:'300'
     },
     record: {
-        color: 'white'
+        color: 'white',
+        fontWeight:'300'
     },
     score: {
-        color: 'white'
+        color: 'white',
+        fontWeight:'300'
     },
     row: {
         borderBottomColor: 'transparent'
     },
     container: {
         marginHorizontal:10,
-        marginTop: 0
+        padding:10,
+        marginTop: 0,
+        marginBottom:50,
+        marginTop:10,
+        borderWidth:1,
+        backgroundColor:'#242629',
+        borderRadius:8,
+        shadowColor:"black",
+        shadowOpacity:0.5,
+        shadowRadius:1,
+        shadowOffset: {width: 5,height: 8}
     }
-    
-
   });

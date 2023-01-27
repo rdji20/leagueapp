@@ -10,6 +10,7 @@ export const iconNames = ['tennis-ball',
  'cards',
  'microsoft-xbox-controller',
  'basketball',
- 'bowling'
+ 'bowling', 
+ 'snake',
+ 'wizard-hat'
 ]
-export const pene = ['tennis-ball', 'tennis','dice-3-outline', 'handball', 'football-helmet', 'glass-mug-variant', 'table-tennis', 'golf-cart']

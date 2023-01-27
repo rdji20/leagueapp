@@ -66,39 +66,6 @@ export default function DisplayUsers({users}) {
   );
 };
 
-const SECTIONS = [
-    {
-      title: 'My Leagues',
-      data: [
-        {
-          userId: '1',
-          displayName: 'Roberto',
-          picUri: 'https://media-exp1.licdn.com/dms/image/C5603AQHRX8cZTM9RQw/profile-displayphoto-shrink_200_200/0/1611796969932?e=1674691200&v=beta&t=_z7G_Mzv9BeCVEmKw5c_owLyULXYNT0Y-OtGq3Fa8N0',
-        },
-        {
-          userId: '2',
-          displayName: 'Octavia',
-          picUri: 'https://media.licdn.com/dms/image/C5603AQFsHOwly1yfKA/profile-displayphoto-shrink_800_800/0/1540257823299?e=1678924800&v=beta&t=tYXL893KTMmflebzL8lVI5j_yCZO-mUKc56FNgZ_83I',
-        },
-  
-        {
-          userId: '3',
-          displayName: 'Max',
-          picUri: 'https://media.licdn.com/dms/image/C5603AQFI24okpCiJRg/profile-displayphoto-shrink_800_800/0/1618847906137?e=1678924800&v=beta&t=I1ADXlyb_SBqHe3oywa2CJTYeSum591wVi9aEj1vvIA',
-        },
-        {
-          userId: '4',
-          displayName: 'Weo',
-          picUri: 'https://pbs.twimg.com/profile_images/1420610977683419137/LlWNgDux_400x400.jpg',
-        },
-        {
-          userId: '5',
-          displayName: 'Daniela',
-          picUri: 'https://i.pinimg.com/280x280_RS/06/32/6f/06326f6ac9f847c9528ce73cdffee0da.jpg',
-        },
-      ],
-    }
-  ];
   
 const styles = StyleSheet.create({
       sectionHeader: {

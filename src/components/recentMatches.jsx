@@ -14,7 +14,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatches } from "./recentMatch";
 
-export const RecentMatchesList = ({ navigation, userProp }) => {
+export const RecentMatchesList = ({ navigation, userProp, matches}) => {
 
     const MatchesList = () => {
         return (matches.map(function(match){return <RecentMatches key={match.matchId} uris={match.uris} players={match.players} score={match.score} teams={match.teams} />}))
@@ -36,6 +36,18 @@ const styles = StyleSheet.create({
         alignItems:'center',
         borderWidth:0,
         paddingBottom:10,
+        marginHorizontal:15,
+        padding:10,
+        marginTop: 0,
+        marginBottom:50,
+        marginTop:10,
+        borderWidth:1,
+        backgroundColor:'#242629',
+        borderRadius:8,
+        shadowColor:"black",
+        shadowOpacity:0.5,
+        shadowRadius:1,
+        shadowOffset: {width: 5,height: 8}
     },
     h3: {
         color: "rgba(256,256,256,0.25)",

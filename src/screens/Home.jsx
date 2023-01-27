@@ -25,7 +25,6 @@ import { ActivityIndicator } from "react-native-paper";
 import * as RequestManager from "../utils/RequestManager";
 
 
-import { useIsFocused } from '@react-navigation/native'
 
 export const Home = ({ navigation, route }) => {
     const [fetched, setFetched] = useState(false);
@@ -38,10 +37,11 @@ export const Home = ({ navigation, route }) => {
     const [leagueIds, setLeagueIds] = useState([]);
     const [displayName, setDisplayName] = useState('')
     const [newLeagueCreated, setNewLeagueCreated] = useState(false)
-    const isFocused = useIsFocused()
+
 
     const { user } = route.params;
     useEffect(() => {
+        console.log('User id: ', user.uid)
         RequestManager.getLeagues(user.uid)
             .then((res) => {
                 //console.log(res.data.leagues.data[0]);
@@ -59,18 +59,24 @@ export const Home = ({ navigation, route }) => {
                         },
                     ]);
                 }
+                //If getLeagues fetched correctly, get matches:
                 setFetched(true)
             })
             .catch((e) => {
+                console.log('Get Leagues failed')
                 setGetError(true);
                 setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
                 setFetched(true)
             });
             RequestManager.getUser(user.uid).then((res) =>{
                 setDisplayName(res.data)
+                console.log('User fetched correctly: ', res.data)
             }).catch((e) => {
                 console.log(e)
+                console.log('Get User failed.')
             })
+
+
     }, [user]);
 
     const getLeagueNames = (leagueArr) => {

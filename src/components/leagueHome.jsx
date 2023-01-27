@@ -25,18 +25,24 @@ import { RecentMatchesList } from "./recentMatches";
 import { getMatches } from "../utils/RequestManager";
 
 export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain, setFetched}) => {
+    const [matches, setMatches] = useState([])
 
     useEffect(() =>{
         console.log(leagueId)
         getMatches(leagueId).then((res) => {
-            console.log(res.data)
+            const matchesTemp = [...res.data.matches.data.map((val, index) => {return {...val, matchId:res.data.matches.ids[index]}})]
+            console.log('Matches Temp: ', matchesTemp)
+            console.log('Matches Temp',matchesTemp)
+            
+            setMatches(matchesTemp)
+
         }).catch((e) =>{
             console.log(e)
         })
     }, [])
     const GenerateTitle = () => {
         return (
-            <View style={{display: 'flex', flexDirection:'column', alignItems:'center', marginBottom:30}}>
+            <View style={{display: 'flex', flexDirection:'column', alignItems:'center',}}>
                 {league.l_name.split(' ').map((str, index) => (<Text key={index}style={styles.h1}>{str.charAt(0).toUpperCase() + str.slice(1)}</Text>))}
             </View>
         )
@@ -47,18 +53,27 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
-                <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 40}}/></Text>
+                <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 50}}/></Text>
                 <GenerateTitle/>
-                <View style={styles.description}>
-                    <Text style={styles.h3}><Feather name='users' style={{color:'white', fontSize:16}}></Feather>  {league.users ? league.users.length: ''} players</Text>
-                    <Text style={styles.h3}><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}></MaterialCommunityIcons> {league.matches ? league.matches.length:'No matches'}  matches </Text>
-                    <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons>  Claudio </Text>
-                </View>
             </View>
+            <View style={styles.description}>
+                    <View style={styles.infoContainer}>
+                        <Feather name='users' style={{color:'white', fontSize:16}}></Feather>
+                        <Text style={styles.h3}>  {league.users ? league.users.length: ''} players</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Text><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}/></Text> 
+                        <Text style={styles.h3}>{league.matches ? league.matches.length:'No matches'}  matches </Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons></Text>
+                        <Text style={styles.h3}>Claudio</Text>
+                    </View>
+                </View>
             <DisplayUsers users={league.users}/>
             <View
                 style={{
-                    width: 150,
+                    width: 500,
                     borderBottomColor: "rgba(256, 256, 256, 0.5)",
                     borderBottomWidth: 1,
                     marginBottom: 30,
@@ -71,15 +86,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                 <Text style={styles.h2}>Recent Matches</Text>
                 <TouchableOpacity style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>See All</Text></TouchableOpacity>
             </View>
-            <View
-                style={{
-                    borderBottomColor: "rgba(256, 256, 256, 0.5)",
-/*                     borderBottomWidth: 1, */
-                    marginBottom: 20,
-                    marginTop: 5,
-                }}
-            ></View>
-            <RecentMatchesList></RecentMatchesList>
+            <RecentMatchesList matches={matches}></RecentMatchesList>
         </ScrollView>
     );
 };
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
         fontSize: "20",
         fontWeight: "600",
         marginTop: 5,
-        marginHorizontal: 10,
+        marginHorizontal: 20,
     },
     h1: {
         fontSize: 40,
@@ -146,16 +153,17 @@ const styles = StyleSheet.create({
         flexDirection:'row',
     },
     title: {
+        marginTop:50,
         display:'flex',
         flexDirection:'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent:'space-evenly',
+        alignItems: 'center',
+        marginBottom:20
     },
     h3: {
-        color: "rgba(256,256,256,0.30)",
-        fontSize: 16,
-        marginHorizontal: 10,
-        marginBottom:10
+        color: "#94a1b2",
+        fontWeight:'500',
+        fontSize: 10,
     },
     description: {
         display: 'flex',
@@ -169,7 +177,7 @@ const styles = StyleSheet.create({
         fontWeight: "800",
         color: "white",
         padding: 0,
-        height: 40,
+        height: 55,
         marginTop:10,
         marginBottom:10
     },
@@ -182,6 +190,20 @@ const styles = StyleSheet.create({
     },
     seeAll: {
         color:"#8983C4"
+    },
+    infoContainer:{
+        backgroundColor:'black',
+        marginHorizontal:10,
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center',
+        height:35,
+        width:100,
+        borderRadius:8,
+        backgroundColor:'#242629',
+        borderRadius:8,
+        marginBottom:20
     }
 
 });

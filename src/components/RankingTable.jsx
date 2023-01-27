@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'transparent'
     },
     container: {
-        marginHorizontal:10,
+        marginHorizontal:15,
         padding:10,
         marginTop: 0,
         marginBottom:50,

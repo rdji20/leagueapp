@@ -14,10 +14,11 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatches } from "./recentMatch";
 
-export const RecentMatchesList = ({ navigation, userProp, matches}) => {
+export const RecentMatchesList = ({ navigation, userProp, matches, users}) => {
 
     const MatchesList = () => {
-        return (matches.map(function(match){return <RecentMatches key={match.matchId} uris={match.uris} players={match.players} score={match.score} teams={match.teams} />}))
+        console.log(users)
+        return (matches.map(function(match){return <RecentMatches key={match.matchId} players={[match.data[0].uid, match.data[1].uid]} score={[match.data[0].score,match.data[1].score]} teams={[match.data[0].team, match.data[1].team]} />}))
     }
 
     return (

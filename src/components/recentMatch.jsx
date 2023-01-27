@@ -47,7 +47,7 @@ export const RecentMatches = ({ navigation, userProp , uris, teams, players, sco
                 <Image 
                     style={styles.itemPhoto} 
                     source={{
-                        uri: url
+                        uri: ''
                     }}
                 />
             </View>
@@ -57,12 +57,12 @@ export const RecentMatches = ({ navigation, userProp , uris, teams, players, sco
         <View style={styles.container}>
             <View style={styles.view}>
                 <View style={styles.player}>
-                    <PictureDisplay url={uris[0]}></PictureDisplay>
-                    <UserInfo player={SECTIONS[0].data[0].display_name} score={'46'} side='left' team={SECTIONS[0].data[0].team}/>
+                    <PictureDisplay url={''}></PictureDisplay>
+                    <UserInfo player={'Player B'} score={'46'} side='left' team={'Team 1'}/>
                 </View>
                 <View style={styles.player}>
-                    <UserInfo player={SECTIONS[0].data[1].display_name} score={'40'} side='right' team={SECTIONS[0].data[1].team}/>
-                    <PictureDisplay url={uris[1]}></PictureDisplay>
+                    <UserInfo player={'Player A'} score={'40'} side='right' team={'Team 2'}/>
+                    <PictureDisplay url={''}></PictureDisplay>
                 </View>
             </View>
         </View>

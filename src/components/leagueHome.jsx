@@ -74,7 +74,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
             <View
                 style={{
                     width: 500,
-                    borderBottomColor: "rgba(256, 256, 256, 0.5)",
+                    borderBottomColor: "rgba(256, 256, 256, 0.25)",
                     borderBottomWidth: 1,
                     marginBottom: 30,
                     marginTop: 5,
@@ -86,7 +86,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                 <Text style={styles.h2}>Recent Matches</Text>
                 <TouchableOpacity style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>See All</Text></TouchableOpacity>
             </View>
-            <RecentMatchesList matches={matches}></RecentMatchesList>
+            <RecentMatchesList matches={matches} users={league.users}></RecentMatchesList>
         </ScrollView>
     );
 };
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         justifyContent:'space-evenly',
         alignItems: 'center',
-        marginBottom:20
+        marginBottom:10
     },
     h3: {
         color: "#94a1b2",
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems:'center',
-        marginBottom:10,
+        marginBottom:5,
+        height:40
     },
     icon: {
         fontSize: 40,

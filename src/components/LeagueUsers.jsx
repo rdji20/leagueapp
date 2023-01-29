@@ -39,7 +39,7 @@ const ListItem = ({ item, index}) => {
             uri: item.picUri
         }}
         /> : <DefaultImage user={item.displayName}/>}
-        <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? item.displayName.split(' ')[0] : 'User'}</Text>
+        <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? item.displayName.split(' ')[0].charAt(0) + item.displayName.split(' ')[0].split().splice(1)  : 'User'}</Text>
         <View style={{display:'flex', flexDirection:'row'}}>
         {index === -1 ? <MaterialCommunityIcons name={'trophy'} style={{color:place, fontSize:25, zIndex:'1'}}></MaterialCommunityIcons>: ''}
 {/*         {index < 3 ? <MaterialCommunityIcons name={'trophy'} style={{color:place, fontSize:15, zIndex:'0'}}></MaterialCommunityIcons>: ''} */}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
       },
       container: {
         backgroundColor: "transparent",
-        marginTop:0,
+        marginBottom:50,
       },
       first:{
         textAlign:'center',

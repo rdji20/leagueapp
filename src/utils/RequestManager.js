@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const localIPAddress = "172.16.1.67";
+export const localIPAddress = "192.168.1.4";
 
 /**
  * Makes a POST call to the backend that adds new user info to firebase.

@@ -63,15 +63,15 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                     </View>
                     <View style={styles.infoContainer}>
                         <Text><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}/></Text> 
-                        <Text style={styles.h3}>{league.matches ? league.matches.length:'No matches'}  matches </Text>
+                        <Text style={styles.h3}> {league.matches ? league.matches.length:'No matches'}  matches </Text>
                     </View>
                     <View style={styles.infoContainer}>
                         <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons></Text>
-                        <Text style={styles.h3}>Claudio</Text>
+                        <Text style={styles.h3}> Claudio</Text>
                     </View>
                 </View>
             <DisplayUsers users={league.users}/>
-            <View
+{/*             <View
                 style={{
                     width: 500,
                     borderBottomColor: "rgba(256, 256, 256, 0.25)",
@@ -79,7 +79,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                     marginBottom: 30,
                     marginTop: 5,
                 }}
-            ></View>
+            ></View> */}
             <Text style={styles.h2}>Leaderboard</Text>
             <LeagueStandings users={league.users}/>
             <View style={styles.recentMatches}>

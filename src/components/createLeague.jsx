@@ -169,7 +169,7 @@ export function CreateLeague({ navigation, route }) {
     );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     view: {
         width: "100%",
     },

@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatches } from "../components/recentMatch";
+import { NavBar } from "../components/screenNavBar";
 import { SelectPlayer } from "../components/selectPlayer";
 import { postScore } from "../utils/RequestManager";
 
@@ -28,29 +29,12 @@ export const AddScoreScreen = ({route, navigation}) => {
     const [scoreOne, setScoreOne] = useState('')
     const [scoreTwo, setScoreTwo] = useState('')
 
-/*     function handleCreate() {
-        const league = {
-            icon,
-            name,
-            players,
-        };
-        console.log("Before request manager", league);
-        console.log("Before request manager", prop1.uid);
-        //redirect
-        if (validName()){
-        RequestManager.createLeague(league, prop1.uid)
-            .then((res) => {
-                setFetched(false)
-                navigation.navigate("Home");
-                setTimeout(() => {
-                    handleTryAgain()
-                }, "2000")
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+    const validScore = () => {
+        if (playerOne.userId && playerTwo.userId && scoreOne != '' && scoreTwo != '' && playerOne.userId != playerTwo.userId){
+            return true
         }
-    } */
+        return false
+    }
 
     const DefaultImage = ({user}) => {
         return (
@@ -79,41 +63,42 @@ export const AddScoreScreen = ({route, navigation}) => {
     }
 
     const handleAddScore = () => {
-        console.log(playerOne)
-        const matchData = {
-            uId:user.uid,
-            leagueId, 
-            matchObject: {
-                leagueId,
-                data: [
-                    {
-                        uid:playerOne.userId,
-                        result:+scoreOne > +scoreTwo ? 'W' : 'L',
-                        score:scoreOne,
-                        team:'Team 1',
-                    },
-                    {
-                        uid:playerTwo.userId,
-                        result:+scoreOne < +scoreTwo ? 'W' : 'L',
-                        score:scoreTwo,
-                        team:'Team 2',
-                    },
-                ]
+        if (validScore()){
+            const matchData = {
+                uId:user.uid,
+                leagueId, 
+                matchObject: {
+                    leagueId,
+                    data: [
+                        {
+                            uid:playerOne.userId,
+                            result:+scoreOne > +scoreTwo ? 'W' : 'L',
+                            score:scoreOne,
+                            team:'Team 1',
+                        },
+                        {
+                            uid:playerTwo.userId,
+                            result:+scoreOne < +scoreTwo ? 'W' : 'L',
+                            score:scoreTwo,
+                            team:'Team 2',
+                        },
+                    ]
+                }
             }
+            if (!(+scoreOne === +scoreTwo)){
+                postScore(matchData).then((res) => {
+                    setFetched(false)
+                    navigation.navigate("Home");
+                    setTimeout(() => {
+                        handleTryAgain()
+                    }, "2000")
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+            }
+            console.log(matchData)
         }
-        if (!(+scoreOne === +scoreTwo)){
-            postScore(matchData).then((res) => {
-                setFetched(false)
-                navigation.navigate("Home");
-                setTimeout(() => {
-                    handleTryAgain()
-                }, "2000")
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-        }
-        console.log(matchData)
     }
 
 
@@ -153,6 +138,7 @@ export const AddScoreScreen = ({route, navigation}) => {
     }
     return (
         <SafeAreaView style={styles.container}>
+            <NavBar backButton='Back' title='New Score' actionButton='Add' handleAction={handleAddScore} validAction={validScore} navigation={navigation}></NavBar>
             <View style={styles.view}>
                 <View style={styles.player}>
                     <PictureDisplay url={''} player={'One'}></PictureDisplay>
@@ -184,7 +170,6 @@ export const AddScoreScreen = ({route, navigation}) => {
                 </View>
             </View>
             <SelectPlayer selectingPlayer={selectingPlayer} setPlayerOne={setPlayerOne} setPlayerTwo={setPlayerTwo} selecting={selecting} setSelecting={setSelecting} users={users}/>
-            <TouchableOpacity onPress={() => handleAddScore()}><Text style={styles.h2}>{user.uid}</Text></TouchableOpacity>
         </SafeAreaView>
     );
 }
@@ -201,7 +186,6 @@ const styles = StyleSheet.create({
         width:'100%',
         borderBottomColor: 'rgba(256,256,256,0.1)',
         borderBottomWidth:0.5,
-        marginTop:300
 
     },
     view: {
@@ -213,7 +197,8 @@ const styles = StyleSheet.create({
         borderWidth:0,
         paddingVertical:0,
         marginHorizontal: 30,
-        width:'100%'
+        width:'100%',
+        marginTop:200
     },
     h3: {
         color: "rgba(256,256,256,0.5)",

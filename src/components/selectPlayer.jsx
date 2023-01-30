@@ -5,11 +5,9 @@ export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setP
 
   const handleSelect = (item) => {
     if (selectingPlayer === 'One'){
-      console.log('Esequeo')
       setPlayerOne(item)
       setSelecting(false)
     }else{
-      console.log('Que mamon')
       setPlayerTwo(item)
       setSelecting(false)
     }

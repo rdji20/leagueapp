@@ -1,23 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import { DataTable} from 'react-native-paper'
+import { firstName } from "../utils/helperFunctions";
 
-const LeagueStandings = ({users}) => {
+const LeagueStandings = ({users, userId}) => {
+
     const TableRows = () => {
         return (
             users.map((user, index) => 
                 <DataTable.Row key={index}style={styles.row}>
-                    <DataTable.Cell style={styles.cell}><Text style={styles.rank}>{index + 1}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.cell}><Text style={styles.name}>{user.displayName.split(' ')[0]}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.cell}><Text style={styles.record}>{`${user.wins}-${user.loses}`}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.cell}><Text style={styles.score}>{user.loses}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={user.userId === userId ? styles.champ : styles.score}>{index + 1}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={user.userId === userId ? styles.champ : styles.score}>{firstName(user.displayName)}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={user.userId === userId ? styles.champ : styles.score}>{`${user.wins}-${user.loses}`}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.cell}><Text style={user.userId === userId ? styles.champ : styles.score}>{+user.wins + +user.loses != 0 ? Math.round((user.wins/(+user.loses + +user.wins)) * 100)/100: 0}</Text></DataTable.Cell>
                 </DataTable.Row>
             )
-
         )
     }
-
-
     return (
         <View style={styles.container}>
             <DataTable style={{marginTop:0}}>
@@ -25,7 +24,7 @@ const LeagueStandings = ({users}) => {
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Rank</Text></DataTable.Title>
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Name</Text></DataTable.Title>
                     <DataTable.Title style={styles.title}><Text style={styles.status}>Record</Text></DataTable.Title>
-                    <DataTable.Title style={styles.title}><Text style={styles.status}>Win Pct</Text></DataTable.Title>
+                    <DataTable.Title style={styles.title}><Text style={styles.status}>Win %</Text></DataTable.Title>
                 </DataTable.Header>
 
                 <TableRows/>
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'baseline',
-        color: 'white'
+        color: 'white',
     },
     title: {
         display: 'flex',
@@ -68,23 +67,24 @@ const styles = StyleSheet.create({
     status:{
         color:'white',
         fontSize: 14,
-        fontWeight: '400'
+        fontWeight: '500'
     },
 
     rank: {
-        color:'white',
-        fontWeight:'300'
+        color:'#94a1b2',
+        fontWeight:'300',
+        textAlign:'center'
     },
     name: {
-        color: 'white',
+        color: '#94a1b2',
         fontWeight:'300'
     },
     record: {
-        color: 'white',
+        color: '#94a1b2',
         fontWeight:'300'
     },
     score: {
-        color: 'white',
+        color: '#94a1b2',
         fontWeight:'300'
     },
     row: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         marginHorizontal:15,
         padding:10,
         marginTop: 0,
-        marginBottom:50,
+        marginBottom:30,
         marginTop:10,
         borderWidth:1,
         backgroundColor:'#242629',
@@ -103,5 +103,9 @@ const styles = StyleSheet.create({
         shadowOpacity:0.5,
         shadowRadius:1,
         shadowOffset: {width: 5,height: 8}
+    },
+    champ:{
+        color: 'white',
+        fontWeight:'500',
     }
   });

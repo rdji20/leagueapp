@@ -15,8 +15,11 @@ import { DataTable } from "react-native-paper";
 import DisplayUsers from "./LeagueUsers";
 import LeagueStandings from "./RankingTable";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { firstName } from "../utils/helperFunctions";
+import { DefaultImage } from "./defaultImage";
 
 export const RecentMatches = ({ navigation, userProp , uris, teams, players, score}) => {
+    
 
     /**
      * Displays UserInfo. If the info to be displayed belongs to the winner, the a prop containing left will be passed so that 
@@ -27,12 +30,12 @@ export const RecentMatches = ({ navigation, userProp , uris, teams, players, sco
      * @param team -  Team played with
      * @returns 
      */
+
     const UserInfo = ({side}) => {
         return (
             <View style={styles[side]} >
-                <Text style={styles.h2}> {side==='left' ? players[0]: players[1]}</Text>
                 <Text style={styles.h3}> {side==='left' ? teams[0]: teams[1]}</Text>
-                <Text style={styles[side==='left' ? 'winner': 'loser']} > {side==='left' ? score[0]: score[1]}</Text>
+                <Text style={styles[+score[0] > +score[1] ? 'winner': 'loser']} > {side==='left' ? score[0]: score[1]}</Text>
             </View>
         )
     }
@@ -41,15 +44,10 @@ export const RecentMatches = ({ navigation, userProp , uris, teams, players, sco
      * @param url - Picture uri string 
      * @returns <Image/> - Image component
      */
-    const PictureDisplay = ({url}) => {
+    const PictureDisplay = ({displayName}) => {
         return (
             <View style={styles.picContainer}>
-                <Image 
-                    style={styles.itemPhoto} 
-                    source={{
-                        uri: ''
-                    }}
-                />
+                <DefaultImage displayName={displayName}></DefaultImage>
             </View>
         )
     }
@@ -57,12 +55,18 @@ export const RecentMatches = ({ navigation, userProp , uris, teams, players, sco
         <View style={styles.container}>
             <View style={styles.view}>
                 <View style={styles.player}>
-                    <PictureDisplay url={''}></PictureDisplay>
+                    <View>
+                        <PictureDisplay displayName={players[0]}></PictureDisplay>
+                        <Text style={styles.name}> {firstName(players[0])}</Text> 
+                    </View>
                     <UserInfo player={'Player B'} score={'46'} side='left' team={'Team 1'}/>
                 </View>
                 <View style={styles.player}>
                     <UserInfo player={'Player A'} score={'40'} side='right' team={'Team 2'}/>
-                    <PictureDisplay url={''}></PictureDisplay>
+                    <View>
+                        <PictureDisplay displayName={players[1]}></PictureDisplay>
+                        <Text style={styles.name}> {firstName(players[1])}</Text> 
+                    </View>
                 </View>
             </View>
         </View>
@@ -96,6 +100,15 @@ const styles = StyleSheet.create({
         color: "rgba(256,256,256,0.5)",
         fontSize: 12,
         fontWeight: "300",
+        textAlign:'center',
+        marginTop: 10
+    },
+    name:{
+        color: "white",
+        fontSize: 12,
+        fontWeight: "00",
+        textAlign:'center',
+        marginTop: 10
     },
     h2: {
         color: "rgba(256,256,256,1)",
@@ -155,21 +168,21 @@ const styles = StyleSheet.create({
        
       },
     winner: {
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: "600",
-        //color: "#DBFF00",
         color: "white",
         height: 40,
-        //shadowColor:"#DBFF00",
         shadowColor:"white",
         shadowOpacity:0.2,
         shadowRadius:10,
+        textAlign:'right'
     },
     loser: {
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: "600",
-        color: 'rgba(256,256,256,0.2)',
+        color: 'rgba(256,256,256,0.1)',
         height: 40,
+        textAlign:'left'
     },
     picContainer: {
         height: 50,
@@ -184,42 +197,5 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignItems: 'center',
         flex:1
-    }
+    },
 });
-
-const SECTIONS = [
-    {
-      title: 'My Leagues',
-      data: [
-        {
-          key: '1',
-          display_name: 'Roberto',
-          uri: 'https://media-exp1.licdn.com/dms/image/C5603AQHRX8cZTM9RQw/profile-displayphoto-shrink_200_200/0/1611796969932?e=1674691200&v=beta&t=_z7G_Mzv9BeCVEmKw5c_owLyULXYNT0Y-OtGq3Fa8N0',
-          team: 'Portland'
-        },
-        {
-          key: '2',
-          display_name: 'Octavia',
-          uri: 'https://media.licdn.com/dms/image/C5603AQFsHOwly1yfKA/profile-displayphoto-shrink_800_800/0/1540257823299?e=1678924800&v=beta&t=tYXL893KTMmflebzL8lVI5j_yCZO-mUKc56FNgZ_83I',
-          team: 'Clippers'
-        },
-  
-        {
-          key: '3',
-          display_name: 'Max',
-          uri: 'https://media.licdn.com/dms/image/C5603AQFI24okpCiJRg/profile-displayphoto-shrink_800_800/0/1618847906137?e=1678924800&v=beta&t=I1ADXlyb_SBqHe3oywa2CJTYeSum591wVi9aEj1vvIA',
-          team: 'Philadelphia'
-        },
-        {
-          key: '4',
-          display_name: 'Weo',
-          uri: 'https://pbs.twimg.com/profile_images/1420610977683419137/LlWNgDux_400x400.jpg',
-        },
-        {
-          key: '5',
-          display_name: 'Daniela',
-          uri: 'https://i.pinimg.com/280x280_RS/06/32/6f/06326f6ac9f847c9528ce73cdffee0da.jpg',
-        },
-      ],
-    }
-  ];

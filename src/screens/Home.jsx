@@ -41,7 +41,6 @@ export const Home = ({ navigation, route }) => {
 
     const { user } = route.params;
     useEffect(() => {
-        console.log('User id: ', user.uid)
         RequestManager.getLeagues(user.uid)
             .then((res) => {
                 //console.log(res.data.leagues.data[0]);
@@ -227,7 +226,7 @@ export const Home = ({ navigation, route }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Profile", {displayName})}
                 >
-                    <Text style={{ color: "#DBFF00", fontSize: 16, fontWeight:'400'}}>Profile</Text>
+                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account-circle' style={{fontSize:35, color:'white'}}/></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})}
@@ -283,7 +282,8 @@ export const Home = ({ navigation, route }) => {
                 style={{
                     width: 60,  
                     height: 60,   
-                    borderRadius: 30,            
+                    borderRadius: 30,
+                    borderWidth:2,            
                     backgroundColor: '#DBFF00',                                    
                     position: 'absolute',                                          
                     bottom: 80,                                                    

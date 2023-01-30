@@ -27,7 +27,6 @@ export function CreateLeague({ navigation, route }) {
     const [icon, setIcon] = useState("trophy");
     const [selectingIcon, setSelectingIcon] = useState(false);
     const [addingPlayer, setAddingPlayer] = useState(false);
-    console.log('displayName: ', displayName)
 
     function handleCreate() {
         const league = {
@@ -59,9 +58,7 @@ export function CreateLeague({ navigation, route }) {
 
     function handleAddPlayer() {
         const len = players.length.toString();
-        console.log(newName);
         if (newName) {
-            console.log(players);
             const newPlayers = [...players];
             newPlayers.unshift({
                 displayName: newName,
@@ -98,22 +95,11 @@ export function CreateLeague({ navigation, route }) {
                 showsVerticalScrollIndicator={false}
                 >
                 <View style={{...styles.container, marginTop:20}}>
-                    <View style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
+                    <TouchableOpacity onPress={() => {setSelectingIcon(!selectingIcon)}} style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
                         <MaterialCommunityIcons name={icon} style={{fontSize:50, color:'black'}}/>
-                    </View>
+                        <MaterialCommunityIcons name={'pencil'} style={{fontSize:20, color:'black', position:'absolute', bottom: 10, right: 20,}}/>
+                    </TouchableOpacity>
                 </View>
-                <Text style={styles.h2}>League Name</Text>
-                <TextInput
-                    placeholder="e.g. Fifa League"
-                    placeholderTextColor="rgba(256, 256, 256, 0.5)"
-                    value={name}
-                    onChangeText={setName}
-                    style={styles.input}
-                />
-                <Text style={styles.h2}>League Icon</Text>
-                <TouchableOpacity style={styles[!selectingIcon ? 'dropDownActive' : 'dropDownInactive']} onPress={() => {setSelectingIcon(!selectingIcon)}}>
-                    <Text style={{color:'white'}}>Select League Icon</Text><MaterialCommunityIcons name={!selectingIcon ?'chevron-right':'chevron-down'} style={{color:'white', fontSize:18}}></MaterialCommunityIcons>
-                </TouchableOpacity>
                 {selectingIcon ? 
                 <ScrollView style={{height:200}}>
                     <View
@@ -128,13 +114,14 @@ export function CreateLeague({ navigation, route }) {
                     >
                         {iconNames.map(val =>
                         <TouchableOpacity 
+                            key={val}
                             style={{
                                 width:50,
                                 height:50,
                                 margin:10,
                                 borderColor:'white',
                                 borderWidth:0.5,
-                                backgroundColor:val==icon ? 'white' : 'transparent',
+                                backgroundColor:val===icon ? 'white' : 'transparent',
                                 justifyContent:'center',
                                 alignItems:'center',
                                 borderRadius:4
@@ -149,6 +136,7 @@ export function CreateLeague({ navigation, route }) {
 
                     </View>
                 </ScrollView> : ''}
+                
                 {!players[0] ? "" : <Text style={styles.h2}> Players </Text>}
                 {players[0] ? (<DisplayNewUsers players={players} setAddingPlayer={setAddingPlayer} displayName={displayName}></DisplayNewUsers>) : ("")}
                 {addingPlayer ? <Text style={{...styles.h2, marginBottom:0}}>Add New Player</Text>: ''}
@@ -164,6 +152,18 @@ export function CreateLeague({ navigation, route }) {
                         <Text style={styles.addButton}><MaterialCommunityIcons name={'account-plus'} style={{color:'black', fontSize:18}}></MaterialCommunityIcons></Text>
                     </TouchableOpacity>
                 </View> : ''}
+                <Text style={styles.h2}>League Name</Text>
+                <TextInput
+                    placeholder="e.g. Fifa League"
+                    placeholderTextColor="rgba(256, 256, 256, 0.5)"
+                    value={name}
+                    onChangeText={setName}
+                    style={styles.input}
+                />
+                <Text style={styles.h2}>League Icon</Text>
+                <TouchableOpacity style={styles[!selectingIcon ? 'dropDownActive' : 'dropDownInactive']} onPress={() => {setSelectingIcon(!selectingIcon)}}>
+                    <Text style={{color:'white'}}>Select League Icon</Text><MaterialCommunityIcons name={!selectingIcon ?'chevron-right':'chevron-down'} style={{color:'white', fontSize:18}}></MaterialCommunityIcons>
+                </TouchableOpacity>
             </InputScrollView>
         </View>
     );
@@ -266,7 +266,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginTop: 5,
-        marginBottom:200
+        marginBottom:20
     },
     labels: {
         color: "white",

@@ -10,27 +10,18 @@ import {
   FlatList
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { firstName } from '../utils/helperFunctions';
 
 const DefaultImage = ({user}) => {
   return (
-    <View style={{backgroundColor: "rgba(256,256,256,0.1)", display:'flex', justifyContent:'center', alignItems:'center', width: 55, height: 55, borderRadius:55, borderColor:'#7f5af0', borderWidth:0.5}}>
-      <Text style={{color:"white", fontSize:16, fontWeight:'400'}}>{user.split(' ').map(val => val.charAt(0).toUpperCase())}</Text>
+    <View style={styles.defaultImg}>
+      <Text style={{color:"white", fontSize:16, fontWeight:'500'}}>{user.split(' ').map(val => val.charAt(0).toUpperCase())}</Text>
     </View>
   )
 }
 
 
 const ListItem = ({ item, index}) => {
-  let place = 'itemText'
-  if (index === 0){
-    place = 'gold'
-  }
-  if (index === 1){
-    place = 'rgba(256, 256, 256, 0.5)'
-  }
-  if (index === 2){
-    place = 'rgba(256, 256, 256, 0.5)'
-  }
   return (
     <View style={styles.item} key={item.userId}>
         {item.picUri != ''? <Image 
@@ -39,10 +30,8 @@ const ListItem = ({ item, index}) => {
             uri: item.picUri
         }}
         /> : <DefaultImage user={item.displayName}/>}
-        <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? item.displayName.split(' ')[0].charAt(0) + item.displayName.split(' ')[0].split().splice(1)  : 'User'}</Text>
+        <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? firstName(item.displayName)  : 'User'}</Text>
         <View style={{display:'flex', flexDirection:'row'}}>
-        {index === -1 ? <MaterialCommunityIcons name={'trophy'} style={{color:place, fontSize:25, zIndex:'1'}}></MaterialCommunityIcons>: ''}
-{/*         {index < 3 ? <MaterialCommunityIcons name={'trophy'} style={{color:place, fontSize:15, zIndex:'0'}}></MaterialCommunityIcons>: ''} */}
         </View>
     </View>
   );
@@ -80,13 +69,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems:'center',
-        marginHorizontal: 7,
+        marginLeft: 13,
         marginBottom:15,
         shadowColor:"black",
         shadowOpacity:0.8,
         shadowRadius:6,
         paddingTop:15,
-        width:60
+        width:60,
       },
       itemPhoto: {
         width: 55, 
@@ -106,7 +95,8 @@ const styles = StyleSheet.create({
       },
       container: {
         backgroundColor: "transparent",
-        marginBottom:50,
+        marginTop:12,
+        marginBottom:10,
       },
       first:{
         textAlign:'center',
@@ -137,5 +127,21 @@ const styles = StyleSheet.create({
         shadowColor:"#CD7F32",
         shadowOpacity:0.8,
         shadowRadius:6,
+      },
+      defaultImg: {
+        backgroundColor: "#242629",
+        display:'flex', 
+        justifyContent:'center', 
+        alignItems:'center', 
+        width: 55, 
+        height: 55, 
+        borderRadius:55, 
+        borderColor:'#7f5af0', 
+        borderWidth:0.5,
+        shadowColor:"black",
+        shadowOpacity:1,
+        shadowRadius:1,
+        shadowOffset: {width: 3,height: 4}
       }
+        
   });

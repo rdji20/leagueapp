@@ -23,16 +23,18 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatchesList } from "./recentMatches";
 import { getMatches } from "../utils/RequestManager";
+import { compare } from "../utils/helperFunctions";
+import { firstName } from "../utils/helperFunctions";
 
 export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain, setFetched}) => {
     const [matches, setMatches] = useState([])
-
+    
+    const leagueUsers = [...league.users]
+    leagueUsers.sort(compare).reverse()//Ordering User List by V0 criterion
+    
     useEffect(() =>{
-        console.log(leagueId)
         getMatches(leagueId).then((res) => {
             const matchesTemp = [...res.data.matches.data.map((val, index) => {return {...val, matchId:res.data.matches.ids[index]}})]
-            console.log('Matches Temp: ', matchesTemp)
-            console.log('Matches Temp',matchesTemp)
             
             setMatches(matchesTemp)
 
@@ -40,6 +42,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
             console.log(e)
         })
     }, [])
+    
     const GenerateTitle = () => {
         return (
             <View style={{display: 'flex', flexDirection:'column', alignItems:'center',}}>
@@ -53,7 +56,9 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
-                <Text style={styles.icon}><MaterialCommunityIcons name={league.icon} style={{fontSize: 50}}/></Text>
+                <View style={{...styles.container, marginTop:20}}>
+                    <MaterialCommunityIcons name={league.icon} style={{fontSize:55, color:'white'}}/>
+                </View>
                 <GenerateTitle/>
             </View>
             <View style={styles.description}>
@@ -63,25 +68,16 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                     </View>
                     <View style={styles.infoContainer}>
                         <Text><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}/></Text> 
-                        <Text style={styles.h3}> {league.matches ? league.matches.length:'No matches'}  matches </Text>
+                        <Text style={styles.h3}>  {league.matches ? league.matches.length:'No matches'}  matches </Text>
                     </View>
                     <View style={styles.infoContainer}>
                         <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons></Text>
-                        <Text style={styles.h3}> Claudio</Text>
+                        <Text style={styles.h3}>  {firstName(leagueUsers[0].displayName)}</Text>
                     </View>
-                </View>
+            </View>
             <DisplayUsers users={league.users}/>
-{/*             <View
-                style={{
-                    width: 500,
-                    borderBottomColor: "rgba(256, 256, 256, 0.25)",
-                    borderBottomWidth: 1,
-                    marginBottom: 30,
-                    marginTop: 5,
-                }}
-            ></View> */}
             <Text style={styles.h2}>Leaderboard</Text>
-            <LeagueStandings users={league.users}/>
+            <LeagueStandings users={leagueUsers} userId={user.uid}/>
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>
                 <TouchableOpacity style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>See All</Text></TouchableOpacity>
@@ -153,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
     },
     title: {
-        marginTop:50,
+        marginTop:8,
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-evenly',
@@ -170,6 +166,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         marginBottom:5,
+        marginTop:10,
         height:40
     },
     icon: {
@@ -189,7 +186,7 @@ const styles = StyleSheet.create({
         marginRight: 20
     },
     seeAll: {
-        color:"#8983C4"
+        color:"#7f5af0"
     },
     infoContainer:{
         backgroundColor:'black',
@@ -200,10 +197,21 @@ const styles = StyleSheet.create({
         alignItems:'center',
         height:35,
         width:100,
+        borderWidth:1,
         borderRadius:8,
         backgroundColor:'#242629',
         borderRadius:8,
-        marginBottom:20
+        marginBottom:20,
+        shadowColor:"black",
+        shadowOpacity:0.8,
+        shadowRadius:1,
+        shadowOffset: {width: 3,height: 4}
+    },
+    container:{
+        display:'flex',
+        alignItems: "center",
+        justifyContent:'center',
+        marginBottom:5
     }
 
 });

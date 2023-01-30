@@ -97,7 +97,6 @@ export const AddScoreScreen = ({route, navigation}) => {
                     console.log(e);
                 });
             }
-            console.log(matchData)
         }
     }
 

@@ -357,5 +357,8 @@ const styles = StyleSheet.create({
     tryAgain: {
         color: "#8983C4",
     },
+    fetching: {
+        color: "rgba(256, 256, 256, 0.25)",
+    }
 });
 

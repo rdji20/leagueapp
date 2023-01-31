@@ -1,7 +1,3 @@
-export const orderUsers = () => {
-    
-}
-
 export const compare = (a, b) => {
     const scoreA = (+a.wins + +a.loses) > 0 ? +a.wins/(+a.wins + +a.loses) : 0
     const scoreB = (+b.wins + +b.loses) > 0 ? +b.wins/(+b.wins + +b.loses) : 0
@@ -16,6 +12,5 @@ export const compare = (a, b) => {
 }
 
 export const firstName = (displayName) => {
-    
     return displayName.split(' ')[0].toUpperCase().charAt(0) + displayName.split(' ')[0].slice(1)
 }

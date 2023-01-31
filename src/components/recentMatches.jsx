@@ -21,13 +21,31 @@ export const RecentMatchesList = ({ navigation, userProp, matches, users}) => {
         return (users.find(element => element.userId === uid))['displayName']
     }
 
+    const findRecords = (uid) => {
+        return `${(users.find(element => element.userId === uid))['wins']}-${(users.find(element => element.userId === uid))['loses']}`
+    }
+
     const MatchesList = () => {
-        return (matches.slice(0, 3).map(function(match){return <RecentMatches key={match.matchId} players={[findDisplayName(match.data[0].uid), findDisplayName(match.data[1].uid)]} score={[match.data[0].score,match.data[1].score]} teams={[match.data[0].team, match.data[1].team]} />}))
+        return (matches.slice(0, 3).map(function(match){
+            return (<RecentMatches key={match.matchId} 
+                                  records={[findRecords(match.data[0].uid), findRecords(match.data[1].uid)]}
+                                  players={[findDisplayName(match.data[0].uid), findDisplayName(match.data[1].uid)]} 
+                                  score={[match.data[0].score,match.data[1].score]} 
+                                  teams={[match.data[0].team, match.data[1].team]} />
+                                  )
+                                }))
     }
 
     return (
+        matches.length > 0 ? 
         <View style={styles.view}>
             <MatchesList></MatchesList>
+        </View>
+        :
+        <View style={styles.matchContainer}>
+            <MaterialCommunityIcons name='stadium' style={{color:'white', fontSize:30, marginBottom:8}}/>
+            <Text style={styles.noMatches}> No matches Yet! </Text>
+            <Text style={styles.noMatchesDescription}> New matches will appear here. </Text>
         </View>
     );
 };
@@ -106,4 +124,35 @@ const styles = StyleSheet.create({
         borderWidth:1
         
       },
+      noMatches:{
+          fontSize:20,
+          fontWeight:'600',
+          color:'#fffffe',
+          textAlign:'left',
+      },
+      noMatchesDescription:{
+          fontSize:14,
+          fontWeight:'400',
+          color:'#94a1b2',
+          textAlign:'left',
+      },
+      matchContainer:{
+        height:130,
+        borderRadius:8,
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems: 'center',
+        width:355,
+        borderBottomWidth:0.5, 
+        borderWidth:1,
+        backgroundColor:'#242629',
+        borderRadius:8,
+        shadowColor:"black",
+        shadowOpacity:0.5,
+        shadowRadius:1,
+        shadowOffset: {width: 5,height: 8},
+        marginVertical:10,
+        marginHorizontal:15
+
+    },
 });

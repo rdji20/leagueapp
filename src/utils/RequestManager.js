@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const localIPAddress = "192.168.100.64";
+export const localIPAddress = "192.168.100.18";
 
 /**
  * Makes a POST call to the backend that adds new user info to firebase.
@@ -38,6 +38,7 @@ export async function getLeagues(uid) {
                 user_id: uid,
             },
         });
+        // console.log(res);
         return res;
     } catch (e) {
         console.log(e);

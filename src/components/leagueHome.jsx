@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
     },
     title: {
-        marginTop:8,
+        marginTop:0,
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-evenly',

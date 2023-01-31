@@ -16,6 +16,7 @@ import { RecentMatches } from "./recentMatch";
 
 export const RecentMatchesList = ({ navigation, userProp, matches, users}) => {
 
+    matches.reverse()
     const findDisplayName = (uid) => {
         return (users.find(element => element.userId === uid))['displayName']
     }
@@ -43,14 +44,6 @@ const styles = StyleSheet.create({
         marginHorizontal:15,
         padding:10,
         marginBottom:50,
-        marginTop:10,
-        borderWidth:1,
-        backgroundColor:'#242629',
-        borderRadius:8,
-        shadowColor:"black",
-        shadowOpacity:0.8,
-        shadowRadius:1,
-        shadowOffset: {width: 7,height: 8}
     },
     h3: {
         color: "rgba(256,256,256,0.25)",

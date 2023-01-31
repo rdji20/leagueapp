@@ -95,17 +95,22 @@ export function CreateLeague({ navigation, route }) {
                 showsVerticalScrollIndicator={false}
                 >
                 <View style={{...styles.container, marginTop:20}}>
-                    <TouchableOpacity onPress={() => {setSelectingIcon(!selectingIcon)}} style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
+                    <TouchableOpacity onPress={() => {
+                        setSelectingIcon(!selectingIcon)
+                        }} style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
                         <MaterialCommunityIcons name={icon} style={{fontSize:50, color:'black'}}/>
                         <MaterialCommunityIcons name={'pencil'} style={{fontSize:20, color:'black', position:'absolute', bottom: 10, right: 20,}}/>
                     </TouchableOpacity>
                 </View>
+                {selectingIcon ? <TouchableOpacity style={styles[!selectingIcon ? 'dropDownActive' : 'dropDownInactive']} onPress={() => {setSelectingIcon(!selectingIcon)}}>
+                    <Text style={{color:'white'}}>Select League Icon</Text><MaterialCommunityIcons name={!selectingIcon ?'chevron-right':'chevron-down'} style={{color:'white', fontSize:18}}></MaterialCommunityIcons>
+                </TouchableOpacity> : ''}
                 {selectingIcon ? 
-                <ScrollView style={{height:200}}>
+                <ScrollView style={{height:350}}>
                     <View
                         style={{
                             width:300,
-                            height:300,
+                            height:350,
                             flexWrap:'wrap',
                             flexDirection:"row",
                             alignItems:'center',
@@ -128,6 +133,7 @@ export function CreateLeague({ navigation, route }) {
                             }}
                             onPress={() => {
                                 setIcon(val)
+                                setSelectingIcon(!selectingIcon)
                             }}
                             >
                             <MaterialCommunityIcons name={val} style={{color:val==icon ? 'black' : 'white', fontSize:23}}></MaterialCommunityIcons>
@@ -160,10 +166,6 @@ export function CreateLeague({ navigation, route }) {
                     onChangeText={setName}
                     style={styles.input}
                 />
-                <Text style={styles.h2}>League Icon</Text>
-                <TouchableOpacity style={styles[!selectingIcon ? 'dropDownActive' : 'dropDownInactive']} onPress={() => {setSelectingIcon(!selectingIcon)}}>
-                    <Text style={{color:'white'}}>Select League Icon</Text><MaterialCommunityIcons name={!selectingIcon ?'chevron-right':'chevron-down'} style={{color:'white', fontSize:18}}></MaterialCommunityIcons>
-                </TouchableOpacity>
             </InputScrollView>
         </View>
     );
@@ -321,6 +323,5 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         marginVertical:5
-    }
-
+    },
 });

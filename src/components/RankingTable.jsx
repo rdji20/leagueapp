@@ -77,15 +77,15 @@ const styles = StyleSheet.create({
     },
     name: {
         color: '#94a1b2',
-        fontWeight:'300'
+        fontWeight:'400'
     },
     record: {
         color: '#94a1b2',
-        fontWeight:'300'
+        fontWeight:'400'
     },
     score: {
         color: '#94a1b2',
-        fontWeight:'300'
+        fontWeight:'400'
     },
     row: {
         borderBottomColor: 'transparent'
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
         shadowColor:"black",
         shadowOpacity:0.5,
         shadowRadius:1,
-        shadowOffset: {width: 5,height: 8}
+        shadowOffset: {width: 5,height: 8},
+        width:355
     },
     champ:{
         color: 'white',

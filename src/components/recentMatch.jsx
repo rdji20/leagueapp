@@ -53,21 +53,32 @@ export const RecentMatches = ({ navigation, userProp , uris, teams, players, sco
     }
     return (
         <View style={styles.container}>
+
             <View style={styles.view}>
-                <View style={styles.player}>
-                    <View>
-                        <PictureDisplay displayName={players[0]}></PictureDisplay>
-                        <Text style={styles.name}> {firstName(players[0])}</Text> 
-                    </View>
-                    <UserInfo player={'Player B'} score={'46'} side='left' team={'Team 1'}/>
+                <View style={styles.playerOne}>
+                    <Text style={styles.playerText}>
+                        {players[0]}
+                    </Text>
+                    <Text style={{color: +score[0] > +score[1] ? 'white' : 'black', fontWeight:'500', fontSize:14}}>
+                        {+score[0] > +score[1] ? <MaterialCommunityIcons name='menu-right' style={{fontSize:20}}></MaterialCommunityIcons> : ''}
+                        {score[0]}
+                    </Text>
                 </View>
-                <View style={styles.player}>
-                    <UserInfo player={'Player A'} score={'40'} side='right' team={'Team 2'}/>
-                    <View>
-                        <PictureDisplay displayName={players[1]}></PictureDisplay>
-                        <Text style={styles.name}> {firstName(players[1])}</Text> 
-                    </View>
+                <View style={styles.playerOne}>
+                    <Text style={styles.playerText}>
+                        {players[1]}
+                    </Text>
+                    <Text style={{color: +score[1] > +score[0] ? 'white' : 'black', fontWeight:'500', fontSize:14}}>
+                        {+score[1] > +score[0] ? <MaterialCommunityIcons name='menu-right' style={{fontSize:20}}></MaterialCommunityIcons> : ''}
+                        {score[1]}
+                    </Text>
                 </View>
+
+
+            </View>
+            <View style={styles.dateContainer}>
+                <MaterialCommunityIcons name='calendar-month' style={{color:'white', fontSize:16, marginBottom:5}}/>
+                <Text style={styles.date}> Yesterday </Text>
             </View>
         </View>
     );
@@ -77,119 +88,35 @@ const styles = StyleSheet.create({
     container:{
         height:100,
         borderRadius:8,
-        flexDirection:'column',
+        flexDirection:'row',
         justifyContent:'flex-end',
         alignItems: 'center',
-        width:'100%',
-        borderBottomColor: 'rgba(256,256,256,0.1)',
-        borderBottomWidth:0.5
+        width:355,
+        borderBottomWidth:0.5, 
+        borderWidth:1,
+        backgroundColor:'#242629',
+        borderRadius:8,
+        shadowColor:"black",
+        shadowOpacity:0.5,
+        shadowRadius:1,
+        shadowOffset: {width: 5,height: 8},
+        marginVertical:8
 
     },
     view: {
         flex: 1,
         display:'flex',
-        flexDirection:'row',
-        justifyContent: 'center',
-        alignItems:'center',
+        flexDirection:'column',
+        justifyContent: 'space-evenly',
+        alignItems:'baseline',
         borderWidth:0,
         paddingVertical:0,
-        marginHorizontal: 30,
-        width:'100%'
-    },
-    h3: {
-        color: "rgba(256,256,256,0.5)",
-        fontSize: 12,
-        fontWeight: "300",
-        textAlign:'center',
-        marginTop: 10
-    },
-    name:{
-        color: "white",
-        fontSize: 12,
-        fontWeight: "00",
-        textAlign:'center',
-        marginTop: 10
-    },
-    h2: {
-        color: "rgba(256,256,256,1)",
-        fontSize: "16",
-        fontWeight: "500",
+        width:'100%',
+        marginLeft:20
     },
     date: {
-        color: "rgba(256,256,256,0.25)",
+        color: "#fffffe",
         fontSize: "14",
-    },
-    h1: {
-        fontSize: 40,
-        fontWeight: "800",
-        color: "white",
-        height: 40,
-        margin: 10,
-        padding: 0,
-    },
-    button: {
-        marginTop: 20,
-        marginBottom: 10,
-        padding: 15,
-        color: "#DCDCDC",
-        backgroundColor: "#DBFF00",
-        borderRadius: "10px",
-        alignItems: "center",
-        width: 300,
-    },
-    buttonText: {
-        fontWeight: "700",
-    },
-    buttonContainer: {
-        alignItems: "center",
-    },
-    left:{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems: 'flex-end',
-        height:80,
-        marginHorizontal:10
-    },
-    right:{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems: 'baseline',
-        height: 80,
-        marginHorizontal:10
-    },
-    itemPhoto: {
-        width: 50, 
-        height:50, 
-        borderRadius: 60/ 2,
-        borderColor:'rgba(256, 256, 256, 0.5)',
-        borderWidth:1,
-       
-      },
-    winner: {
-        fontSize: 40,
-        fontWeight: "600",
-        color: "white",
-        height: 40,
-        shadowColor:"white",
-        shadowOpacity:0.2,
-        shadowRadius:10,
-        textAlign:'right'
-    },
-    loser: {
-        fontSize: 40,
-        fontWeight: "600",
-        color: 'rgba(256,256,256,0.1)',
-        height: 40,
-        textAlign:'left'
-    },
-    picContainer: {
-        height: 50,
-        marginHorizontal:20,
-        shadowColor:"black",
-        shadowOpacity:0.2,
-        shadowRadius:4, 
     },
     player:{
         display:'flex',
@@ -198,4 +125,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex:1
     },
+    playerOne: {
+        display:'flex',
+        flexDirection:"row",
+        justifyContent: 'space-between',
+        alignItems:'center',
+        width:200,
+        marginVertical:8
+    },
+    dateContainer:{
+        backgroundColor: '#16161a',
+        height: '100%',
+        width:100,
+        justifyContent:'center',
+        alignItems:'center',
+        borderTopRightRadius:6,
+        borderBottomRightRadius:8,
+    },
+
+    playerText:{
+        color:'#fffffe',
+        fontWeight:'400'
+    },
+    scoreText:{
+        fontSize:20
+    }
+
+
 });

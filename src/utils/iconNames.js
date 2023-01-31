@@ -11,6 +11,11 @@ export const iconNames = ['tennis-ball',
  'microsoft-xbox-controller',
  'basketball',
  'bowling', 
- 'snake',
- 'wizard-hat'
+ 'badminton',
+ 'baseball-bat',
+ 'cards-playing-club-multiple',
+ 'checkerboard',
+ 'chess-king',
+ 'racquetball',
+ 'bike'
 ]

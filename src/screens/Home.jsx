@@ -230,6 +230,7 @@ export const Home = ({ navigation, route }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})}
+                    style={{justifyContent:'center', alignItems:'center'}}
                 >
                     <Text style={{ color: "#DBFF00", fontSize: 16, fontWeight:'400'}}>
                         Create League

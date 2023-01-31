@@ -11,11 +11,14 @@ import {
     Button,
     SafeAreaView,
 } from "react-native";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const NoLeagues = ({ navigation, userProp, uId, displayName, handleTryAgain, setFetched}) => {
     return (
         <View style={styles.view}>
+            <MaterialCommunityIcons name='stadium' style={{color:'white', fontSize:46}}/>
             <Text style={styles.h1}> No Leagues Yet </Text>
+            <Text style={{color:'#94a1b2', fontWeight:'400', fontSize:16, marginBottom:40}}> Create a league to start ranking your friends!</Text>
             <TouchableOpacity
                 onPress={() => navigation.navigate("NewLeague", {displayName, uId, handleTryAgain, setFetched})}
                 style={styles.button}
@@ -46,10 +49,9 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: "800",
         color: "white",
-        height: 40,
-        margin: 10,
         padding: 0,
-        height: 60,
+        marginTop:20,
+        marginBottom:10
     },
     button: {
         marginTop: 20,
@@ -57,9 +59,13 @@ const styles = StyleSheet.create({
         padding: 15,
         color: "#DCDCDC",
         backgroundColor: "#DBFF00",
-        borderRadius: "10px",
+        borderRadius: 10,
         alignItems: "center",
         width: 300,
+        shadowColor:"black",
+        shadowOpacity:1,
+        shadowRadius:0,
+        shadowOffset: {width: 5,height: 8},
     },
     buttonText: {
         fontWeight: "700",

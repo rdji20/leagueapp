@@ -13,11 +13,13 @@ import {
     TextInput,
     Modal
 } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { RecentMatches } from "../components/recentMatch";
 import { NavBar } from "../components/screenNavBar";
 import { SelectPlayer } from "../components/selectPlayer";
 import { postScore } from "../utils/RequestManager";
+import {Keyboard} from 'react-native'
 
 export const AddScoreScreen = ({route, navigation}) => {
     const {users, leagueId, user, setFetched, handleTryAgain} = route.params;
@@ -138,8 +140,9 @@ export const AddScoreScreen = ({route, navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <NavBar backButton='Back' title='New Score' actionButton='Add' handleAction={handleAddScore} validAction={validScore} navigation={navigation}></NavBar>
+            <TouchableWithoutFeedback style={{height:200, width:500}} onPress={()=>Keyboard.dismiss()}></TouchableWithoutFeedback>
             <View style={styles.view}>
-                <View style={styles.player}>
+                <View style={styles.player} >
                     <PictureDisplay url={''} player={'One'}></PictureDisplay>
                     <View style={styles['left']} >
                         <Text style={styles.h2}>Player A</Text>
@@ -149,26 +152,36 @@ export const AddScoreScreen = ({route, navigation}) => {
                             placeholder={'0'}
                             style={{...styles[+scoreOne > +scoreTwo ? 'winner' : 'loser'], textAlign:'right',}}
                             onChangeText={setScoreOne}
+                            keyboardType='numeric'
                         >
                         </TextInput>
                     </View>
                 </View>
-                <View style={styles.player}>
-                    <View style={styles['right']} >
-                        <Text style={styles.h2}>Player B</Text>
-                        <Text style={styles.h3}>Points</Text>
-                        <TextInput 
-                            value={scoreTwo} 
-                            placeholder={'0'}
-                            style={{...styles[+scoreOne < +scoreTwo ? 'winner' : 'loser'], textAlign:'left',}}
-                            onChangeText={setScoreTwo}
-                        >
-                        </TextInput>
-                    </View>
-                    <PictureDisplay url={''} player={'Two'}></PictureDisplay>
+                    <View style={styles.player}>
+                        <View style={styles['right']} >
+                            <Text style={styles.h2}>Player B</Text>
+                            <Text style={styles.h3}>Points</Text>
+                            <TextInput 
+                                value={scoreTwo} 
+                                placeholder={'0'}
+                                style={{...styles[+scoreOne < +scoreTwo ? 'winner' : 'loser'], textAlign:'left',}}
+                                onChangeText={setScoreTwo}
+                                keyboardType='number-pad'
+                            >
+                            </TextInput>
+                        </View>
+                        <PictureDisplay url={''} player={'Two'}></PictureDisplay>
                 </View>
             </View>
+            <TouchableOpacity style={styles.chunkyButton} onPress={() => {
+                Keyboard.dismiss()
+            }}>
+                    <Text style={styles.addScoreText}>Add Score</Text>
+            </TouchableOpacity>
+            <TouchableWithoutFeedback style={{height:100, width:500,}} onPress={()=>Keyboard.dismiss()}>
+            </TouchableWithoutFeedback>
             <SelectPlayer selectingPlayer={selectingPlayer} setPlayerOne={setPlayerOne} setPlayerTwo={setPlayerTwo} selecting={selecting} setSelecting={setSelecting} users={users}/>
+
         </SafeAreaView>
     );
 }
@@ -176,8 +189,7 @@ export const AddScoreScreen = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     container:{
-        flex: 3,
-        height:100,
+        flex: 1,
         borderRadius:8,
         flexDirection:'column',
         justifyContent:'flex-end',
@@ -197,7 +209,6 @@ const styles = StyleSheet.create({
         paddingVertical:0,
         marginHorizontal: 30,
         width:'100%',
-        marginTop:200
     },
     h3: {
         color: "rgba(256,256,256,0.5)",
@@ -300,5 +311,25 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignItems: 'center',
         flex:1
+    },
+    chunkyButton:{
+        backgroundColor:'#7f5af0',
+        width:200,
+        height:50,
+        borderRadius:8,
+        borderColor:'black',
+        borderWidth:2,
+        shadowColor:"black",
+        shadowOpacity:10,
+        shadowRadius:0,
+        shadowOffset: {width: 5,height: 8},
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    addScoreText:{
+        color:'white',
+        fontSize:16,
+        fontWeight:'500',
     }
+
 });

@@ -57,18 +57,18 @@ export default function App() {
      * Signs new user up with firebase auth and adds user to firebase using
      * a call to Usercreation api function.
      */
-    const handleSignUp = () => {
+     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
                 const thisUser = userCredential.user;
                 setUser(userCredential.user);
                 console.log("Test before rerquestManger", newUserName);
-                setIsLoggedIn(
-                    RequestManager.userCreation(thisUser, newUserName)
-                );
+                RequestManager.userCreation(thisUser, newUserName);
                 // ...
-            })
+            }).then(() => {
+                setIsLoggedIn(true);
+            }) 
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;

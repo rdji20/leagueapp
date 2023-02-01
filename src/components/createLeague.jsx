@@ -27,6 +27,8 @@ export function CreateLeague({ navigation, route }) {
     const [icon, setIcon] = useState("trophy");
     const [selectingIcon, setSelectingIcon] = useState(false);
     const [addingPlayer, setAddingPlayer] = useState(false);
+    const [missingPlayer, setMissingPlayer] = useState(false)
+    const [invalidName, setInvalidName] = useState(false)
 
     function handleCreate() {
         const league = {
@@ -34,10 +36,14 @@ export function CreateLeague({ navigation, route }) {
             name,
             players,
         };
-        console.log("Before request manager", league);
-        console.log("Before request manager", prop1.uid);
         //redirect
-        if (validName()){
+        if (players.length === 1){
+            setMissingPlayer(true)
+        }
+        if (!validName()){
+            setInvalidName(true)
+        }
+        if (validName() && players.length > 1){
         RequestManager.createLeague(league, prop1.uid)
             .then((res) => {
                 setFetched(false)
@@ -53,6 +59,7 @@ export function CreateLeague({ navigation, route }) {
     }
 
     const validName = () => {
+        console.log(players.length)
         return name.split().find((val) => val != '' && val != ' ')
     }
 
@@ -86,12 +93,12 @@ export function CreateLeague({ navigation, route }) {
                 </TouchableOpacity>
                 <Text style={styles.h1}>New League</Text>
                 <TouchableOpacity style={styles.button1} onPress={handleCreate}>
-                    <Text style={!validName() ? styles.buttonText1 : styles.buttonTextValid}> Create </Text>
+                    <Text style={validName() && players.length > 1? styles.buttonTextValid : styles.buttonText1}> Create </Text>
                 </TouchableOpacity>
             </View>
             <InputScrollView
                 style={{marginHorizontal:30}}
-                keyboardOffset={150}
+                keyboardOffset={50000}
                 showsVerticalScrollIndicator={false}
                 >
                 <View style={{...styles.container, marginTop:20}}>
@@ -142,7 +149,14 @@ export function CreateLeague({ navigation, route }) {
 
                     </View>
                 </ScrollView> : ''}
-                
+                <Text style={styles.h2}>League Name</Text>
+                <TextInput
+                    placeholder="e.g. Fifa League"
+                    placeholderTextColor="rgba(256, 256, 256, 0.5)"
+                    value={name}
+                    onChangeText={setName}
+                    style={styles.input}
+                />
                 {!players[0] ? "" : <Text style={styles.h2}> Players </Text>}
                 {players[0] ? (<DisplayNewUsers players={players} setAddingPlayer={setAddingPlayer} displayName={displayName}></DisplayNewUsers>) : ("")}
                 {addingPlayer ? <Text style={{...styles.h2, marginBottom:0}}>Add New Player</Text>: ''}
@@ -155,17 +169,9 @@ export function CreateLeague({ navigation, route }) {
                         style={{...styles.input, width:280, borderTopLeftRadius:5, borderBottomLeftRadius:5, borderTopRightRadius:0, borderBottomRightRadius:0}}
                     />
                     <TouchableOpacity onPress={handleAddPlayer} style={styles.addPlayerButton}>
-                        <Text style={styles.addButton}><MaterialCommunityIcons name={'account-plus'} style={{color:'black', fontSize:18}}></MaterialCommunityIcons></Text>
+                        <Text style={styles.addButton}>ADD<MaterialCommunityIcons name={'account-plus'} style={{color:'black', fontSize:18}}></MaterialCommunityIcons></Text>
                     </TouchableOpacity>
                 </View> : ''}
-                <Text style={styles.h2}>League Name</Text>
-                <TextInput
-                    placeholder="e.g. Fifa League"
-                    placeholderTextColor="rgba(256, 256, 256, 0.5)"
-                    value={name}
-                    onChangeText={setName}
-                    style={styles.input}
-                />
             </InputScrollView>
         </View>
     );

@@ -10,42 +10,17 @@ import {
     TouchableOpacity,
     Button,
     SafeAreaView,
+    InputText
 } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { RecentMatches } from "./recentMatch";
+import { DefaultImage } from "../components/defaultImage";
 
-export const RecentMatchesList = ({ navigation, userProp, matches, users}) => {
-
-    matches.reverse()
-    const findDisplayName = (uid) => {
-        return (users.find(element => element.userId === uid))['displayName']
-    }
-
-    const findRecords = (uid) => {
-        return `${(users.find(element => element.userId === uid))['wins']}-${(users.find(element => element.userId === uid))['loses']}`
-    }
-
-    const MatchesList = () => {
-        return (matches.slice(0, 3).map(function(match){
-            return (<RecentMatches key={match.matchId} 
-                                  records={[findRecords(match.data[0].uid), findRecords(match.data[1].uid)]}
-                                  players={[findDisplayName(match.data[0].uid), findDisplayName(match.data[1].uid)]} 
-                                  score={[match.data[0].score,match.data[1].score]} 
-                                  teams={[match.data[0].team, match.data[1].team]} />
-                                  )
-                                }))
-    }
+export const AddNewPlayer = ({ navigation, userProp}) => {
+    const [displayName, setDisplayName] = useState('')
 
     return (
-        matches.length > 0 ? 
-        <View style={styles.view}>
-            <MatchesList></MatchesList>
-        </View>
-        :
-        <View style={styles.matchContainer}>
-            <MaterialCommunityIcons name='stadium' style={{color:'white', fontSize:30, marginBottom:8}}/>
-            <Text style={styles.noMatches}> No matches Yet! </Text>
-            <Text style={styles.noMatchesDescription}> New matches will appear here. </Text>
+        <View>
+            <Text>Hello</Text>
         </View>
     );
 };
@@ -154,5 +129,16 @@ const styles = StyleSheet.create({
         marginVertical:10,
         marginHorizontal:15
 
+    },
+    input: {
+        placeHolderTextColor: "white",
+        backgroundColor: "rgba(0,0,0,0.5)",
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        color: "white",
+        width: 320,
+        borderRadius: 5,
+        height: 42,
+        marginVertical:5
     },
 });

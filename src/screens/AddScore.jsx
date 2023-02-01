@@ -152,7 +152,8 @@ export const AddScoreScreen = ({route, navigation}) => {
                             placeholder={'0'}
                             style={{...styles[+scoreOne > +scoreTwo ? 'winner' : 'loser'], textAlign:'right',}}
                             onChangeText={setScoreOne}
-                            keyboardType='numeric'
+                            keyboardType='number-pad'
+                            returnKeyType='done'
                         >
                         </TextInput>
                     </View>
@@ -167,6 +168,7 @@ export const AddScoreScreen = ({route, navigation}) => {
                                 style={{...styles[+scoreOne < +scoreTwo ? 'winner' : 'loser'], textAlign:'left',}}
                                 onChangeText={setScoreTwo}
                                 keyboardType='number-pad'
+                                returnKeyType='done'
                             >
                             </TextInput>
                         </View>

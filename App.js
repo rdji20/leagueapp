@@ -36,6 +36,7 @@ import axios from "axios";
 import { Home } from "./src/screens/Home";
 import * as RequestManager from "./src/utils/RequestManager";
 import { AddScoreScreen } from "./src/screens/AddScore";
+import { AddNewPlayer } from "./src/screens/addNewPlayer";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -184,10 +185,10 @@ export default function App() {
                                     cardStyle: {
                                         backgroundColor: "#16161a",
                                     },
-                                    title: "Profile ",
+                                    title: "AddScore",
                                 }}
-                                name="profile"
-                                component={Profile}
+                                name="AddScore"
+                                component={AddScoreScreen}
                                 initialParams={{
                                     prop1: user,
                                     prop2: "another value",
@@ -198,13 +199,12 @@ export default function App() {
                                     cardStyle: {
                                         backgroundColor: "#16161a",
                                     },
-                                    title: "AddScore",
+                                    title: "AddNewPlayer",
                                 }}
-                                name="AddScore"
-                                component={AddScoreScreen}
+                                name="AddNewPlayer"
+                                component={AddNewPlayer}
                                 initialParams={{
                                     prop1: user,
-                                    prop2: "another value",
                                 }}
                             />
                         </Stack.Navigator>

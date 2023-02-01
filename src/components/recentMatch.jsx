@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width:355,
         borderBottomWidth:0.5, 
-        borderWidth:1,
+        borderWidth:2,
         backgroundColor:'#242629',
         borderRadius:8,
         shadowColor:"black",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         width:200,
     },
     dateContainer:{
-        backgroundColor: 'rgba(256,256,256, 0.1)',
+        backgroundColor: 'rgba(0,0,0, 0.2)',
         height: '100%',
         width:100,
         justifyContent:'center',

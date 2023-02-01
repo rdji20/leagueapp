@@ -76,7 +76,11 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                     </View>
             </View>
             <DisplayUsers users={league.users}/>
-            <Text style={styles.h2}>Leaderboard</Text>
+            <View style={styles.recentMatches}>
+                <Text style={styles.h2}>Leaderboard</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("AddNewPlayer")} style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>Add New Player</Text></TouchableOpacity>
+            </View>
+           
             <LeagueStandings users={leagueUsers} userId={user.uid}/>
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>

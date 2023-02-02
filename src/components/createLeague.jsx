@@ -10,6 +10,7 @@ import {
     Pressable,
     TouchableOpacity,
     TextInput,
+    Keyboard
 } from "react-native";
 import { useIsFocused } from '@react-navigation/native'
 import DisplayNewUsers from "./addUserList";
@@ -26,7 +27,7 @@ export function CreateLeague({ navigation, route }) {
     const [newName, setNewName] = useState("");
     const [icon, setIcon] = useState("trophy");
     const [selectingIcon, setSelectingIcon] = useState(false);
-    const [addingPlayer, setAddingPlayer] = useState(false);
+    const [addingPlayer, setAddingPlayer] = useState(true);
     const [missingPlayer, setMissingPlayer] = useState(false)
     const [invalidName, setInvalidName] = useState(false)
 
@@ -59,8 +60,7 @@ export function CreateLeague({ navigation, route }) {
     }
 
     const validName = () => {
-        console.log(players.length)
-        return name.split().find((val) => val != '' && val != ' ')
+        return name.split('').find((val) => val != '' && val != ' ')
     }
 
     function handleAddPlayer() {
@@ -97,23 +97,19 @@ export function CreateLeague({ navigation, route }) {
                 </TouchableOpacity>
             </View>
             <InputScrollView
-                style={{marginHorizontal:30}}
                 keyboardOffset={50000}
                 showsVerticalScrollIndicator={false}
                 >
                 <View style={{...styles.container, marginTop:20}}>
-                    <TouchableOpacity onPress={() => {
-                        setSelectingIcon(!selectingIcon)
-                        }} style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
+                    <View style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
                         <MaterialCommunityIcons name={icon} style={{fontSize:50, color:'black'}}/>
-                        <MaterialCommunityIcons name={'pencil'} style={{fontSize:20, color:'black', position:'absolute', bottom: 10, right: 20,}}/>
+                    </View>
+                    <TouchableOpacity onPress={() => {setSelectingIcon(!selectingIcon)}}>
+                        <Text style={styles.editText}>Edit Icon</Text>
                     </TouchableOpacity>
                 </View>
-                {selectingIcon ? <TouchableOpacity style={styles[!selectingIcon ? 'dropDownActive' : 'dropDownInactive']} onPress={() => {setSelectingIcon(!selectingIcon)}}>
-                    <Text style={{color:'white'}}>Select League Icon</Text><MaterialCommunityIcons name={!selectingIcon ?'chevron-right':'chevron-down'} style={{color:'white', fontSize:18}}></MaterialCommunityIcons>
-                </TouchableOpacity> : ''}
                 {selectingIcon ? 
-                <ScrollView style={{height:350}}>
+                <ScrollView style={{height:350, marginLeft:30}}>
                     <View
                         style={{
                             width:300,
@@ -149,6 +145,8 @@ export function CreateLeague({ navigation, route }) {
 
                     </View>
                 </ScrollView> : ''}
+                <DisplayNewUsers players={players} setAddingPlayer={setAddingPlayer} displayName={displayName}></DisplayNewUsers>
+
                 <Text style={styles.h2}>League Name</Text>
                 <TextInput
                     placeholder="e.g. Fifa League"
@@ -157,21 +155,20 @@ export function CreateLeague({ navigation, route }) {
                     onChangeText={setName}
                     style={styles.input}
                 />
-                {!players[0] ? "" : <Text style={styles.h2}> Players </Text>}
-                {players[0] ? (<DisplayNewUsers players={players} setAddingPlayer={setAddingPlayer} displayName={displayName}></DisplayNewUsers>) : ("")}
-                {addingPlayer ? <Text style={{...styles.h2, marginBottom:0}}>Add New Player</Text>: ''}
-                {addingPlayer ? <View style={styles.addContainer}>
+                <Text style={{...styles.h2, marginBottom:0}}>Add New Player</Text>
+                <View style={styles.addContainer}>
                     <TextInput
                         placeholder="Player Name"
                         placeholderTextColor={'rgba(256,256,256,0.5)'}
                         value={newName}
                         onChangeText={setNewName}
                         style={{...styles.input, width:280, borderTopLeftRadius:5, borderBottomLeftRadius:5, borderTopRightRadius:0, borderBottomRightRadius:0}}
+                        onSubmitEditing={handleAddPlayer}
                     />
                     <TouchableOpacity onPress={handleAddPlayer} style={styles.addPlayerButton}>
-                        <Text style={styles.addButton}>ADD<MaterialCommunityIcons name={'account-plus'} style={{color:'black', fontSize:18}}></MaterialCommunityIcons></Text>
+                        <Text style={styles.addButton}><MaterialCommunityIcons name={'plus-circle'} style={{color:'#010101', fontSize:18}}></MaterialCommunityIcons></Text>
                     </TouchableOpacity>
-                </View> : ''}
+                </View> 
             </InputScrollView>
         </View>
     );
@@ -187,7 +184,7 @@ export const styles = StyleSheet.create({
         fontWeight: "600",
         marginTop: 5,
         marginBottom: 5,
-        marginHorizontal: 5,
+        marginHorizontal: 25,
     },
     h1: {
         fontSize: 18,
@@ -236,10 +233,11 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         color: "white",
-        width: 320,
+        width: '90%',
         borderRadius: 5,
         height: 42,
-        marginVertical:5
+        marginVertical:5,
+        marginHorizontal:15
     },
     itemPhoto: {
         width: 100,
@@ -274,7 +272,6 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginTop: 5,
-        marginBottom:20
     },
     labels: {
         color: "white",
@@ -302,7 +299,8 @@ export const styles = StyleSheet.create({
         height: 40,
         display:'flex',
         flexDirection:'row',
-        marginVertical:5
+        marginVertical:5,
+        marginLeft:15
     },
     dropDownInactive:{
         borderWidth:1,
@@ -317,10 +315,11 @@ export const styles = StyleSheet.create({
         height: 40,
         display:'flex',
         flexDirection:'row',
-        marginVertical:5
+        marginVertical:5,
+        marginLeft:15
     },
     addPlayerButton:{
-        backgroundColor:'white', 
+        backgroundColor:'#fffffe', 
         width:40, 
         height:40, 
         borderTopRightRadius:5, 
@@ -330,4 +329,9 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         marginVertical:5
     },
+    editText:{
+        fontWeight:'400',
+        color:'rgba(256,256,256,0.5)',
+        fontSize:14
+    }
 });

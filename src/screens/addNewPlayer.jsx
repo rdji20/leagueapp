@@ -10,125 +10,52 @@ import {
     TouchableOpacity,
     Button,
     SafeAreaView,
-    InputText
+    TextInput,
+    TouchableWithoutFeedback,
+    Keyboard
 } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { DefaultImage } from "../components/defaultImage";
+import { NavBar } from "../components/screenNavBar";
+import {v4 as uuidv4} from 'uuid';
 
 export const AddNewPlayer = ({ navigation, userProp}) => {
     const [displayName, setDisplayName] = useState('')
+    const [color, setColor] = useState(false)
+
+    const validName = () => {
+        return displayName.split('').find((val) => val != ' ' &&  val != '')
+    }
 
     return (
-        <View>
-            <Text>Hello</Text>
-        </View>
+        <SafeAreaView style={{flex:1}}>
+            <NavBar navigation={navigation} backButton={'Back'} title='New Player' actionButton='Add Player' validAction={validName} handleAction={() => console.log('uid: ', uuidv4())}></NavBar>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <View style={styles.container}>
+                    <MaterialCommunityIcons name='account-multiple-plus' style={{color:'white', fontSize:60, marginTop:20}}></MaterialCommunityIcons>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.h2}> Player Name </Text>
+                        <View>
+                            <TextInput 
+                                style={styles.input}
+                                onChangeText={setDisplayName}
+                                placeholder='e.g. Mirna Jerlach'
+                                > 
+                                
+                            </TextInput>
+                        </View>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-    view: {
-        flex: 1,
+    container:{
+        flex:1,
         display:'flex',
-        flexDirection:'column',
-        justifyContent: 'center',
-        alignItems:'center',
-        borderWidth:0,
-        paddingBottom:10,
-        marginHorizontal:15,
-        padding:10,
-        marginBottom:50,
-    },
-    h3: {
-        color: "rgba(256,256,256,0.25)",
-        fontSize: 14,
-        fontWeight: "600",
-        marginHorizontal: 10,
-    },
-    h2: {
-        color: "rgba(256,256,256,1)",
-        fontSize: "20",
-        fontWeight: "600",
-        marginBottom: 2,
-        marginTop: 5,
-        marginHorizontal: 10,
-    },
-    h1: {
-        fontSize: 40,
-        fontWeight: "800",
-        color: "white",
-        height: 40,
-        margin: 10,
-        padding: 0,
-    },
-    button: {
-        marginTop: 20,
-        marginBottom: 10,
-        padding: 15,
-        color: "#DCDCDC",
-        backgroundColor: "#DBFF00",
-        borderRadius: "10px",
-        alignItems: "center",
-        width: 300,
-    },
-    buttonText: {
-        fontWeight: "700",
-    },
-    buttonContainer: {
-        alignItems: "center",
-    },
-    left:{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'baseline',
-        alignItems: 'baseline',
-        marginBottom:100,
-        paddingBottom:10
-    },
-    right:{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'baseline',
-        alignItems: 'flex-end',
-        marginBottom:100,
-    },
-    itemPhoto: {
-        width: 60, 
-        height: 60, 
-        borderRadius: 60/ 2,
-        borderColor:'rgba(256, 256, 256, 0.5)',
-        borderWidth:1
-        
-      },
-      noMatches:{
-          fontSize:20,
-          fontWeight:'600',
-          color:'#fffffe',
-          textAlign:'left',
-      },
-      noMatchesDescription:{
-          fontSize:14,
-          fontWeight:'400',
-          color:'#94a1b2',
-          textAlign:'left',
-      },
-      matchContainer:{
-        height:130,
-        borderRadius:8,
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems: 'center',
-        width:355,
-        borderBottomWidth:0.5, 
-        borderWidth:2,
-        backgroundColor:'#242629',
-        borderRadius:8,
-        shadowColor:"black",
-        shadowOpacity:0.5,
-        shadowRadius:1,
-        shadowOffset: {width: 5,height: 8},
-        marginVertical:10,
-        marginHorizontal:15
-
+        alignItems:'center'
     },
     input: {
         placeHolderTextColor: "white",
@@ -141,4 +68,15 @@ const styles = StyleSheet.create({
         height: 42,
         marginVertical:5
     },
+    inputContainer:{
+        justifyContent:'flex-start',
+        alignItems:'baseline',
+        marginTop:30
+    },
+    h2: {
+        fontSize:18,
+        color:'#fffffe',
+        fontWeight:'500',
+        marginBottom:5
+    }
 });

@@ -24,7 +24,11 @@ export const NavBar = ({navigation, backButton, title, actionButton, handleActio
                 <Text style={styles.buttonText2}>{backButton}</Text>
             </TouchableOpacity>
             <Text style={styles.h1}>{title}</Text>
-            <TouchableOpacity style={styles.button1} onPress={handleAction}>
+            <TouchableOpacity style={styles.button1} onPress={() => {
+                if(validAction()){
+                    handleAction()
+                }
+                }}>
                 <Text style={!validAction() ? styles.buttonText1 : styles.buttonTextValid}>{actionButton}</Text>
             </TouchableOpacity>
         </View>)

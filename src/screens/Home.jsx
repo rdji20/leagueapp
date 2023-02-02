@@ -226,14 +226,19 @@ export const Home = ({ navigation, route }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Profile", {displayName})}
                 >
-                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account-circle' style={{fontSize:35, color:'white'}}/></Text>
+                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account-box' style={{fontSize:35, color:'white'}}/></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})}
+                    onPress={() => {
+                        if (!getError && fetched){
+                        navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})
+                        }
+                    }}
                     style={{justifyContent:'center', alignItems:'center'}}
                 >
-                    <Text style={{ color: "#DBFF00", fontSize: 16, fontWeight:'400'}}>
-                        Create League
+                    
+                    <Text style={{ color: (!getError && fetched) ? "#DBFF00" : 'rgba(256,256,256,0.1)', fontSize: 16, fontWeight:'400'}}>
+                        New League
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -279,7 +284,7 @@ export const Home = ({ navigation, route }) => {
             </View>
             {/* <View > */}
             <LeagueScreen />
-            {leagueId ? <TouchableOpacity
+            {leagueId && fetched && !getError? <TouchableOpacity
                 style={{
                     width: 60,  
                     height: 60,   

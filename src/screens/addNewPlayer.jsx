@@ -17,9 +17,11 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { DefaultImage } from "../components/defaultImage";
 import { NavBar } from "../components/screenNavBar";
-import {v4 as uuidv4} from 'uuid';
+import uuid from 'react-uuid'
+import { AddGuestUser } from "../utils/RequestManager";
 
-export const AddNewPlayer = ({ navigation, userProp}) => {
+export const AddNewPlayer = ({ navigation, route}) => {
+    const {uId, leagueId, setFetched, handleTryAgain} = route.params
     const [displayName, setDisplayName] = useState('')
     const [color, setColor] = useState(false)
 
@@ -27,19 +29,42 @@ export const AddNewPlayer = ({ navigation, userProp}) => {
         return displayName.split('').find((val) => val != ' ' &&  val != '')
     }
 
+    const handleAddPlayer = () => {
+        const userObject = {
+            displayName,
+            loses: 0,
+            wins: 0,
+            userId: uuid(),
+            picUri: "",
+            rating: '1500'
+        }
+        AddGuestUser(uId, leagueId,userObject).then(() => {
+            console.log('Yas Queen, user was added.')
+            setFetched(false)
+            navigation.navigate("Home");
+            setTimeout(() => {
+                handleTryAgain()
+            }, "2000")
+        }
+        ).catch((e) => {
+            console.log(e)
+        })
+
+    }
+
     return (
         <SafeAreaView style={{flex:1}}>
-            <NavBar navigation={navigation} backButton={'Back'} title='New Player' actionButton='Add Player' validAction={validName} handleAction={() => console.log('uid: ', uuidv4())}></NavBar>
+            <NavBar navigation={navigation} backButton={'Back'} title='New Player' actionButton='Add Player' validAction={validName} handleAction={() => handleAddPlayer()}></NavBar>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View style={styles.container}>
                     <MaterialCommunityIcons name='account-multiple-plus' style={{color:'white', fontSize:60, marginTop:20}}></MaterialCommunityIcons>
                     <View style={styles.inputContainer}>
-                        <Text style={styles.h2}> Player Name </Text>
                         <View>
                             <TextInput 
                                 style={styles.input}
                                 onChangeText={setDisplayName}
-                                placeholder='e.g. Mirna Jerlach'
+                                placeholder='Player Name'
+                                placeholderTextColor= '#72757e'
                                 > 
                                 
                             </TextInput>

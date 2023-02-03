@@ -13,17 +13,25 @@ import {
 import { DefaultImage } from './defaultImage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { firstName } from '../utils/helperFunctions';
+import uuid from 'react-uuid'
 
 
-
-export default function DisplayNewUsers({players, setAddingPlayer, displayName}) {
+export default function DisplayNewUsers({players, setAddingPlayer, displayName, handleDeletePlayer}) {
 
   const ListItem = ({ item, index}) => {
+    console.log(item)
     return (
       <View style={styles.item}>
-          <View>
-            <DefaultImage displayName={item.displayName} color={index === players.length - 1 ? '#7f5af0' : 'white'}></DefaultImage>
-          </View>
+          <TouchableOpacity  style={{position:'absolute',bottom:38, left:25,margin:10, zIndex:10}} onPress={() => {
+            handleDeletePlayer(item.userId)
+            console.log('sono')
+            }}>
+            <Text><MaterialCommunityIcons name='close-circle'style={{color:'#94a1b2', fontSize:25, }}></MaterialCommunityIcons></Text>
+          </TouchableOpacity>
+          <View style={{backgroundColor:'black', width:15, height:15, borderRadius:10, position:'absolute', zIndex:9, bottom:50,left:39}}/>
+          <TouchableOpacity >
+            <DefaultImage displayName={item.displayName} color='#fffffe'></DefaultImage>
+          </TouchableOpacity>
           <Text style={styles.itemText}>{firstName(item.displayName)}</Text>
       </View>
     );
@@ -54,8 +62,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft:20,
-        marginBottom:15
+        marginLeft:18,
+        marginBottom:15,
       },
       itemPhoto: {
         width: 60, 

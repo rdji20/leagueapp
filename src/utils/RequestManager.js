@@ -103,3 +103,19 @@ export async function postScore(matchObj) {
             throw new Error("Error adding the score /add_score");
         });
 }
+export async function AddGuestUser(uId, leagueId, userObject) {
+    axios
+        .post(`http://${localIPAddress}:3000/new_guest_user`, {
+            uId,
+            leagueId,
+            userObject
+        })
+        .then((response) => {
+            console.log("User Added");
+            return response;
+        })
+        .catch((error) => {
+            console.log(error);
+            throw new Error("Error adding new user /new_guest_user");
+        });
+}

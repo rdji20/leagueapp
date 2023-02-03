@@ -19,32 +19,41 @@ import * as RequestManager from "../utils/RequestManager";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { iconNames } from "../utils/iconNames";
 import InputScrollView from 'react-native-input-scroll-view'
+import uuid from 'react-uuid'
 
 export function CreateLeague({ navigation, route }) {
     const { prop1, prop2, logout, uId, displayName, handleTryAgain, setFetched} = route.params;
     const [name, setName] = useState("");
-    const [players, setPlayers] = useState([{displayName, loses: 0, wins: 0, userId: prop1.uid, picUri: ""}]);
+    const [players, setPlayers] = useState([]);
     const [newName, setNewName] = useState("");
-    const [icon, setIcon] = useState("trophy");
+    const [icon, setIcon] = useState("camera");
     const [selectingIcon, setSelectingIcon] = useState(false);
     const [addingPlayer, setAddingPlayer] = useState(true);
     const [missingPlayer, setMissingPlayer] = useState(false)
     const [invalidName, setInvalidName] = useState(false)
 
     function handleCreate() {
+        const newPlayers = [...players];
+        newPlayers.unshift({
+            displayName,
+            loses: 0,
+            wins: 0,
+            userId: prop1.uid,
+            picUri: "",
+        });
         const league = {
-            icon,
+            icon: icon ==='camera' ? 'trophy' : icon,
             name,
-            players,
+            players:newPlayers,
         };
         //redirect
         if (players.length === 1){
-            setMissingPlayer(true)
+            setMissingPlayer(true)//This is for alerts
         }
         if (!validName()){
-            setInvalidName(true)
+            setInvalidName(true)//This is for alerts
         }
-        if (validName() && players.length > 1){
+        if (validName() && players.length > 0){
         RequestManager.createLeague(league, prop1.uid)
             .then((res) => {
                 setFetched(false)
@@ -64,19 +73,64 @@ export function CreateLeague({ navigation, route }) {
     }
 
     function handleAddPlayer() {
-        const len = players.length.toString();
         if (newName) {
             const newPlayers = [...players];
             newPlayers.unshift({
                 displayName: newName,
                 loses: 0,
                 wins: 0,
-                userId: len,
+                userId: uuid(),
                 picUri: "",
             });
             setPlayers(newPlayers);
             setNewName("");
         }
+    }
+
+    const handleDeletePlayer = (uid) => {
+        const copy = players.filter(element => element.userId != uid)
+        setPlayers(copy)
+    }
+
+    const IconMenu = () => {
+        return (
+            <ScrollView style={{height:350, marginLeft:30}}>
+                <View
+                    style={{
+                        width:300,
+                        height:350,
+                        flexWrap:'wrap',
+                        flexDirection:"row",
+                        alignItems:'center',
+                        justifyContent:'center'
+                    }}
+                >
+                    {iconNames.map(val =>
+                    <TouchableOpacity 
+                        key={val}
+                        style={{
+                            width:50,
+                            height:50,
+                            margin:10,
+                            borderColor:'white',
+                            borderWidth:0.5,
+                            backgroundColor:val===icon ? 'white' : 'transparent',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            borderRadius:4
+                        }}
+                        onPress={() => {
+                            setIcon(val)
+                            setSelectingIcon(!selectingIcon)
+                        }}
+                        >
+                        <MaterialCommunityIcons name={val} style={{color:val==icon ? 'black' : 'white', fontSize:23}}></MaterialCommunityIcons>
+                    </TouchableOpacity>
+                    )}
+
+                </View>
+            </ScrollView>
+        )
     }
 
     return (
@@ -93,83 +147,50 @@ export function CreateLeague({ navigation, route }) {
                 </TouchableOpacity>
                 <Text style={styles.h1}>New League</Text>
                 <TouchableOpacity style={styles.button1} onPress={handleCreate}>
-                    <Text style={validName() && players.length > 1? styles.buttonTextValid : styles.buttonText1}> Create </Text>
+                    <Text style={validName() && players.length > 0? styles.buttonTextValid : styles.buttonText1}> Create </Text>
                 </TouchableOpacity>
             </View>
-            <InputScrollView
-                keyboardOffset={50000}
-                showsVerticalScrollIndicator={false}
-                >
-                <View style={{...styles.container, marginTop:20}}>
-                    <View style={{...styles.container, width:100, height:100, borderWidth:0.5, borderColor:'white', borderRadius:50, backgroundColor:'white'}}>
-                        <MaterialCommunityIcons name={icon} style={{fontSize:50, color:'black'}}/>
-                    </View>
-                    <TouchableOpacity onPress={() => {setSelectingIcon(!selectingIcon)}}>
-                        <Text style={styles.editText}>Edit Icon</Text>
-                    </TouchableOpacity>
-                </View>
-                {selectingIcon ? 
-                <ScrollView style={{height:350, marginLeft:30}}>
-                    <View
-                        style={{
-                            width:300,
-                            height:350,
-                            flexWrap:'wrap',
-                            flexDirection:"row",
-                            alignItems:'center',
-                            justifyContent:'center'
-                        }}
-                    >
-                        {iconNames.map(val =>
-                        <TouchableOpacity 
-                            key={val}
-                            style={{
-                                width:50,
-                                height:50,
-                                margin:10,
-                                borderColor:'white',
-                                borderWidth:0.5,
-                                backgroundColor:val===icon ? 'white' : 'transparent',
-                                justifyContent:'center',
-                                alignItems:'center',
-                                borderRadius:4
-                            }}
-                            onPress={() => {
-                                setIcon(val)
-                                setSelectingIcon(!selectingIcon)
-                            }}
-                            >
-                            <MaterialCommunityIcons name={val} style={{color:val==icon ? 'black' : 'white', fontSize:23}}></MaterialCommunityIcons>
+            <View>
+                <View style={{display:'flex', flexDirection:'row', alignItems:'center', marginLeft:20, marginBottom:20}}>
+                    <View style={{...styles.container, marginTop:20}}>
+                        <View style={{...styles.container, width:70, height:70, borderWidth:0.5, borderColor:'white', borderRadius:35, backgroundColor:'transparent'}}>
+                            <MaterialCommunityIcons name={icon} style={{fontSize:30, color:icon === 'camera' ? '#94a1b2' :'white'}}/>
+                        </View>
+                        <TouchableOpacity style={{marginTop:10}}onPress={() => {
+                            setSelectingIcon(!selectingIcon)
+                            Keyboard.dismiss()
+                            }}>
+                            <Text style={styles.editText}>Edit Icon</Text>
                         </TouchableOpacity>
-                        )}
-
                     </View>
-                </ScrollView> : ''}
-                <DisplayNewUsers players={players} setAddingPlayer={setAddingPlayer} displayName={displayName}></DisplayNewUsers>
-
-                <Text style={styles.h2}>League Name</Text>
-                <TextInput
-                    placeholder="e.g. Fifa League"
-                    placeholderTextColor="rgba(256, 256, 256, 0.5)"
-                    value={name}
-                    onChangeText={setName}
-                    style={styles.input}
-                />
-                <Text style={{...styles.h2, marginBottom:0}}>Add New Player</Text>
+                    <View>
+                        <TextInput
+                            placeholder="League Name"
+                            placeholderTextColor="rgba(256, 256, 256, 0.3)"
+                            value={name}
+                            onChangeText={setName}
+                            style={styles.leagueInput}
+                        />
+                    </View>
+                </View>
+                {selectingIcon ? <IconMenu></IconMenu>: ''}
+                <Text style={{...styles.h2, marginBottom:10}}>Players</Text>
                 <View style={styles.addContainer}>
                     <TextInput
-                        placeholder="Player Name"
-                        placeholderTextColor={'rgba(256,256,256,0.5)'}
+                        placeholder="New Player Name"
+                        placeholderTextColor={'rgba(256,256,256,0.3)'}
                         value={newName}
                         onChangeText={setNewName}
                         style={{...styles.input, width:280, borderTopLeftRadius:5, borderBottomLeftRadius:5, borderTopRightRadius:0, borderBottomRightRadius:0}}
                         onSubmitEditing={handleAddPlayer}
                     />
                     <TouchableOpacity onPress={handleAddPlayer} style={styles.addPlayerButton}>
-                        <Text style={styles.addButton}><MaterialCommunityIcons name={'plus-circle'} style={{color:'#010101', fontSize:18}}></MaterialCommunityIcons></Text>
+                        <Text style={{color:newName ? '#7f5af0' : 'rgba(256,256,256,0.1)'}}>Add</Text>
                     </TouchableOpacity>
                 </View> 
-            </InputScrollView>
+                <DisplayNewUsers players={players} setAddingPlayer={setAddingPlayer} displayName={displayName} handleDeletePlayer={handleDeletePlayer}></DisplayNewUsers>
+
+            </View>
         </View>
     );
 }
@@ -181,7 +202,7 @@ export const styles = StyleSheet.create({
     h2: {
         color: "rgba(256,256,256,1)",
         fontSize: "18",
-        fontWeight: "600",
+        fontWeight: "500",
         marginTop: 5,
         marginBottom: 5,
         marginHorizontal: 25,
@@ -235,9 +256,9 @@ export const styles = StyleSheet.create({
         color: "white",
         width: '90%',
         borderRadius: 5,
-        height: 42,
+        height: 40,
         marginVertical:5,
-        marginHorizontal:15
+        marginLeft:20
     },
     itemPhoto: {
         width: 100,
@@ -251,7 +272,7 @@ export const styles = StyleSheet.create({
         display:'flex',
         alignItems: "center",
         justifyContent:'center',
-        marginBottom: 10,
+
     },
     createContainer: {
         marginTop: 70,
@@ -271,7 +292,7 @@ export const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 5,
+        marginBottom:20
     },
     labels: {
         color: "white",
@@ -300,7 +321,7 @@ export const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         marginVertical:5,
-        marginLeft:15
+        marginLeft:20
     },
     dropDownInactive:{
         borderWidth:1,
@@ -316,11 +337,11 @@ export const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         marginVertical:5,
-        marginLeft:15
+        marginLeft:20
     },
     addPlayerButton:{
-        backgroundColor:'#fffffe', 
-        width:40, 
+        backgroundColor: 'rgba(0,0,0,0.5)', 
+        width:60, 
         height:40, 
         borderTopRightRadius:5, 
         borderBottomRightRadius:5,
@@ -330,8 +351,19 @@ export const styles = StyleSheet.create({
         marginVertical:5
     },
     editText:{
+        fontWeight:'600',
+        color:'rgba(256,256,256,0.4)',
+        fontSize:10
+    },
+    leagueInput:{
+        backgroundColor:'transparent',
+        color:'white',
+        fontSize:14,
         fontWeight:'400',
-        color:'rgba(256,256,256,0.5)',
-        fontSize:14
+        marginLeft:20,
+        width:230,
+        paddingBottom:10,
+        borderBottomWidth:0.5,
+        borderColor:'rgba(256,256,256,0.1)'
     }
 });

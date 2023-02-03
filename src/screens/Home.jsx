@@ -126,19 +126,28 @@ export const Home = ({ navigation, route }) => {
         );
     };
 
+    /**
+     * Returns league object idx when provided a leagueId. This index can be used to get get the league object from res.data.leagues[idx]
+     */
+    const findModifiedLeague = (id) => {
+        console.log('Index modified league :',leagueIds.findIndex(leagueId => leagueId === id))
+        return leagueIds.findIndex(leagueId => leagueId === id)
+    }
+
     /**Callback function used in try again button when an error occurs.
      *
      * Fetched variable is set to false so that the loading spinner loads then the error message is removed and finally the fetch function is called again.
      */
     const handleTryAgain = () => {
+        console.log('League Id on handletryagain: ', leagueId)
         setFetched(false);
         setGetError(false);
         RequestManager.getLeagues(user.uid)
             .then((res) => {
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
-                    setLeague(res.data.leagues.data[0]);
-                    setLeagueId(res.data.leagues.ids[0])
+                    setLeague(leagueId ? res.data.leagues.data[findModifiedLeague(leagueId)] : res.data.leagues.data[0]);//If there was a league before the handleTryAgain, the same league will be displayed
+                    setLeagueId(leagueId ? leagueId : res.data.leagues.ids[0])
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
@@ -301,7 +310,7 @@ export const Home = ({ navigation, route }) => {
                     justifyContent:'center',
                     alignItems:'center'
                   }}
-                onPress={() => navigation.navigate("AddScore", {users:league.users, leagueId, user, handleTryAgain, setFetched})}>
+                onPress={() => navigation.navigate("AddScore", {users:league.users, leagueId, user, handleTryAgain, setFetched, league, setLeague, leagueId, setLeagueId})}>
                     <Text><MaterialCommunityIcons name='plus' style={{fontSize:45, color:'black'}}/></Text>
             </TouchableOpacity> : ''}
 

@@ -60,6 +60,7 @@ export function CreateLeague({ navigation, route }) {
                 navigation.navigate("Home");
                 setTimeout(() => {
                     handleTryAgain()
+
                 }, "2000")
             })
             .catch((e) => {

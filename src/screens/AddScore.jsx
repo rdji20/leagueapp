@@ -22,7 +22,7 @@ import { postScore } from "../utils/RequestManager";
 import {Keyboard} from 'react-native'
 
 export const AddScoreScreen = ({route, navigation}) => {
-    const {users, leagueId, user, setFetched, handleTryAgain} = route.params;
+    const {users, leagueId, user, setFetched, handleTryAgain, setLeagueId, league, setLeague} = route.params;
     const [playerOne, setPlayerOne] = useState({})
     const [playerTwo, setPlayerTwo] = useState({})
     const [teams, setTeams] = useState([])
@@ -93,6 +93,8 @@ export const AddScoreScreen = ({route, navigation}) => {
                     navigation.navigate("Home");
                     setTimeout(() => {
                         handleTryAgain()
+                        setLeague(league)
+                        setLeagueId(leagueId)
                     }, "2000")
                 })
                 .catch((e) => {

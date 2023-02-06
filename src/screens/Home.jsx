@@ -59,6 +59,13 @@ export const Home = ({ navigation, route }) => {
                     ]);
                 }
                 //If getLeagues fetched correctly, get matches:
+                RequestManager.getUser(user.uid).then((res) =>{
+                    setDisplayName(res.data)
+                    console.log('User fetched correctly: ', res.data)
+                }).catch((e) => {
+                    console.log(e)
+                    console.log('Get User failed.')
+                })
                 setFetched(true)
             })
             .catch((e) => {
@@ -67,13 +74,6 @@ export const Home = ({ navigation, route }) => {
                 setLeagueNames([{ value: "No leagues to display.", key: -1 }]);
                 setFetched(true)
             });
-            RequestManager.getUser(user.uid).then((res) =>{
-                setDisplayName(res.data)
-                console.log('User fetched correctly: ', res.data)
-            }).catch((e) => {
-                console.log(e)
-                console.log('Get User failed.')
-            })
 
 
     }, [user]);
@@ -158,6 +158,14 @@ export const Home = ({ navigation, route }) => {
                         },
                     ]);
                 }
+                //If getLeagues fetched correctly, get matches:
+                RequestManager.getUser(user.uid).then((res) =>{
+                    setDisplayName(res.data)
+                    console.log('User fetched correctly: ', res.data)
+                }).catch((e) => {
+                    console.log(e)
+                    console.log('Get User failed.')
+                })
                 setFetched(true)
             })
             .catch((e) => {

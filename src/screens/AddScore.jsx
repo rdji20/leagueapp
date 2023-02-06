@@ -32,7 +32,7 @@ export const AddScoreScreen = ({route, navigation}) => {
     const [scoreTwo, setScoreTwo] = useState('')
 
     const validScore = () => {
-        if (playerOne.userId && playerTwo.userId && scoreOne != '' && scoreTwo != '' && playerOne.userId != playerTwo.userId){
+        if (playerOne.userId && playerTwo.userId && scoreOne != '' && scoreTwo != '' && playerOne.userId != playerTwo.userId && scoreOne != scoreTwo){
             return true
         }
         return false
@@ -87,21 +87,19 @@ export const AddScoreScreen = ({route, navigation}) => {
                     ]
                 }
             }
-            if (!(+scoreOne === +scoreTwo)){
-                postScore(matchData).then((res) => {
-                    setFetched(false)
-                    navigation.navigate("Home");
-                    setTimeout(() => {
-                        handleTryAgain()
-                        setLeague(league)
-                        setLeagueId(leagueId)
-                    }, "2000")
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
+            postScore(matchData).then((res) => {
+                setFetched(false)
+                navigation.navigate("Home");
+                setTimeout(() => {
+                    handleTryAgain()
+                    setLeague(league)
+                    setLeagueId(leagueId)
+                }, "2000")
+            })
+            .catch((e) => {
+                console.log(e);
+            });
             }
-        }
     }
 
 
@@ -177,8 +175,9 @@ export const AddScoreScreen = ({route, navigation}) => {
                         <PictureDisplay url={''} player={'Two'}></PictureDisplay>
                 </View>
             </View>
-            <TouchableOpacity style={styles.chunkyButton} onPress={() => {
+            <TouchableOpacity style={styles[validScore() ? 'chunkyButtonValid' : 'chunkyButton']} onPress={() => {
                 Keyboard.dismiss()
+                handleAddScore()
             }}>
                     <Text style={styles.addScoreText}>Add Score</Text>
             </TouchableOpacity>
@@ -317,6 +316,19 @@ const styles = StyleSheet.create({
         flex:1
     },
     chunkyButton:{
+        backgroundColor:'grey',
+        width:200,
+        height:50,
+        borderRadius:8,
+        borderColor:'black',
+        borderWidth:2,
+        justifyContent:'center',
+        alignItems:'center',
+        position:'absolute',
+        bottom:310,
+        left:103
+    },
+    chunkyButtonValid:{
         backgroundColor:'#7f5af0',
         width:200,
         height:50,
@@ -326,9 +338,12 @@ const styles = StyleSheet.create({
         shadowColor:"black",
         shadowOpacity:10,
         shadowRadius:0,
-        shadowOffset: {width: 5,height: 8},
+        shadowOffset: {width: 3,height: 8},
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        position:'absolute',
+        bottom:318,
+        left:100
     },
     addScoreText:{
         color:'white',

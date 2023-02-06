@@ -243,7 +243,7 @@ export const Home = ({ navigation, route }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Profile", {displayName})}
                 >
-                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account-box' style={{fontSize:35, color:'white'}}/></Text>
+                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account' style={{fontSize:35, color:'white'}}/></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {

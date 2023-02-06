@@ -5,7 +5,8 @@ export const compare = (a, b) => {
         return 1
     }else if (scoreA < scoreB){
         return -1
-    }else if (a.wins > b.wins){
+    }else if (+a.wins + +a.loses > +b.wins + +b.loses){
+        console.log('Yes : ', a.displayName)
         return 1
     }
     return 0

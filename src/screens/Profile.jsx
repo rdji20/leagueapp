@@ -7,10 +7,15 @@ export const Profile = ({ navigation, route }) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
                 <Text style={styles.h1}>Hi, {displayName.split(' ')[0]}</Text>
-                <Text style={styles.h2}> UID: {prop1.uid}</Text>
-                <Text style={styles.h2}> Mail: {prop1.email}</Text>
-                <Text style={styles.h2}> Display Name:c  {displayName}</Text>
-                <Text style={styles.h2}> Display Name:c  {displayName}</Text>
+                <View style={styles.card}>
+                    <Text style={styles.subtitle}>Email:</Text>
+                    <Text style={styles.h2}>{prop1.email}</Text>
+                </View>
+                <View style={styles.card}>
+                    <Text style={styles.subtitle}>Display Name:</Text>
+                    <Text style={styles.h2}>{displayName}</Text>
+                </View>
+
                 <Button
                     title="Go to Home"
                     onPress={() => navigation.navigate("Home")}
@@ -31,13 +36,13 @@ const styles = StyleSheet.create({
     },
     h2: {
         color: 'white',
-        fontSize: 16,
-        textAlign: 'center'
+        fontSize: 14,
+        textAlign: 'left'
     },
     h3: {
         color: 'white',
         fontSize: 14,
-        textAlign:'right'
+        textAlign:'left'
     },
     container: {
         display: "flex",
@@ -45,5 +50,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         flex: 1
+    },
+    card: {
+        backgroundColor: '#242629',
+        marginVertical:10,
+        marginHorizontal:30,
+        borderRadius: 10,
+        padding:12,
+    },
+    subtitle:{
+        fontSize: 12,
+        color: '#94a1b2'
     }
 })

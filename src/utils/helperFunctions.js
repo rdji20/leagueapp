@@ -3,11 +3,15 @@ export const compare = (a, b) => {
     const scoreB = (+b.wins + +b.loses) > 0 ? +b.wins/(+b.wins + +b.loses) : 0
     if (scoreA > scoreB){
         return 1
-    }else if (scoreA < scoreB){
+    }    
+    if (scoreA < scoreB){
         return -1
-    }else if (+a.wins + +a.loses > +b.wins + +b.loses){
-        console.log('Yes : ', a.displayName)
+    }
+    if (+a.wins + +a.loses > +b.wins + +b.loses){
         return 1
+    }    
+    if (+a.wins + +a.loses < +b.wins + +b.loses){
+        return -1
     }
     return 0
 }

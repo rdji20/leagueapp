@@ -94,6 +94,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
 const styles = StyleSheet.create({
     view: {
         flex: 1,
+        zIndex:-1
     },
     h2: {
         color: "white",
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     },
     h3: {
         color: "#94a1b2",
-        fontWeight:'500',
+        fontWeight:'600',
         fontSize: 10,
     },
     description: {
@@ -193,7 +194,6 @@ const styles = StyleSheet.create({
         color:"#7f5af0"
     },
     infoContainer:{
-        backgroundColor:'black',
         marginHorizontal:10,
         display:'flex',
         flexDirection:'row',
@@ -202,9 +202,8 @@ const styles = StyleSheet.create({
         height:35,
         width:100,
         borderWidth:1,
-        borderRadius:8,
         backgroundColor:'#242629',
-        borderRadius:8,
+        borderRadius:2,
         marginBottom:20,
         shadowColor:"black",
         shadowOpacity:0.8,

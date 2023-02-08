@@ -47,7 +47,11 @@ export default function LoginForm({email, setEmail, password, setPassword, handl
         
         <TouchableOpacity
             title="or Sign Up"
-            onPress={() => {setLoginScreen(false)}}
+            onPress={() => {
+                setEmail('')
+                setPassword('')
+                setLoginScreen(false)
+            }}
             style={styles.register}
         >
             <Text style={styles.alreadyText}> Don't have an account yet?</Text>

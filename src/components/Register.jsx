@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 
-export default function RegisterForm({email, setEmail, password, setPassword, handleLogin, handleSignUp, setLoginScreen, newUserName, setNewUserName}) {
+export default function RegisterForm({email, setEmail, password, setPassword, handleSignUp, setLoginScreen, newUserName, setNewUserName}) {
   return (
     <SafeAreaView
         style={{
@@ -54,7 +54,12 @@ export default function RegisterForm({email, setEmail, password, setPassword, ha
         </TouchableOpacity>
         <TouchableOpacity
             title="Login"
-            onPress={() => {setLoginScreen(true)}}
+            onPress={() => {
+                setPassword('')
+                setEmail('')
+                setNewUserName('')
+                setLoginScreen(true)
+            }}
             style={styles.register}
         >
             <Text style={styles.alreadyText}> Already Have an account?</Text>

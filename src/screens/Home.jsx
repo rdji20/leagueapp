@@ -23,6 +23,7 @@ import axios from "axios";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ActivityIndicator } from "react-native-paper";
 import * as RequestManager from "../utils/RequestManager";
+import { DropdownList } from "../components/leaguesDropdown";
 
 
 
@@ -80,7 +81,7 @@ export const Home = ({ navigation, route }) => {
 
     const getLeagueNames = (leagueArr) => {
         const leagueNames = leagueArr.leagues.data.map((element, index) => {
-            return { value: element.l_name, key: leagueArr.leagues.ids[index] };
+            return { value: element.l_name, icon:element.icon, key: leagueArr.leagues.ids[index] };
         });
         return leagueNames;
     };
@@ -243,7 +244,7 @@ export const Home = ({ navigation, route }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Profile", {displayName})}
                 >
-                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account' style={{fontSize:35, color:'white'}}/></Text>
+                    <Text style={{fontSize: 16, fontWeight:'400'}}><MaterialCommunityIcons name='account-circle' style={{fontSize:35, color:'white'}}/></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
@@ -266,40 +267,9 @@ export const Home = ({ navigation, route }) => {
                     justifyContent: "center",
                 }}
             >
-                <SelectList
-                    setSelected={(key) => handleSelectLeague(key)}
-                    save="key"
-                    data={leagueNames}
-                    dropdownTextStyles={{ color: "white" }}
-                    placeholder="My Leagues"
-                    search={false}
-                    arrowicon={
-                        <MaterialCommunityIcons
-                            name="chevron-down"
-                            style={{
-                                color: "rgba(256,256,256,0.5)",
-                                fontSize: 22,
-                            }}
-                        ></MaterialCommunityIcons>
-                    }
-                    inputStyles={{
-                        color: "rgba(256,256,256,0.5)",
-                        textAlign: "center",
-                        fontWeight: "600",
-                        fontSize: 18,
-                    }}
-                    boxStyles={{
-                        color: "rgba(256,256,256,0.5)",
-                        borderWidth: "0",
-                        width: 150,
-                    }}
-                    dropdownStyles={{
-                        color: "rgba(256,256,256,0.5)",
-                        width: 300,
-                    }}
-                />
+                <DropdownList leagueNames={leagueNames} handleSelectLeague={handleSelectLeague}></DropdownList>
             </View>
-            {/* <View > */}
+
             <LeagueScreen />
             {leagueId && fetched && !getError? <TouchableOpacity
                 style={{
@@ -375,6 +345,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginHorizontal: 30,
         marginTop: 10,
+        marginBottom:35
     },
     tryAgain: {
         color: "#8983C4",

@@ -154,8 +154,8 @@ export function CreateLeague({ navigation, route }) {
             <View>
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', marginLeft:20, marginBottom:20}}>
                     <View style={{...styles.container, marginTop:20}}>
-                        <View style={{...styles.container, width:70, height:70, borderWidth:0.5, borderColor:'white', borderRadius:35, backgroundColor:'transparent'}}>
-                            <MaterialCommunityIcons name={icon} style={{fontSize:30, color:icon === 'camera' ? '#94a1b2' :'white'}}/>
+                        <View style={{...styles.container, width:70, height:70, borderWidth:0.5, borderColor:'white', borderRadius:35, backgroundColor:icon === 'camera' ? '#transparent' :'white'}}>
+                            <MaterialCommunityIcons name={icon} style={{fontSize:30, color:icon === 'camera' ? '#94a1b2' :'black'}}/>
                         </View>
                         <TouchableOpacity style={{marginTop:10}}onPress={() => {
                             setSelectingIcon(!selectingIcon)
@@ -239,7 +239,7 @@ export const styles = StyleSheet.create({
     },
     buttonText2: {
         fontWeight: "400",
-        color: "#8983C4",
+        color: "#7f5af0",
         fontSize: 16,
     },
     buttonContainer: {
@@ -352,14 +352,14 @@ export const styles = StyleSheet.create({
         marginVertical:5
     },
     editText:{
-        fontWeight:'600',
-        color:'rgba(256,256,256,0.4)',
-        fontSize:10
+        fontWeight:'500',
+        color:'#DBFF00',
+        fontSize:12
     },
     leagueInput:{
         backgroundColor:'transparent',
         color:'white',
-        fontSize:14,
+        fontSize:16,
         fontWeight:'400',
         marginLeft:20,
         width:230,

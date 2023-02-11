@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const localIPAddress = "10.50.179.3";
+export const localIPAddress = "http://192.168.100.64:3000";
 export const firebaseServerAddress =
     "https://us-central1-ntf-app-36f1e.cloudfunctions.net/app";
 

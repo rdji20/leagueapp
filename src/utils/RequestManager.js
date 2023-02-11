@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const localIPAddress = "192.168.100.64";
+export const localIPAddress = "10.50.179.3";
+export const firebaseServerAddress =
+    "https://us-central1-ntf-app-36f1e.cloudfunctions.net/app";
 
 /**
  * Makes a POST call to the backend that adds new user info to firebase.
@@ -13,7 +15,7 @@ export async function userCreation(thisUser, newUserName) {
     console.log("Test after request Manager ", newUserName);
 
     axios
-        .post(`http://${localIPAddress}:3000/create_user`, {
+        .post(`${firebaseServerAddress}/create_user`, {
             user_id: thisUser.uid,
             displayName: newUserName,
         })
@@ -33,7 +35,7 @@ export async function userCreation(thisUser, newUserName) {
  */
 export async function getLeagues(uid) {
     try {
-        const res = await axios.get(`http://${localIPAddress}:3000/leagues`, {
+        const res = await axios.get(`${firebaseServerAddress}/leagues`, {
             params: {
                 user_id: uid,
             },
@@ -47,9 +49,9 @@ export async function getLeagues(uid) {
 }
 export async function getMatches(leagueId) {
     try {
-        const res = await axios.get(`http://${localIPAddress}:3000/get_matches`, {
+        const res = await axios.get(`${firebaseServerAddress}/get_matches`, {
             params: {
-                leagueId
+                leagueId,
             },
         });
         return res;
@@ -60,9 +62,10 @@ export async function getMatches(leagueId) {
 }
 export async function getUser(uid) {
     try {
-        const res = await axios.get(`http://${localIPAddress}:3000/get_user`, {
-        params:{
-            uId: uid}
+        const res = await axios.get(`${firebaseServerAddress}/get_user`, {
+            params: {
+                uId: uid,
+            },
         });
         return res;
     } catch (e) {
@@ -73,7 +76,7 @@ export async function getUser(uid) {
 
 export async function createLeague(league, uid) {
     axios
-        .post(`http://${localIPAddress}:3000/create_league`, {
+        .post(`${firebaseServerAddress}/create_league`, {
             uId: uid,
             leagueName: league.name,
             leagueType: league.leagueType,
@@ -91,8 +94,8 @@ export async function createLeague(league, uid) {
 }
 export async function postScore(matchObj) {
     axios
-        .post(`http://${localIPAddress}:3000/add_score`, {
-            ...matchObj
+        .post(`${firebaseServerAddress}/add_score`, {
+            ...matchObj,
         })
         .then((response) => {
             console.log("Score Added");
@@ -105,10 +108,10 @@ export async function postScore(matchObj) {
 }
 export async function AddGuestUser(uId, leagueId, userObject) {
     axios
-        .post(`http://${localIPAddress}:3000/new_guest_user`, {
+        .post(`${firebaseServerAddress}/new_guest_user`, {
             uId,
             leagueId,
-            userObject
+            userObject,
         })
         .then((response) => {
             console.log("User Added");

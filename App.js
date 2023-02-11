@@ -59,7 +59,7 @@ export default function App() {
      * Signs new user up with firebase auth and adds user to firebase using
      * a call to Usercreation api function.
      */
-     const handleSignUp = () => {
+    const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
@@ -68,9 +68,22 @@ export default function App() {
                 console.log("Test before rerquestManger", newUserName);
                 RequestManager.userCreation(thisUser, newUserName);
                 // ...
-            }).then(() => {
-                setIsLoggedIn(true);
-            }) 
+            })
+            .then(() => {
+                auth.currentUser
+                    .getIdToken(true)
+                    .then((idToken) => {
+                        axios.defaults.headers.common[
+                            "Authorization"
+                        ] = `Bearer ${idToken}`;
+                    })
+                    .then(() => {
+                        setIsLoggedIn(true);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -87,7 +100,19 @@ export default function App() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setUser(userCredential.user);
-                setIsLoggedIn(true);
+                auth.currentUser
+                    .getIdToken(true)
+                    .then((idToken) => {
+                        axios.defaults.headers.common[
+                            "Authorization"
+                        ] = `Bearer ${idToken}`;
+                    })
+                    .then(() => {
+                        setIsLoggedIn(true);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
             })
             .catch((error) => {
                 console.error(error);
@@ -172,7 +197,7 @@ export default function App() {
                                         backgroundColor: "#16161a",
                                     },
                                     title: "Profile ",
-                                    gestureDirection:'horizontal-inverted'
+                                    gestureDirection: "horizontal-inverted",
                                 }}
                                 name="Profile"
                                 component={Profile}

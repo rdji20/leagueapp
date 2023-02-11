@@ -37,6 +37,7 @@ import { Home } from "./src/screens/Home";
 import * as RequestManager from "./src/utils/RequestManager";
 import { AddScoreScreen } from "./src/screens/AddScore";
 import { AddNewPlayer } from "./src/screens/addNewPlayer";
+import { LeagueType } from "./src/screens/leagueType";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -171,6 +172,7 @@ export default function App() {
                                         backgroundColor: "#16161a",
                                     },
                                     title: "Profile ",
+                                    gestureDirection:'horizontal-inverted'
                                 }}
                                 name="Profile"
                                 component={Profile}
@@ -203,6 +205,19 @@ export default function App() {
                                 }}
                                 name="AddNewPlayer"
                                 component={AddNewPlayer}
+                                initialParams={{
+                                    prop1: user,
+                                }}
+                            />
+                            <Stack.Screen
+                                options={{
+                                    cardStyle: {
+                                        backgroundColor: "#16161a",
+                                    },
+                                    title: "Select League Type",
+                                }}
+                                name="LeagueType"
+                                component={LeagueType}
                                 initialParams={{
                                     prop1: user,
                                 }}

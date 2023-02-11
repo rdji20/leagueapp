@@ -249,7 +249,7 @@ export const Home = ({ navigation, route }) => {
                 <TouchableOpacity
                     onPress={() => {
                         if (!getError && fetched){
-                        navigation.navigate("NewLeague", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})
+                        navigation.navigate("LeagueType", {uId:user.uid, displayName:displayName, handleTryAgain, setFetched})
                         }
                     }}
                     style={{justifyContent:'center', alignItems:'center'}}

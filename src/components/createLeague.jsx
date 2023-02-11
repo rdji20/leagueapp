@@ -22,7 +22,7 @@ import InputScrollView from 'react-native-input-scroll-view'
 import uuid from 'react-uuid'
 
 export function CreateLeague({ navigation, route }) {
-    const { prop1, prop2, logout, uId, displayName, handleTryAgain, setFetched} = route.params;
+    const { prop1, prop2, logout, uId, displayName, handleTryAgain, setFetched, leagueType} = route.params;
     const [name, setName] = useState("");
     const [players, setPlayers] = useState([]);
     const [newName, setNewName] = useState("");
@@ -45,6 +45,7 @@ export function CreateLeague({ navigation, route }) {
             icon: icon ==='camera' ? 'trophy' : icon,
             name,
             players:newPlayers,
+            leagueType
         };
         //redirect
         if (players.length === 1){
@@ -142,7 +143,7 @@ export function CreateLeague({ navigation, route }) {
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.button2}
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => navigation.pop()}
                 >
                     <Text style={styles.buttonText2}> Back </Text>
                 </TouchableOpacity>

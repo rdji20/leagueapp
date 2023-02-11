@@ -76,7 +76,7 @@ export async function createLeague(league, uid) {
         .post(`http://${localIPAddress}:3000/create_league`, {
             uId: uid,
             leagueName: league.name,
-            leagueType: "0",
+            leagueType: league.leagueType,
             users: league.players,
             iconId: league.icon,
         })

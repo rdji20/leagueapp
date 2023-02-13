@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 import {
     View,
     Text,
@@ -8,69 +8,99 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 
-
-export default function RegisterForm({email, setEmail, password, setPassword, handleSignUp, setLoginScreen, newUserName, setNewUserName}) {
-  return (
-    <SafeAreaView
-        style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-        }}
-    >
-        <Text style={styles.text}> Sign up with your email</Text>
-        <TextInput
-            placeholder="Email"
-            autoCapitalize="none"
-            placeholderTextColor="rgba(256,256,256,0.5)"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-        />
-        <TextInput
-            placeholder="Display Name"
-            placeholderTextColor="rgba(256,256,256,0.5)"
-            value={newUserName}
-            onChangeText={setNewUserName}
-            style={styles.input}
-        />
-        <TextInput
-            placeholder="Password"
-            placeholderTextColor="rgba(256,256,256,0.5)"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            style={styles.input}
-        />
-
-        <TouchableOpacity
-            title="Sign Up"
-            onPress={handleSignUp}
-            style={styles.login}
-        >
-            <Text style={styles.loginText}>Create Account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-            title="Login"
-            onPress={() => {
-                setPassword('')
-                setEmail('')
-                setNewUserName('')
-                setLoginScreen(true)
+export default function RegisterForm({
+    email,
+    setEmail,
+    password,
+    setPassword,
+    passwordCheck,
+    setPasswordCheck,
+    handleSignUp,
+    setLoginScreen,
+    newUserName,
+    setNewUserName,
+}) {
+    return (
+        <SafeAreaView
+            style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
             }}
-            style={styles.register}
         >
-            <Text style={styles.alreadyText}> Already Have an account?</Text>
-            <Text style={styles.registerText}> Sign in</Text>
-        </TouchableOpacity>
-    </SafeAreaView>
-  );
-};
+            <Text style={styles.text}> Sign up with your email</Text>
+            <TextInput
+                placeholder="Email"
+                autoCapitalize="none"
+                placeholderTextColor="rgba(256,256,256,0.5)"
+                value={email}
+                onChangeText={setEmail}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Display Name"
+                placeholderTextColor="rgba(256,256,256,0.5)"
+                value={newUserName}
+                onChangeText={setNewUserName}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                placeholderTextColor="rgba(256,256,256,0.5)"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                placeholderTextColor="rgba(256,256,256,0.5)"
+                value={passwordCheck}
+                onChangeText={setPasswordCheck}
+                secureTextEntry
+                style={styles.input}
+            />
 
+            <TouchableOpacity
+                title="Sign Up"
+                onPress={() => {
+                    if (password == passwordCheck) {
+                        console.log("Reached");
+                        handleSignUp();
+                    } else {
+                        Alert.alert(
+                            "Incorrect password",
+                            "The passwords don't match."
+                        );
+                    }
+                }}
+                style={styles.login}
+            >
+                <Text style={styles.loginText}>Create Account</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                title="Login"
+                onPress={() => {
+                    setPassword("");
+                    setEmail("");
+                    setNewUserName("");
+                    setLoginScreen(true);
+                }}
+                style={styles.register}
+            >
+                <Text style={styles.alreadyText}>
+                    {" "}
+                    Already Have an account?
+                </Text>
+                <Text style={styles.registerText}> Sign in</Text>
+            </TouchableOpacity>
+        </SafeAreaView>
+    );
+}
 
-  
 const styles = StyleSheet.create({
     input: {
         placeHolderTextColor: "white",
@@ -109,22 +139,21 @@ const styles = StyleSheet.create({
     loginText: {
         color: "#8983C4",
         fontSize: 16,
-        fontWeight: '600'
+        fontWeight: "600",
     },
     registerText: {
         color: "#8983C4",
-        fontSize: 12
+        fontSize: 12,
     },
 
     alreadyText: {
         color: "white",
-        fontSize: 12
+        fontSize: 12,
     },
-    
-    
+
     text: {
         color: "white",
         fontSize: 22,
-        marginBottom: 15
+        marginBottom: 15,
     },
-    })
+});

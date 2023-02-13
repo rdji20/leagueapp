@@ -7,6 +7,7 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
+    Alert,
 } from "react-native";
 
 import { initializeApp } from "firebase/app";
@@ -48,6 +49,7 @@ const auth = getAuth(app);
 export default function App() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordCheck, setPasswordCheck] = useState("");
     const [error, setError] = useState(null);
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -115,7 +117,10 @@ export default function App() {
                     });
             })
             .catch((error) => {
-                console.error(error);
+                Alert.alert(
+                    "Login error",
+                    "The password or email you provided is wrong."
+                );
             });
     };
 
@@ -125,7 +130,7 @@ export default function App() {
                 setIsLoggedIn(false);
             })
             .catch((error) => {
-                console.error(error);
+                console.log(error);
             });
     };
 
@@ -148,6 +153,8 @@ export default function App() {
                     setEmail={setEmail}
                     password={password}
                     setPassword={setPassword}
+                    passwordCheck={passwordCheck}
+                    setPasswordCheck={setPasswordCheck}
                     handleSignUp={handleSignUp}
                     setLoginScreen={setLoginScreen}
                     setNewUserName={setNewUserName}

@@ -14,11 +14,11 @@ export const Profile = ({ navigation, route }) => {
                 </View>
                 <Text style={styles.h1}>{displayName}</Text>
                 <View style={styles.card}>
-                    <Text style={styles.subtitle}>Email:</Text>
+                    <Text style={styles.subtitle}>Email</Text>
                     <Text style={styles.h2}>{prop1.email}</Text>
                 </View>
                 <View style={{...styles.card, marginBottom:300}}>
-                    <Text style={styles.subtitle}>Display Name:</Text>
+                    <Text style={styles.subtitle}>Display Name</Text>
                     <Text style={styles.h2}>{displayName}</Text>
                 </View>
                 <Button color='#7f5af0' title="Logout" onPress={logout.handleLogout} />

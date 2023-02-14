@@ -13,14 +13,14 @@ import {
 } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export const NoLeagues = ({ navigation, userProp, uId, displayName, handleTryAgain, setFetched}) => {
+export const NoLeagues = ({ navigation, userProp, uId, displayName, handleTryAgain, setFetched, setNewLeagueCreated}) => {
     return (
         <View style={styles.view}>
             <MaterialCommunityIcons name='stadium' style={{color:'white', fontSize:46}}/>
             <Text style={styles.h1}> No Leagues Yet </Text>
             <Text style={{color:'#94a1b2', fontWeight:'400', fontSize:16, marginBottom:40}}> Create a league to start ranking your friends!</Text>
             <TouchableOpacity
-                onPress={() => navigation.navigate("NewLeague", {displayName, uId, handleTryAgain, setFetched})}
+                onPress={() => navigation.navigate("LeagueType", {displayName, uId, handleTryAgain, setFetched, setNewLeagueCreated})}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}> Create League</Text>

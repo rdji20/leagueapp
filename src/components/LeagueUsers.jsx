@@ -24,13 +24,8 @@ const DefaultImage = ({user}) => {
 const ListItem = ({ item, index}) => {
   return (
     <View style={styles.item} key={item.userId}>
-        {item.picUri != ''? <Image 
-        style={styles.itemPhoto} 
-        source={{
-            uri: item.picUri
-        }}
-        /> : <DefaultImage user={item.displayName}/>}
-        <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? firstName(item.displayName)  : 'User'}</Text>
+        <DefaultImage user={item.displayName}/>
+        <Text numberOfLines={1} style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? firstName(item.displayName)  : 'User'}</Text>
         <View style={{display:'flex', flexDirection:'row'}}>
         </View>
     </View>
@@ -91,7 +86,8 @@ const styles = StyleSheet.create({
         fontWeight:'400',
         marginTop: 8,
         fontSize: 12,
-        marginBottom: 5
+        marginBottom: 5,
+        overflow:'hidden'
       },
       container: {
         backgroundColor: "transparent",

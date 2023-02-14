@@ -145,8 +145,7 @@ export const Home = ({ navigation, route }) => {
      *
      * Fetched variable is set to false so that the loading spinner loads then the error message is removed and finally the fetch function is called again.
      */
-    const handleTryAgain = () => {
-        console.log("League Id on handletryagain: ", leagueId);
+    const handleTryAgain = (newLeague=false) => {
         setFetched(false);
         setGetError(false);
         RequestManager.getLeagues(user.uid)
@@ -154,13 +153,13 @@ export const Home = ({ navigation, route }) => {
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
                     setLeague(
-                        leagueId
+                        !newLeague && leagueId
                             ? res.data.leagues.data[
                                   findModifiedLeague(leagueId)
                               ]
-                            : res.data.leagues.data[0]
+                            : res.data.leagues.data[res.data.leagues.data.length - 1]
                     ); //If there was a league before the handleTryAgain, the same league will be displayed
-                    setLeagueId(leagueId ? leagueId : res.data.leagues.ids[0]);
+                    setLeagueId(leagueId && !newLeague ? leagueId : res.data.leagues.ids[res.data.leagues.data.length - 1]);
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
@@ -225,6 +224,7 @@ export const Home = ({ navigation, route }) => {
                 setFetched={setFetched}
                 navigation={navigation}
                 route={route}
+                setNewLeagueCreated={setNewLeagueCreated}
             ></NoLeagues>
         );
     };
@@ -284,6 +284,7 @@ export const Home = ({ navigation, route }) => {
                                 displayName: displayName,
                                 handleTryAgain,
                                 setFetched,
+                                setNewLeagueCreated
                             });
                         }
                     }}

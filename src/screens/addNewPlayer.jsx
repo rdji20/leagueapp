@@ -39,7 +39,6 @@ export const AddNewPlayer = ({ navigation, route}) => {
             rating: '1500'
         }
         AddGuestUser(uId, leagueId,userObject).then(() => {
-            console.log('Yas Queen, user was added.')
             setFetched(false)
             navigation.navigate("Home");
             setTimeout(() => {
@@ -61,6 +60,7 @@ export const AddNewPlayer = ({ navigation, route}) => {
                     <View style={styles.inputContainer}>
                         <View>
                             <TextInput 
+                                maxLength={18}
                                 style={styles.input}
                                 onChangeText={setDisplayName}
                                 placeholder='Player Name'

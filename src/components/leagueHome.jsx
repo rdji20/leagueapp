@@ -33,6 +33,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
     leagueUsers.sort(compare).reverse()//Ordering User List by V0 criterion
     
     useEffect(() =>{
+        console.log('League Id Pene:',leagueId)
         getMatches(leagueId).then((res) => {
             const matchesTemp = [...res.data.matches.data.map((val, index) => {return {...val, matchId:res.data.matches.ids[index]}})]
             

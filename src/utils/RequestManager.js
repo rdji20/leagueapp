@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export const localIPAddress = "http://192.168.100.64:3000";
-export const firebaseServerAddress =
-    "https://us-central1-ntf-app-36f1e.cloudfunctions.net/app";
+/* export const firebaseServerAddress =
+    "https://us-central1-ntf-app-36f1e.cloudfunctions.net/app"; */
+export const firebaseServerAddress = "http://192.168.100.64:3000";
 
 /**
  * Makes a POST call to the backend that adds new user info to firebase.

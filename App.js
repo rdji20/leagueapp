@@ -118,8 +118,8 @@ export default function App() {
             })
             .catch((error) => {
                 Alert.alert(
-                    "Login error",
-                    "The password or email you provided is wrong."
+                    "Login Failed",
+                    "Your email or password is incorrect. Please try again."
                 );
             });
     };
@@ -267,7 +267,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#1B1C1E",
+        backgroundColor: "#16161a",
     },
     input: {
         placeHolderTextColor: "white",

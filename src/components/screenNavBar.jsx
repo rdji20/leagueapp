@@ -9,7 +9,6 @@ import {
     ScrollView,
     Pressable,
     TouchableOpacity,
-    TextInput,
 } from "react-native";
 import { styles } from "./createLeague";
 

@@ -8,11 +8,11 @@ import { leagueTypes } from "../utils/leagueDescriptions";
 
 
 export const LeagueType = ({navigation,route}) => {
-    const {uId, displayName, handleTryAgain, setFetched} = route.params;
+    const {uId, displayName, handleTryAgain, setFetched, setNewLeagueCreated} = route.params;
     const [leagueType, setLeagueType] = useState('')
     
     const navigateCreate  = (leagueType) => {
-        navigation.navigate('NewLeague', {uId, displayName, handleTryAgain, setFetched, leagueType})
+        navigation.navigate('NewLeague', {uId, displayName, handleTryAgain, setFetched ,leagueType, setNewLeagueCreated})
     }
 
     return (

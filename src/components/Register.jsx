@@ -33,6 +33,7 @@ export default function RegisterForm({
         >
             <Text style={styles.text}> Sign up with your email</Text>
             <TextInput
+                keyboardType="email-address"
                 placeholder="Email"
                 autoCapitalize="none"
                 placeholderTextColor="rgba(256,256,256,0.5)"
@@ -56,7 +57,7 @@ export default function RegisterForm({
                 style={styles.input}
             />
             <TextInput
-                placeholder="Password"
+                placeholder="Confirm Password"
                 placeholderTextColor="rgba(256,256,256,0.5)"
                 value={passwordCheck}
                 onChangeText={setPasswordCheck}
@@ -73,7 +74,7 @@ export default function RegisterForm({
                     } else {
                         Alert.alert(
                             "Incorrect password",
-                            "The passwords don't match."
+                            "Password doesn't match."
                         );
                     }
                 }}

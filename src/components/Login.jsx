@@ -29,6 +29,8 @@ export default function LoginForm({
         >
             <Text style={styles.text}>Sign in</Text>
             <TextInput
+                textContentType="emailAddress"
+                keyboardType="email-address"
                 placeholder="Email"
                 autoCapitalize="none"
                 placeholderTextColor="rgba(256, 256, 256, 0.5)"

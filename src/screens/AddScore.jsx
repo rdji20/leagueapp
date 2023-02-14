@@ -45,24 +45,6 @@ export const AddScoreScreen = ({route, navigation}) => {
           </View>
         )
       }
-    
-    const UserInfo = ({side, player}) => {
-        const scorePlayer = side ==='left' ? scoreOne: scoreTwo
-        const setFunction = side ==='left' ? setScoreOne: setScoreTwo
-        return (
-            <View style={styles[side]} >
-                <Text style={styles.h2}> {side==='left' ? 'Left Player': 'Right Player'}</Text>
-                <Text style={styles.h3}> {side==='left' ? 'Team 1': 'Team 2'}</Text>
-                <TextInput 
-                    value={scorePlayer} 
-                    placeholder={'0'}
-                    style={styles[side==='left' ? 'winner': 'loser']}
-                    onChangeText={setFunction}
-                >
-                </TextInput>
-            </View>
-        )
-    }
 
     const handleAddScore = () => {
         if (validScore()){
@@ -92,8 +74,6 @@ export const AddScoreScreen = ({route, navigation}) => {
                 navigation.navigate("Home");
                 setTimeout(() => {
                     handleTryAgain()
-                    setLeague(league)
-                    setLeagueId(leagueId)
                 }, "2000")
             })
             .catch((e) => {
@@ -148,6 +128,7 @@ export const AddScoreScreen = ({route, navigation}) => {
                         <Text style={styles.h2}>Player A</Text>
                         <Text style={styles.h3}>Points</Text>
                         <TextInput 
+                            maxLength={7}
                             value={scoreOne} 
                             placeholder={'0'}
                             style={{...styles[+scoreOne > +scoreTwo ? 'winner' : 'loser'], textAlign:'right',}}
@@ -163,6 +144,7 @@ export const AddScoreScreen = ({route, navigation}) => {
                             <Text style={styles.h2}>Player B</Text>
                             <Text style={styles.h3}>Points</Text>
                             <TextInput 
+                                maxLength={7}
                                 value={scoreTwo} 
                                 placeholder={'0'}
                                 style={{...styles[+scoreOne < +scoreTwo ? 'winner' : 'loser'], textAlign:'left',}}

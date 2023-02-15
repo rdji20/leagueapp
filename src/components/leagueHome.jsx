@@ -15,66 +15,122 @@ import { DataTable } from "react-native-paper";
 import DisplayUsers from "./LeagueUsers";
 import { RecentMatches } from "./recentMatch";
 import LeagueStandings from "./RankingTable";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import Feather from 'react-native-vector-icons/Feather'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
+import Feather from "react-native-vector-icons/Feather";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RecentMatchesList } from "./recentMatches";
 import { getMatches } from "../utils/RequestManager";
 import { compare } from "../utils/helperFunctions";
 import { firstName } from "../utils/helperFunctions";
 
-export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain, setFetched}) => {
-    const [matches, setMatches] = useState([])
-    
-    const leagueUsers = [...league.users]
-    leagueUsers.sort(compare).reverse()//Ordering User List by V0 criterion
-    
-    useEffect(() =>{
-        console.log('League Id Pene:',leagueId)
-        getMatches(leagueId).then((res) => {
-            const matchesTemp = [...res.data.matches.data.map((val, index) => {return {...val, matchId:res.data.matches.ids[index]}})]
-            
-            setMatches(matchesTemp)
+export const LeagueHome = ({
+    navigation,
+    league,
+    leagueId,
+    user,
+    handleTryAgain,
+    setFetched,
+}) => {
+    const [matches, setMatches] = useState([]);
 
-        }).catch((e) =>{
-            console.log(e)
-        })
-    }, [])
-    
+    const leagueUsers = [...league.users];
+    leagueUsers.sort(compare).reverse(); //Ordering User List by V0 criterion
+
+    useEffect(() => {
+        console.log("League Id Pene:", leagueId);
+        getMatches(leagueId)
+            .then((res) => {
+                const matchesTemp = [
+                    ...res.data.matches.data.map((val, index) => {
+                        return {
+                            ...val,
+                            matchId: res.data.matches.ids[index],
+                            timeStamp: res.data.matches.times[index],
+                        };
+                    }),
+                ];
+                console.log("Matches object", matchesTemp);
+                setMatches(matchesTemp);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }, []);
+
     const GenerateTitle = () => {
         return (
-            <View style={{display: 'flex', flexDirection:'column', alignItems:'center',}}>
-                {league.l_name.split(' ').map((str, index) => (<Text key={index}style={styles.h1}>{str.charAt(0).toUpperCase() + str.slice(1)}</Text>))}
+            <View
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
+                {league.l_name.split(" ").map((str, index) => (
+                    <Text key={index} style={styles.h1}>
+                        {str.charAt(0).toUpperCase() + str.slice(1)}
+                    </Text>
+                ))}
             </View>
-        )
-    }
-
-
+        );
+    };
 
     return (
         <ScrollView style={styles.view}>
             <View style={styles.title}>
-                <View style={{...styles.container, marginTop:20}}>
-                    <MaterialCommunityIcons name={league.icon} style={{fontSize:55, color:'white'}}/>
+                <View style={{ ...styles.container, marginTop: 20 }}>
+                    <MaterialCommunityIcons
+                        name={league.icon}
+                        style={{ fontSize: 55, color: "white" }}
+                    />
                 </View>
-                <GenerateTitle/>
+                <GenerateTitle />
             </View>
 
-            <DisplayUsers users={league.users}/>
+            <DisplayUsers users={league.users} />
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Leaderboard</Text>
-                <TouchableOpacity onPress={() => navigation.navigate("AddNewPlayer", {uId:user.uid, leagueId, setFetched, handleTryAgain})} style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>Add New Player</Text></TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() =>
+                        navigation.navigate("AddNewPlayer", {
+                            uId: user.uid,
+                            leagueId,
+                            setFetched,
+                            handleTryAgain,
+                        })
+                    }
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Text style={styles.seeAll}>Add New Player</Text>
+                </TouchableOpacity>
             </View>
-           
-            <LeagueStandings users={leagueUsers} userId={user.uid}/>
+
+            <LeagueStandings users={leagueUsers} userId={user.uid} />
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>
-                <TouchableOpacity style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}><Text style={styles.seeAll}>See All</Text></TouchableOpacity>
+                <TouchableOpacity
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Text style={styles.seeAll}>See All</Text>
+                </TouchableOpacity>
             </View>
-            <RecentMatchesList matches={matches} users={league.users}></RecentMatchesList>
+            <RecentMatchesList
+                matches={matches}
+                users={league.users}
+            ></RecentMatchesList>
         </ScrollView>
     );
 };
@@ -82,7 +138,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
 const styles = StyleSheet.create({
     view: {
         flex: 1,
-        zIndex:-1
+        zIndex: -1,
     },
     h2: {
         color: "white",
@@ -96,12 +152,12 @@ const styles = StyleSheet.create({
         fontWeight: "800",
         color: "white",
         padding: 0,
-        marginTop:0,
-        shadowColor:'white',
-        shadowOpacity:0.2,
-        shadowRadius:15,
+        marginTop: 0,
+        shadowColor: "white",
+        shadowOpacity: 0.2,
+        shadowRadius: 15,
         width: 500,
-        textAlign: 'center',
+        textAlign: "center",
     },
     buttonMain: {
         marginHorizontal: 10,
@@ -128,45 +184,45 @@ const styles = StyleSheet.create({
         width: 50,
     },
     buttonTextMain: {
-        color: 'black',
-        fontSize:14,
-        fontWeight:'600'
+        color: "black",
+        fontSize: 14,
+        fontWeight: "600",
     },
     buttonTextSecondary: {
-        color: 'black',
-        fontSize:12
+        color: "black",
+        fontSize: 12,
     },
     buttonContainer: {
         alignItems: "center",
-        display: 'flex',
-        flexDirection:'row',
+        display: "flex",
+        flexDirection: "row",
     },
     title: {
-        marginTop:20,
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'space-evenly',
-        alignItems: 'center',
-        marginBottom:10
+        marginTop: 20,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginBottom: 10,
     },
     h3: {
         color: "#fffffe",
-        fontWeight:'600',
+        fontWeight: "600",
         fontSize: 16,
-        textAlign:'center'
+        textAlign: "center",
     },
     description: {
-        flex:1,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems:'center',
-        marginTop:10,
-        height:40,
-        borderRadius:4,
-        paddingVertical:50,
-        borderBottomWidth:1,
-        borderBottomColor:'#94a1b2'
+        flex: 1,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 10,
+        height: 40,
+        borderRadius: 4,
+        paddingVertical: 50,
+        borderBottomWidth: 1,
+        borderBottomColor: "#94a1b2",
     },
     icon: {
         fontSize: 40,
@@ -174,33 +230,32 @@ const styles = StyleSheet.create({
         color: "white",
         padding: 0,
         height: 55,
-        marginTop:10,
-        marginBottom:10
+        marginTop: 10,
+        marginBottom: 10,
     },
-    recentMatches:{
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center',
-        marginRight: 20
+    recentMatches: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginRight: 20,
     },
     seeAll: {
-        color:"#7f5af0"
+        color: "#7f5af0",
     },
-    infoContainer:{
-        marginHorizontal:10,
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'center',
-        height:35,
-        width:100,
-    },
-    container:{
-        display:'flex',
+    infoContainer: {
+        marginHorizontal: 10,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
-        justifyContent:'center',
-        marginBottom:5
-    }
-
+        height: 35,
+        width: 100,
+    },
+    container: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 5,
+    },
 });

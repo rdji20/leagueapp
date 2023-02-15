@@ -40,7 +40,6 @@ export const LeagueHome = ({
     leagueUsers.sort(compare).reverse(); //Ordering User List by V0 criterion
 
     useEffect(() => {
-        console.log("League Id Pene:", leagueId);
         getMatches(leagueId)
             .then((res) => {
                 const matchesTemp = [
@@ -52,7 +51,6 @@ export const LeagueHome = ({
                         };
                     }),
                 ];
-                console.log("Matches object", matchesTemp);
                 setMatches(matchesTemp);
             })
             .catch((e) => {

@@ -41,7 +41,6 @@ export const Home = ({ navigation, route }) => {
     useEffect(() => {
         RequestManager.getLeagues(user.uid)
             .then((res) => {
-                //console.log(res.data.leagues.data[0]);
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
                     setLeague(res.data.leagues.data[0]);
@@ -224,7 +223,6 @@ export const Home = ({ navigation, route }) => {
                 setFetched={setFetched}
                 navigation={navigation}
                 route={route}
-                setNewLeagueCreated={setNewLeagueCreated}
             ></NoLeagues>
         );
     };

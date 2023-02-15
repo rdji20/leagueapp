@@ -32,11 +32,12 @@ export const DropdownList = ({leagueNames, handleSelectLeague}) => {
     return (
         <View style={styles.listContainer}>
             <TouchableOpacity
+                style={{borderBottomWidth:1, borderBottomColor:'#94a1b2'}}
                 onPress={() => {
                     setSelecting(!selecting)
                 }}
             >
-                <Text style={styles.dropdownButton}> My Leagues <MaterialCommunityIcons name={!selecting ? 'chevron-right' : 'chevron-down'} style={{fontSize:12}}/></Text>
+                <Text style={selecting ? styles.dropdownButtonSelecting : styles.dropdownButton}> My Leagues <MaterialCommunityIcons name={selecting ? 'chevron-up' : 'chevron-down'} style={{fontSize:12}}/></Text>
             </TouchableOpacity>
             <View style={{...styles.listStyles, borderWidth: selecting ? 1 : 0}}>
                 {selecting ? <FlatList
@@ -95,14 +96,21 @@ const styles = StyleSheet.create({
         zIndex:100,
         left:0,
         right:0,
-        top:-30,
+        top:-35,
     },
     dropdownButton:{
         textAlign:'center',
-        color:'white',
+        color:'#fffffe',
         fontWeight:'500',
         marginBottom:10,
-        fontSize:16,
+        fontSize:18,
+    },
+    dropdownButtonSelecting:{
+        textAlign:'center',
+        color:'#fffffe',
+        fontWeight:'600',
+        marginBottom:10,
+        fontSize:18,
     },
     listStyles:{
         backgroundColor:'#16161a',

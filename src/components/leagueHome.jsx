@@ -62,20 +62,7 @@ export const LeagueHome = ({ navigation, league, leagueId, user, handleTryAgain,
                 </View>
                 <GenerateTitle/>
             </View>
-            <View style={styles.description}>
-                    <View style={styles.infoContainer}>
-                        <Feather name='users' style={{color:'white', fontSize:16}}></Feather>
-                        <Text style={styles.h3}>  {league.users ? league.users.length: ''} players</Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <Text><MaterialCommunityIcons name='sword-cross' style={{color:'white', fontSize:16}}/></Text> 
-                        <Text style={styles.h3}>  {league.matches ? league.matches.length:'No matches'}  matches </Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <Text style={styles.h3}><MaterialCommunityIcons name='crown' style={{color:'white', fontSize:16}}></MaterialCommunityIcons></Text>
-                        <Text style={styles.h3}>  {firstName(leagueUsers[0].displayName)}</Text>
-                    </View>
-            </View>
+
             <DisplayUsers users={league.users}/>
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Leaderboard</Text>
@@ -155,7 +142,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
     },
     title: {
-        marginTop:0,
+        marginTop:20,
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-evenly',
@@ -163,17 +150,23 @@ const styles = StyleSheet.create({
         marginBottom:10
     },
     h3: {
-        color: "#94a1b2",
+        color: "#fffffe",
         fontWeight:'600',
-        fontSize: 10,
+        fontSize: 16,
+        textAlign:'center'
     },
     description: {
+        flex:1,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        marginBottom:5,
+        alignItems:'center',
         marginTop:10,
-        height:40
+        height:40,
+        borderRadius:4,
+        paddingVertical:50,
+        borderBottomWidth:1,
+        borderBottomColor:'#94a1b2'
     },
     icon: {
         fontSize: 40,
@@ -197,19 +190,11 @@ const styles = StyleSheet.create({
     infoContainer:{
         marginHorizontal:10,
         display:'flex',
-        flexDirection:'row',
+        flexDirection:'column',
         justifyContent:'center',
         alignItems:'center',
         height:35,
         width:100,
-        borderWidth:1,
-        backgroundColor:'#242629',
-        borderRadius:2,
-        marginBottom:20,
-        shadowColor:"black",
-        shadowOpacity:0.8,
-        shadowRadius:1,
-        shadowOffset: {width: 3,height: 4}
     },
     container:{
         display:'flex',

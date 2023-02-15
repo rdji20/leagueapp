@@ -19,10 +19,10 @@ export const LeagueType = ({navigation,route}) => {
         <SafeAreaView style={{flex:1}}>
             <NavBar navigation={navigation} backButton='Back' title='League Type' actionButton='' validAction={() => {return true}} handleAction={function (){}}></NavBar>
             <View style={{marginTop:100}}>
-                <Text style={{color:'white', fontSize:28, marginHorizontal:20, fontWeight:'600', marginBottom:5}}>Select Your League Type</Text>
+                <Text style={{color:'white', fontSize:24, marginHorizontal:20, fontWeight:'600', marginBottom:5,}}>Select Your League Type</Text>
                 <Text style={{color:'#94a1b2', fontSize:14, marginHorizontal:20, overflow:'hidden', marginBottom:40}}>This will determine the way the scoring will work in your league. </Text>
                 <View style={styles.container}>
-                    <View style={{height:400}}>
+                    <View style={{height:350}}>
                         <FlatList
                             showsHorizontalScrollIndicator={false}
                             data={leagueTypes}

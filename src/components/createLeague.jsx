@@ -22,7 +22,7 @@ import InputScrollView from 'react-native-input-scroll-view'
 import uuid from 'react-uuid'
 
 export function CreateLeague({ navigation, route }) {
-    const { prop1, prop2, logout, uId, displayName, handleTryAgain, setFetched, leagueType, setNewLeagueCreated} = route.params;
+    const { prop1, prop2, logout, uId, displayName, handleTryAgain, setFetched, leagueType} = route.params;
     const [name, setName] = useState("");
     const [players, setPlayers] = useState([]);
     const [newName, setNewName] = useState("");
@@ -58,7 +58,6 @@ export function CreateLeague({ navigation, route }) {
         RequestManager.createLeague(league, prop1.uid)
             .then((res) => {
                 setFetched(false)
-                setNewLeagueCreated(true)
                 navigation.navigate("Home");
                 setTimeout(() => {
                     handleTryAgain(true)

@@ -19,3 +19,8 @@ export const compare = (a, b) => {
 export const firstName = (displayName) => {
     return displayName.split(' ')[0].toUpperCase().charAt(0) + displayName.split(' ')[0].slice(1)
 }
+
+export const fullName = (displayName) => {
+    //return displayName.split(' ').map((word) => {word.toUpperCase().charAt(0) + word.slice(1)}).join(' ')
+    return displayName.split(' ').map((word) => word.toUpperCase().charAt(0) + word.slice(1)).join(' ')
+}

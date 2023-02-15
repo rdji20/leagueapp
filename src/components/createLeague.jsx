@@ -154,9 +154,15 @@ export function CreateLeague({ navigation, route }) {
             <View>
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center', marginLeft:20, marginBottom:20}}>
                     <View style={{...styles.container, marginTop:20}}>
-                        <View style={{...styles.container, width:70, height:70, borderWidth:0.5, borderColor:'white', borderRadius:35, backgroundColor:icon === 'camera' ? '#transparent' :'white'}}>
-                            <MaterialCommunityIcons name={icon} style={{fontSize:30, color:icon === 'camera' ? '#94a1b2' :'black'}}/>
-                        </View>
+                        <TouchableOpacity 
+                            style={{...styles.container, width:70, height:70, borderWidth:0.5, borderColor:'white', borderRadius:35, backgroundColor:icon === 'camera' ? 'transparent' :'transparent'}}
+                            onPress={() => {
+                                setSelectingIcon(!selectingIcon)
+                                Keyboard.dismiss()
+                                }}
+                            >
+                            <MaterialCommunityIcons name={icon} style={{fontSize:30, color:icon === 'camera' ? '#94a1b2' :'white'}}/>
+                        </TouchableOpacity>
                         <TouchableOpacity style={{marginTop:10}}onPress={() => {
                             setSelectingIcon(!selectingIcon)
                             Keyboard.dismiss()
@@ -166,6 +172,7 @@ export function CreateLeague({ navigation, route }) {
                     </View>
                     <View>
                         <TextInput
+                            maxLength={25}
                             placeholder="League Name"
                             placeholderTextColor="rgba(256, 256, 256, 0.3)"
                             value={name}
@@ -178,6 +185,7 @@ export function CreateLeague({ navigation, route }) {
                 <Text style={{...styles.h2, marginBottom:10}}>Players</Text>
                 <View style={styles.addContainer}>
                     <TextInput
+                        maxLength={18}
                         placeholder="New Player Name"
                         placeholderTextColor={'rgba(256,256,256,0.3)'}
                         value={newName}
@@ -352,8 +360,8 @@ export const styles = StyleSheet.create({
         marginVertical:5
     },
     editText:{
-        fontWeight:'500',
-        color:'#DBFF00',
+        fontWeight:'400',
+        color:'#94a1b2',
         fontSize:12
     },
     leagueInput:{

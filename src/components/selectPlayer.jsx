@@ -1,5 +1,9 @@
+import { BlurView } from 'expo-blur';
 import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View, FlatList, Image, TouchableOpacity} from 'react-native';
+import { fullName } from '../utils/helperFunctions';
+import { DefaultImage } from './defaultImage';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setPlayerTwo, selectingPlayer}) => {
 
@@ -12,29 +16,21 @@ export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setP
       setSelecting(false)
     }
   }
-  const DefaultImage = ({user}) => {
+/*   const DefaultImage = ({user}) => {
     return (
       <View style={{backgroundColor: "rgba(256,256,256,0.1)", display:'flex', justifyContent:'center', alignItems:'center', width: 55, height: 55, borderRadius:55, borderColor:'rgba(256, 256, 256, 1)', borderWidth:0.5}}>
         <Text style={{color:"white", fontSize:16, fontWeight:'400'}}>{user.split(' ').map(val => val.charAt(0).toUpperCase())}</Text>
       </View>
     )
-  }
+  } */
   const ListItem = ({ item, index}) => {
     return (
       <TouchableOpacity style={styles.item} key={item.userId}
         onPress={() => {handleSelect(item)}}
       >
-          {item.picUri != '' ? <Image 
-          style={styles.itemPhoto} 
-          source={{
-              uri: item.picUri
-          }}
-          /> : <DefaultImage user={item.displayName}/>}
-          <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? item.displayName.split(' ')[0] : 'User'}</Text>
-          <View style={{display:'flex', flexDirection:'row'}}>
-          {index === -1 ? <MaterialCommunityIcons name={'trophy'} style={{color:place, fontSize:25, zIndex:'1'}}></MaterialCommunityIcons>: ''}
-  {/*         {index < 3 ? <MaterialCommunityIcons name={'trophy'} style={{color:place, fontSize:15, zIndex:'0'}}></MaterialCommunityIcons>: ''} */}
-          </View>
+          <DefaultImage displayName={item.displayName } size={'Small'}></DefaultImage>
+
+          <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? fullName(item.displayName ) : 'User'}</Text>
       </TouchableOpacity>
     );
   };
@@ -46,19 +42,23 @@ export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setP
         transparent={true}
         visible={selecting}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setSelecting(!selecting);
         }}>
+        
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={{color:'#fffffe'}}> Select Player</Text>
-          <FlatList
-            horizontal
-            style={{width:'100%'}}
-            data={users}
-            renderItem={({ item, index}) => <ListItem item={item} index={index}/>}
-            showsHorizontalScrollIndicator={false}
-          />
+            <TouchableOpacity  style={{position:'absolute',top:10, right:10,margin:10, zIndex:10}} onPress={() => {
+              setSelecting(false)
+            }}>
+              <Text><MaterialCommunityIcons name='close'style={{color:'#7f5af0', fontSize:25, }}></MaterialCommunityIcons></Text>
+            </TouchableOpacity>
+            <Text style={styles.h3}> Select Player</Text>
+            <FlatList
+              style={{width:'100%'}}
+              data={users}
+              renderItem={({ item, index}) => <ListItem item={item} index={index}/>}
+              showsHorizontalScrollIndicator={false}
+            />
           </View>
         </View>
       </Modal>
@@ -116,16 +116,18 @@ const styles = StyleSheet.create({
   },
   item: {
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'baseline',
     alignItems:'center',
     marginHorizontal: 8,
     marginBottom:15,
     shadowColor:"black",
     shadowOpacity:0.8,
     shadowRadius:6,
-    paddingTop:15,
-    width:60
+    width:'100%',
+    paddingBottom:5,
+    borderBottomWidth:0.5,
+    borderColor:'#94a1b2'
   },
   itemPhoto: {
     width: 55, 
@@ -138,43 +140,20 @@ const styles = StyleSheet.create({
   itemText: {
     textAlign:'center',
     color: 'rgba(256, 256, 256, 1)',
-    fontWeight:'400',
+    fontWeight:'500',
     marginTop: 8,
     fontSize: 12,
-    marginBottom: 5
+    marginBottom: 5,
+    marginLeft: 10
   },
   container: {
     backgroundColor: "transparent",
     marginTop:0,
   },
-  first:{
-    textAlign:'center',
-    color: 'white',
-    fontWeight:'500',
-    marginTop: 8,
-    fontSize: 12,
-    shadowColor:"gold",
-    shadowOpacity:0.5,
-    shadowRadius:5,
-  },
-  second:{
-    textAlign:'center',
-    color: 'white',
-    fontWeight:'500',
-    marginTop: 8,
-    fontSize: 12,
-    shadowColor:"grey",
-    shadowOpacity:0.8,
-    shadowRadius:6,
-  },
-  third:{
-    textAlign:'center',
-    color: 'white',
-    fontWeight:'500',
-    marginTop: 8,
-    fontSize: 12,
-    shadowColor:"#CD7F32",
-    shadowOpacity:0.8,
-    shadowRadius:6,
+  h3:{
+    color:'white',
+    fontWeight:'600',
+    fontSize:18,
+    marginBottom:30
   }
 });

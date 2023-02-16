@@ -15,7 +15,7 @@ import { DataTable } from "react-native-paper";
 import DisplayUsers from "./LeagueUsers";
 import LeagueStandings from "./RankingTable";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { firstName } from "../utils/helperFunctions";
+import { firstName, formatDate } from "../utils/helperFunctions";
 import { DefaultImage } from "./defaultImage";
 
 export const RecentMatches = ({
@@ -101,7 +101,7 @@ export const RecentMatches = ({
                     name="calendar-month"
                     style={{ color: "white", fontSize: 16, marginBottom: 5 }}
                 />
-                <Text style={styles.date}> {times} </Text>
+                <Text style={styles.date}> {formatDate(times)} </Text>
             </View>
         </View>
     );

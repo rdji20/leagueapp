@@ -182,7 +182,7 @@ export function CreateLeague({ navigation, route }) {
                     </View>
                 </View>
                 {selectingIcon ? <IconMenu></IconMenu>: ''}
-                <Text style={{...styles.h2, marginBottom:10}}>Players</Text>
+                <Text style={{...styles.h2, marginBottom:10}}>Players  </Text>
                 <View style={styles.addContainer}>
                     <TextInput
                         maxLength={18}
@@ -242,7 +242,7 @@ export const styles = StyleSheet.create({
     },
     buttonTextValid: {
         fontWeight: "600",
-        color: "white",
+        color: "#7f5af0",
         fontSize: 16,
     },
     buttonText2: {

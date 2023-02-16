@@ -7,7 +7,8 @@ import {
   SectionList,
   SafeAreaView,
   Image,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { firstName } from '../utils/helperFunctions';
@@ -23,12 +24,12 @@ const DefaultImage = ({user}) => {
 
 const ListItem = ({ item, index}) => {
   return (
-    <View style={styles.item} key={item.userId}>
+    <TouchableOpacity style={styles.item} key={item.userId}>
         <DefaultImage user={item.displayName}/>
         <Text numberOfLines={1} style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? firstName(item.displayName)  : 'User'}</Text>
         <View style={{display:'flex', flexDirection:'row'}}>
         </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

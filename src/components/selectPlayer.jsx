@@ -28,7 +28,7 @@ export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setP
       <TouchableOpacity style={styles.item} key={item.userId}
         onPress={() => {handleSelect(item)}}
       >
-          <DefaultImage displayName={item.displayName } size={'Small'}></DefaultImage>
+          <DefaultImage displayName={item.displayName } color={'#7f5af0'} size={'Small'}></DefaultImage>
 
           <Text style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? fullName(item.displayName ) : 'User'}</Text>
       </TouchableOpacity>
@@ -38,7 +38,7 @@ export const SelectPlayer = ({selecting, setSelecting, users, setPlayerOne, setP
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType='fade'
+        animationType='slide'
         transparent={true}
         visible={selecting}
         onRequestClose={() => {
@@ -75,20 +75,13 @@ const styles = StyleSheet.create({
     height:50,
   },
   modalView: {
-    margin: 20,
+    position:'absolute',
+    bottom:0,
     height:300,
     backgroundColor: '#242629',
-    borderRadius: 20,
+    borderRadius: 12,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    width:300,
+    width:'100%',
     paddingVertical:30
   },
   button: {
@@ -126,8 +119,7 @@ const styles = StyleSheet.create({
     shadowRadius:6,
     width:'100%',
     paddingBottom:5,
-    borderBottomWidth:0.5,
-    borderColor:'#94a1b2'
+
   },
   itemPhoto: {
     width: 55, 

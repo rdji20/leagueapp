@@ -47,6 +47,7 @@ export const AddScoreScreen = ({route, navigation}) => {
       }
 
     const handleAddScore = () => {
+        console.log("Score 1: ", +scoreOne)
         if (validScore()){
             const matchData = {
                 uId:user.uid,
@@ -57,13 +58,13 @@ export const AddScoreScreen = ({route, navigation}) => {
                         {
                             uid:playerOne.userId,
                             result:+scoreOne > +scoreTwo ? 'W' : 'L',
-                            score:scoreOne,
+                            score:+scoreOne,
                             team:'Team 1',
                         },
                         {
                             uid:playerTwo.userId,
                             result:+scoreOne < +scoreTwo ? 'W' : 'L',
-                            score:scoreTwo,
+                            score:+scoreTwo,
                             team:'Team 2',
                         },
                     ]
@@ -92,10 +93,10 @@ export const AddScoreScreen = ({route, navigation}) => {
      */
     const PlayerPicture = ({player}) => {
         if (player === 'One' && playerOne.displayName){
-            return playerOne.picUri != '' ? <Image style={styles.itemPhoto} source={{uri: playerOne.picUri}}/> : <DefaultImage user={playerOne.displayName}/>
+            return <DefaultImage user={playerOne.displayName}/>
         }
         if (player === 'Two' && playerTwo.displayName){
-            return playerTwo.picUri != '' ? <Image style={styles.itemPhoto} source={{uri: playerTwo.picUri}}/> : <DefaultImage user={playerTwo.displayName}/>
+            return <DefaultImage user={playerTwo.displayName}/>
         }
         return <MaterialCommunityIcons name='account-plus' style={{color:'white', fontSize:50, }}/> 
 
@@ -110,10 +111,10 @@ export const AddScoreScreen = ({route, navigation}) => {
         const playerSide = player === 'One' ? playerOne : playerTwo
         return (
             <TouchableOpacity onPress={() => {handleSelectPlayer(player)}} style={styles.picContainer}>
-                {<Text style={{color:'white', marginBottom:10, fontWeight:'500'}}>{playerSide.displayName ? playerSide.displayName.split(' ')[0] : 'Add Player'}</Text>}
                 <View style={{borderWidth:'0', borderRadius:10}}>
                     <PlayerPicture player={player} />
                 </View>
+                {<Text style={{color: playerSide.displayName ? '#fffffe' : '#7f5af0', marginBottom:10, fontWeight:'500', textAlign:'center', marginTop:5}}>{playerSide.displayName ? playerSide.displayName.split(' ')[0] : 'Add Player'}</Text>}
             </TouchableOpacity>
         )
     }
@@ -163,12 +164,10 @@ export const AddScoreScreen = ({route, navigation}) => {
             }}>
                     <Text style={styles.addScoreText}>Add Score</Text>
             </TouchableOpacity>
-            <TouchableWithoutFeedback style={{height:100, width:500,}} onPress={()=>Keyboard.dismiss()}>
-            </TouchableWithoutFeedback>
             <SelectPlayer selectingPlayer={selectingPlayer} setPlayerOne={setPlayerOne} setPlayerTwo={setPlayerTwo} selecting={selecting} setSelecting={setSelecting} users={users}/>
 
         </SafeAreaView>
-    );
+    )
 }
 
 
@@ -194,6 +193,7 @@ const styles = StyleSheet.create({
         paddingVertical:0,
         marginHorizontal: 30,
         width:'100%',
+        marginBottom:10
     },
     h3: {
         color: "rgba(256,256,256,0.5)",
@@ -306,9 +306,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         justifyContent:'center',
         alignItems:'center',
-        position:'absolute',
-        bottom:310,
-        left:103
+        marginBottom:200,
     },
     chunkyButtonValid:{
         backgroundColor:'#7f5af0',
@@ -323,9 +321,7 @@ const styles = StyleSheet.create({
         shadowOffset: {width: 3,height: 8},
         justifyContent:'center',
         alignItems:'center',
-        position:'absolute',
-        bottom:318,
-        left:100
+        marginBottom:200,
     },
     addScoreText:{
         color:'white',

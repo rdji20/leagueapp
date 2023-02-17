@@ -70,8 +70,15 @@ export default function RegisterForm({
                 title="Sign Up"
                 onPress={() => {
                     if (password == passwordCheck) {
-                        console.log("Reached");
-                        handleSignUp();
+                        console.log(password.length);
+                        if (password.length >= 6) {
+                            handleSignUp();
+                        } else {
+                            Alert.alert(
+                                "Short Password",
+                                "Password must be 6 characters or longer"
+                            );
+                        }
                     } else {
                         Alert.alert(
                             "Incorrect password",

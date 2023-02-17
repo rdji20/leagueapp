@@ -31,6 +31,7 @@ export default function RegisterForm({
                 alignItems: "center",
             }}
         >
+            <Text style={styles.title}>Rankd</Text>
             <Text style={styles.text}> Sign up with your email</Text>
             <TextInput
                 keyboardType="email-address"
@@ -156,5 +157,11 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 22,
         marginBottom: 15,
+    },
+    title: {
+        fontSize: 80,
+        color: "white",
+        fontFamily: "AppleSDGothicNeo-UltraLight",
+        paddingBottom: 20,
     },
 });

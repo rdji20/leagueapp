@@ -27,6 +27,7 @@ export default function LoginForm({
                 alignItems: "center",
             }}
         >
+            <Text style={styles.title}>Rankd</Text>
             <Text style={styles.text}>Sign in</Text>
             <TextInput
                 textContentType="emailAddress"
@@ -133,5 +134,11 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         color: "#8983C4",
         marginBottom: 80,
+    },
+    title: {
+        fontSize: 80,
+        color: "white",
+        fontFamily: "AppleSDGothicNeo-UltraLight",
+        paddingBottom: 20,
     },
 });

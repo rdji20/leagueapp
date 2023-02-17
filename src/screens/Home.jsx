@@ -144,7 +144,7 @@ export const Home = ({ navigation, route }) => {
      *
      * Fetched variable is set to false so that the loading spinner loads then the error message is removed and finally the fetch function is called again.
      */
-    const handleTryAgain = (newLeague=false) => {
+    const handleTryAgain = (newLeague = false) => {
         setFetched(false);
         setGetError(false);
         RequestManager.getLeagues(user.uid)
@@ -156,9 +156,17 @@ export const Home = ({ navigation, route }) => {
                             ? res.data.leagues.data[
                                   findModifiedLeague(leagueId)
                               ]
-                            : res.data.leagues.data[res.data.leagues.data.length - 1]
+                            : res.data.leagues.data[
+                                  res.data.leagues.data.length - 1
+                              ]
                     ); //If there was a league before the handleTryAgain, the same league will be displayed
-                    setLeagueId(leagueId && !newLeague ? leagueId : res.data.leagues.ids[res.data.leagues.data.length - 1]);
+                    setLeagueId(
+                        leagueId && !newLeague
+                            ? leagueId
+                            : res.data.leagues.ids[
+                                  res.data.leagues.data.length - 1
+                              ]
+                    );
                     setLeagues(res.data.leagues.data);
                     setLeagueNames(getLeagueNames(res.data));
                 } else {
@@ -260,7 +268,6 @@ export const Home = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={styles.view}>
-            {/*             <LeagueHomeView></LeagueHomeView> */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     onPress={() =>
@@ -282,7 +289,7 @@ export const Home = ({ navigation, route }) => {
                                 displayName: displayName,
                                 handleTryAgain,
                                 setFetched,
-                                setNewLeagueCreated
+                                setNewLeagueCreated,
                             });
                         }
                     }}

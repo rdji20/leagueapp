@@ -89,29 +89,41 @@ export const LeagueHome = ({
             </View>
 
             <DisplayUsers users={league.users} />
-            <View style={styles.recentMatches}>
-                <Text style={styles.h2}>Leaderboard</Text>
-                <TouchableOpacity
-                    onPress={() =>
-                        navigation.navigate("AddNewPlayer", {
-                            uId: user.uid,
-                            leagueId,
-                            setFetched,
-                            handleTryAgain,
-                        })
-                    }
+            <View>
+                <View style={styles.recentMatches}>
+                    <Text style={styles.h2}>Leaderboard</Text>
+                    <TouchableOpacity
+                        onPress={() =>
+                            navigation.navigate("AddNewPlayer", {
+                                uId: user.uid,
+                                leagueId,
+                                setFetched,
+                                handleTryAgain,
+                            })
+                        }
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Text style={styles.newPlayerBtn}>
+                            + Add New Player
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <View
                     style={{
-                        display: "flex",
-                        flexDirection: "column",
+                        flex: 1,
                         justifyContent: "center",
                         alignItems: "center",
                     }}
                 >
-                    <Text style={styles.seeAll}>Add New Player</Text>
-                </TouchableOpacity>
+                    <LeagueStandings users={leagueUsers} userId={user.uid} />
+                </View>
             </View>
 
-            <LeagueStandings users={leagueUsers} userId={user.uid} />
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>
                 <TouchableOpacity
@@ -232,7 +244,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     recentMatches: {
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -240,6 +252,11 @@ const styles = StyleSheet.create({
     },
     seeAll: {
         color: "#7f5af0",
+    },
+    newPlayerBtn: {
+        color: "#DBFF00",
+        fontWeight: "bold",
+        fontSize: 14,
     },
     infoContainer: {
         marginHorizontal: 10,

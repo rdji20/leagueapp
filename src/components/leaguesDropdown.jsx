@@ -3,6 +3,7 @@ import { View, Text, Button, SafeAreaView, StyleSheet, FlatList, TouchableOpacit
 import { DefaultImage } from "../components/defaultImage";
 import { NavBar } from "../components/screenNavBar";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { fullName } from '../utils/helperFunctions';
 
 export const DropdownList = ({leagueNames, handleSelectLeague}) => {
     const [selectedLeague, setSelectedLeague] = useState('')
@@ -26,13 +27,13 @@ export const DropdownList = ({leagueNames, handleSelectLeague}) => {
             <View style={{backgroundColor:'transparent', alignItems:'center', justifyContent:'flex-start', marginRight:10, marginHorizontal:15}}>
                 <MaterialCommunityIcons name={item.icon} style={{fontSize: 20,color: selectedLeague === item.key ? 'black' :'white'}}/>
             </View>
-            <Text style={{fontSize:12, fontWeight:'500', color:item.key === selectedLeague ? 'black' : 'white'}}>{item.value}</Text>
+            <Text style={{fontSize:12, fontWeight:'500', color:item.key === selectedLeague ? 'black' : 'white'}}>{fullName(item.value)}</Text>
         </TouchableOpacity>
     )
     return (
         <View style={styles.listContainer}>
             <TouchableOpacity
-                style={{borderBottomWidth:1, borderBottomColor:'#94a1b2'}}
+                style={{borderBottomWidth:0, borderBottomColor:'#94a1b2'}}
                 onPress={() => {
                     setSelecting(!selecting)
                 }}
@@ -121,6 +122,6 @@ const styles = StyleSheet.create({
         shadowOpacity:10,
         shadowRadius:30,
         shadowOffset: {width: 0,height: 0},
-        maxHeight:300
+        maxHeight:300,
     }
 })

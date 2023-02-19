@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     },
     h2: {
         color: "rgba(256,256,256,1)",
-        fontSize: "16",
+        fontSize: 14,
         fontWeight: "500",
     },
     date: {

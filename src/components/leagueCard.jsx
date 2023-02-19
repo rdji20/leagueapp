@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         fontWeight:'600',
         marginTop:10,
         marginLeft:10,
-        textAlign:'center'
+        textAlign:'left'
     },
     image:{
         width:'100%',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         fontSize:16,
         marginTop:10,
         marginLeft:10,
-        textAlign:'center'
+        textAlign:'left'
     },
     category:{
         marginLeft:10,

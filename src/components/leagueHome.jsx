@@ -15,16 +15,13 @@ import { DataTable } from "react-native-paper";
 import DisplayUsers from "./LeagueUsers";
 import { RecentMatches } from "./recentMatch";
 import LeagueStandings from "./RankingTable";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Entypo from "react-native-vector-icons/Entypo";
-import Feather from "react-native-vector-icons/Feather";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RecentMatchesList } from "./recentMatches";
 import { getMatches } from "../utils/RequestManager";
 import { compare } from "../utils/helperFunctions";
 import { firstName } from "../utils/helperFunctions";
+import { Description } from "./description";
+
 
 export const LeagueHome = ({
     navigation,
@@ -38,6 +35,16 @@ export const LeagueHome = ({
 
     const leagueUsers = [...league.users];
     leagueUsers.sort(compare).reverse(); //Ordering User List by V0 criterion
+
+    const includeAddUserButton = (users) => {
+        return [{
+            button:true,
+            uId: user.uid,
+            leagueId,
+            setFetched,
+            handleTryAgain,
+        },...league.users]
+    }
 
     useEffect(() => {
         getMatches(leagueId)
@@ -86,12 +93,12 @@ export const LeagueHome = ({
                     />
                 </View>
                 <GenerateTitle />
+                <Description numMatches={matches.length} numPlayers={league.users.length} topPlayer={firstName(leagueUsers[0].displayName)}/>
             </View>
-
-            <DisplayUsers users={league.users} />
+            <DisplayUsers users={includeAddUserButton(league.users)} navigation={navigation}/>
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Leaderboard</Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={() =>
                         navigation.navigate("AddNewPlayer", {
                             uId: user.uid,
@@ -108,7 +115,7 @@ export const LeagueHome = ({
                     }}
                 >
                     <Text style={styles.seeAll}>Add New Player</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             <LeagueStandings users={leagueUsers} userId={user.uid} />
@@ -196,7 +203,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     title: {
-        marginTop: 20,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
@@ -209,18 +215,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
     },
-    description: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10,
-        height: 40,
-        borderRadius: 4,
-        paddingVertical: 50,
-        borderBottomWidth: 1,
-        borderBottomColor: "#94a1b2",
+    descriptionText: {
+        color:'#94a1b2',
+        fontWeight:'300'
     },
     icon: {
         fontSize: 40,

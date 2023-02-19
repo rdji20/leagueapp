@@ -37,14 +37,13 @@ export const formatDate = (someDateTimeStamp) => {
         diffDays = new Date().getDate() - date,
         diffMonths = new Date().getMonth() - dt.getMonth(),
         diffYears = new Date().getFullYear() - dt.getFullYear();
-
     if(diffYears === 0 && diffDays === 0 && diffMonths === 0){
       return "Today";
     }else if(diffYears === 0 && diffDays === 1) {
       return "Yesterday";
     }else if(diffYears === 0 && diffDays === -1) {
       return "Tomorrow";
-    }else if(diffYears === 0 && (diffDays < -1 && diffDays > -7)) {
+    }else if(diffYears === 0 && (diffDays > 1 && diffDays < 7)) {
       return fulldays[dt.getDay()];
     }else if(diffYears >= 1){
       return month + " " + date + ", " + new Date(someDateTimeStamp).getFullYear();

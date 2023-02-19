@@ -24,7 +24,13 @@ import uuid from 'react-uuid'
 export function CreateLeague({ navigation, route }) {
     const { prop1, prop2, logout, uId, displayName, handleTryAgain, setFetched, leagueType} = route.params;
     const [name, setName] = useState("");
-    const [players, setPlayers] = useState([]);
+    const [players, setPlayers] = useState([{
+        displayName,
+        loses: 0,
+        wins: 0,
+        userId: prop1.uid,
+        admin:true
+    }]);
     const [newName, setNewName] = useState("");
     const [icon, setIcon] = useState("camera");
     const [selectingIcon, setSelectingIcon] = useState(false);
@@ -34,13 +40,6 @@ export function CreateLeague({ navigation, route }) {
 
     function handleCreate() {
         const newPlayers = [...players];
-        newPlayers.unshift({
-            displayName,
-            loses: 0,
-            wins: 0,
-            userId: prop1.uid,
-            picUri: "",
-        });
         const league = {
             icon: icon ==='camera' ? 'trophy' : icon,
             name,
@@ -54,7 +53,7 @@ export function CreateLeague({ navigation, route }) {
         if (!validName()){
             setInvalidName(true)//This is for alerts
         }
-        if (validName() && players.length > 0){
+        if (validName() && players.length > 1){
         RequestManager.createLeague(league, prop1.uid)
             .then((res) => {
                 setFetched(false)
@@ -81,7 +80,7 @@ export function CreateLeague({ navigation, route }) {
                 loses: 0,
                 wins: 0,
                 userId: uuid(),
-                picUri: "",
+                admin:false
             });
             setPlayers(newPlayers);
             setNewName("");
@@ -148,7 +147,7 @@ export function CreateLeague({ navigation, route }) {
                 </TouchableOpacity>
                 <Text style={styles.h1}>New League</Text>
                 <TouchableOpacity style={styles.button1} onPress={handleCreate}>
-                    <Text style={validName() && players.length > 0? styles.buttonTextValid : styles.buttonText1}> Create </Text>
+                    <Text style={validName() && players.length > 1 ? styles.buttonTextValid : styles.buttonText1}> Create </Text>
                 </TouchableOpacity>
             </View>
             <View>
@@ -182,7 +181,7 @@ export function CreateLeague({ navigation, route }) {
                     </View>
                 </View>
                 {selectingIcon ? <IconMenu></IconMenu>: ''}
-                <Text style={{...styles.h2, marginBottom:10}}>Players  </Text>
+                <Text style={{...styles.h2, marginBottom:5}}>Who's Playing?  </Text>
                 <View style={styles.addContainer}>
                     <TextInput
                         maxLength={18}

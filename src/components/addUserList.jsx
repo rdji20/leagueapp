@@ -21,16 +21,16 @@ export default function DisplayNewUsers({players, setAddingPlayer, displayName, 
   const ListItem = ({ item, index}) => {
     return (
       <View style={styles.item}>
-          <TouchableOpacity  style={{position:'absolute',bottom:38, left:25,margin:10, zIndex:10}} onPress={() => {
+          {!item.admin ? <TouchableOpacity  style={{position:'absolute',bottom:38, left:25,margin:10, zIndex:10}} onPress={() => {
             handleDeletePlayer(item.userId)
             }}>
-            <Text><MaterialCommunityIcons name='close-circle'style={{color:'#94a1b2', fontSize:25, }}></MaterialCommunityIcons></Text>
-          </TouchableOpacity>
-          <View style={{backgroundColor:'black', width:15, height:15, borderRadius:10, position:'absolute', zIndex:9, bottom:50,left:39}}/>
+            <Text><MaterialCommunityIcons name='close-circle'style={{color:'#fffffe', fontSize:25, }}></MaterialCommunityIcons></Text>
+          </TouchableOpacity> : ''}
+          {!item.admin ?  <View style={{backgroundColor:'black', width:15, height:15, borderRadius:10, position:'absolute', zIndex:9, bottom:50,left:39}}/> : ''}
           <TouchableOpacity >
-            <DefaultImage displayName={item.displayName} color='#fffffe'></DefaultImage>
+            <DefaultImage displayName={item.displayName} color={!item.admin ? '#94a1b2' : '#7f5af0'}></DefaultImage>
           </TouchableOpacity>
-          <Text style={styles.itemText}>{firstName(item.displayName)}</Text>
+          <Text numberOfLines={1} style={styles.itemText}>{firstName(item.displayName)}</Text>
       </View>
     );
   };
@@ -76,7 +76,9 @@ const styles = StyleSheet.create({
         fontWeight:'400',
         fontSize:10,
         verticalAlign:'center',
-        marginTop:5
+        marginTop:5,
+        textAlign:'center',
+        width:50,
       },
       container: {
         borderRadius: 8,

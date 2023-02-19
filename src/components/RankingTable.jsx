@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
         backgroundColor:'#242629',
         borderRadius:8,
         shadowColor:"black",
-        shadowOpacity:0.5,
+        shadowOpacity:1,
         shadowRadius:1,
-        shadowOffset: {width: 5,height: 8},
+        shadowOffset: {width: 10,height: 10},
         width:355
     },
     champ:{

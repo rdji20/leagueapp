@@ -13,8 +13,12 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { firstName } from '../utils/helperFunctions';
 
-const DefaultImage = ({user}) => {
+const DefaultImage = ({user, button=false}) => {
   return (
+    button ?
+    <View style={{...styles.defaultImg, backgroundColor:'white', borderColor:'white'}}>
+      <Text style={{color:"black", fontSize:30, fontWeight:'700'}}><MaterialCommunityIcons style={{fontSize:24}}name='account-plus'/></Text>
+    </View> :
     <View style={styles.defaultImg}>
       <Text style={{color:"white", fontSize:16, fontWeight:'500'}}>{user.split(' ').map(val => val.charAt(0).toUpperCase())}</Text>
     </View>
@@ -22,13 +26,23 @@ const DefaultImage = ({user}) => {
 }
 
 
-const ListItem = ({ item, index}) => {
-  return (
+const ListItem = ({ item, index, navigation}) => {
+  const {button, ...navParams} = item.button ? item : {}
+  return (//Add 
+    item.button ? 
+    <TouchableOpacity 
+      style={styles.item} 
+      key={item.userId}
+      onPress ={() => 
+        navigation.navigate("AddNewPlayer", navParams)
+      }
+    >
+        <DefaultImage user={'+'} button={true}/>
+        <Text numberOfLines={1} style={{...styles.itemText, fontWeight:'700'}}>Add</Text>
+    </TouchableOpacity> :
     <TouchableOpacity style={styles.item} key={item.userId}>
         <DefaultImage user={item.displayName}/>
         <Text numberOfLines={1} style={styles.itemText}>{item.displayName != '' && item.displayName != ' ' ? firstName(item.displayName)  : 'User'}</Text>
-        <View style={{display:'flex', flexDirection:'row'}}>
-        </View>
     </TouchableOpacity>
   );
 };
@@ -38,13 +52,13 @@ const ListItem = ({ item, index}) => {
  * @param {*} param0 
  * @returns 
  */
-export default function DisplayUsers({users}) {
+export default function DisplayUsers({navigation, users}) {
   return (
     <View style={styles.container}>
       <FlatList
         horizontal
         data={users}
-        renderItem={({ item, index}) => <ListItem item={item} index={index}/>}
+        renderItem={({ item, index}) => <ListItem navigation={navigation} item={item} index={index}/>}
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -134,7 +148,7 @@ const styles = StyleSheet.create({
         height: 55, 
         borderRadius:55, 
         borderColor:'#7f5af0', 
-        borderWidth:1.5,
+        borderWidth:1,
         shadowColor:"black",
         shadowOpacity:1,
         shadowRadius:1,

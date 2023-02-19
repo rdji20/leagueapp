@@ -38,8 +38,18 @@ export function CreateLeague({ navigation, route }) {
     const [missingPlayer, setMissingPlayer] = useState(false)
     const [invalidName, setInvalidName] = useState(false)
 
+    /**
+     * Callback function for map in handleCreate. This function removes the admin property from the player object
+     * and adds the picUri property. 
+     */
+    const playerCallback = (player) => {
+        const {admin, ...rest} = player
+        rest['picUri'] = ''
+        return rest
+    }
+
     function handleCreate() {
-        const newPlayers = [...players];
+        const newPlayers = players.map(playerCallback)
         const league = {
             icon: icon ==='camera' ? 'trophy' : icon,
             name,

@@ -149,6 +149,7 @@ export const Home = ({ navigation, route }) => {
         setGetError(false);
         RequestManager.getLeagues(user.uid)
             .then((res) => {
+                console.log('Fetching Our Leagues! New League Created? ', newLeague)
                 setLeagueIds(res.data.leagues.ids); //res.data is user data
                 if (res.data.leagues.ids[0]) {
                     setLeague(

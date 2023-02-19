@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "ntf-app",
+    "owner": "udogs",
     "slug": "ntf-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,16 +19,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.udogs.rankd"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.udogs.rankd"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bb96b7e5-f7a5-4243-8023-15a52380cc7e"
+      }
     }
   }
 }

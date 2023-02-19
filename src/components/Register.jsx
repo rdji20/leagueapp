@@ -23,6 +23,16 @@ export default function RegisterForm({
     newUserName,
     setNewUserName,
 }) {
+
+    const clearInputs = () => {
+        setEmail('')
+        setNewUserName('')
+        setPassword('')
+        setPasswordCheck('')
+    }
+
+
+
     return (
         <SafeAreaView
             style={{
@@ -70,9 +80,9 @@ export default function RegisterForm({
                 title="Sign Up"
                 onPress={() => {
                     if (password == passwordCheck) {
-                        console.log(password.length);
                         if (password.length >= 6) {
-                            handleSignUp();
+                            handleSignUp()
+                            clearInputs()
                         } else {
                             Alert.alert(
                                 "Short Password",

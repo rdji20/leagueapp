@@ -96,8 +96,9 @@ export const LeagueHome = ({
                 <Description numMatches={matches.length} numPlayers={league.users.length} topPlayer={firstName(leagueUsers[0].displayName)}/>
             </View>
             <DisplayUsers users={includeAddUserButton(league.users)} navigation={navigation}/>
+            <Text style={styles.h2}>Leaderboard</Text>
+            <LeagueStandings users={leagueUsers} userId={user.uid}></LeagueStandings>
             <View style={styles.recentMatches}>
-                <Text style={styles.h2}>Leaderboard</Text>
                 {/* <TouchableOpacity
                     onPress={() =>
                         navigation.navigate("AddNewPlayer", {

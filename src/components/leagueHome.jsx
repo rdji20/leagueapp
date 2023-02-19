@@ -108,8 +108,7 @@ export const LeagueHome = ({
                         })
                     }
                     style={{
-                        display: "flex",
-                        flexDirection: "column",
+                        flex: 1,
                         justifyContent: "center",
                         alignItems: "center",
                     }}
@@ -118,7 +117,6 @@ export const LeagueHome = ({
                 </TouchableOpacity> */}
             </View>
 
-            <LeagueStandings users={leagueUsers} userId={user.uid} />
             <View style={styles.recentMatches}>
                 <Text style={styles.h2}>Recent Matches</Text>
                 <TouchableOpacity
@@ -229,7 +227,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     recentMatches: {
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -237,6 +235,11 @@ const styles = StyleSheet.create({
     },
     seeAll: {
         color: "#7f5af0",
+    },
+    newPlayerBtn: {
+        color: "#DBFF00",
+        fontWeight: "bold",
+        fontSize: 14,
     },
     infoContainer: {
         marginHorizontal: 10,

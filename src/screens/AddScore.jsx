@@ -11,189 +11,274 @@ import {
     Button,
     SafeAreaView,
     TextInput,
-    Modal
+    Modal,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RecentMatches } from "../components/recentMatch";
 import { NavBar } from "../components/screenNavBar";
 import { SelectPlayer } from "../components/selectPlayer";
 import { postScore } from "../utils/RequestManager";
-import {Keyboard} from 'react-native'
+import { Keyboard } from "react-native";
 
-export const AddScoreScreen = ({route, navigation}) => {
-    const {users, leagueId, user, setFetched, handleTryAgain, setLeagueId, league, setLeague} = route.params;
-    const [playerOne, setPlayerOne] = useState({})
-    const [playerTwo, setPlayerTwo] = useState({})
-    const [teams, setTeams] = useState([])
-    const [selecting, setSelecting] = useState(false)
-    const [selectingPlayer, setSelectingPlayer] = useState('None')
-    const [scoreOne, setScoreOne] = useState('')
-    const [scoreTwo, setScoreTwo] = useState('')
+export const AddScoreScreen = ({ route, navigation }) => {
+    const {
+        users,
+        leagueId,
+        user,
+        setFetched,
+        handleTryAgain,
+        setLeagueId,
+        league,
+        setLeague,
+    } = route.params;
+    const [playerOne, setPlayerOne] = useState({});
+    const [playerTwo, setPlayerTwo] = useState({});
+    const [teams, setTeams] = useState([]);
+    const [selecting, setSelecting] = useState(false);
+    const [selectingPlayer, setSelectingPlayer] = useState("None");
+    const [scoreOne, setScoreOne] = useState("");
+    const [scoreTwo, setScoreTwo] = useState("");
 
     const validScore = () => {
-        if (playerOne.userId && playerTwo.userId && scoreOne != '' && scoreTwo != '' && playerOne.userId != playerTwo.userId && scoreOne != scoreTwo){
-            return true
+        if (
+            playerOne.userId &&
+            playerTwo.userId &&
+            scoreOne != "" &&
+            scoreTwo != "" &&
+            playerOne.userId != playerTwo.userId &&
+            scoreOne != scoreTwo
+        ) {
+            return true;
         }
-        return false
-    }
+        return false;
+    };
 
-    const DefaultImage = ({user}) => {
+    const DefaultImage = ({ user }) => {
         return (
-          <View style={{backgroundColor: "rgba(256,256,256,0.1)", display:'flex', justifyContent:'center', alignItems:'center', width: 60, height: 60, borderRadius:30, borderColor:'rgba(256, 256, 256, 1)', borderWidth:0.5}}>
-            <Text style={{color:"white", fontSize:16, fontWeight:'400'}}>{user.split(' ').map(val => val.charAt(0).toUpperCase())}</Text>
-          </View>
-        )
-      }
+            <View
+                style={{
+                    backgroundColor: "rgba(256,256,256,0.1)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    borderColor: "rgba(256, 256, 256, 1)",
+                    borderWidth: 0.5,
+                }}
+            >
+                <Text
+                    style={{ color: "white", fontSize: 16, fontWeight: "400" }}
+                >
+                    {user.split(" ").map((val) => val.charAt(0).toUpperCase())}
+                </Text>
+            </View>
+        );
+    };
 
     const handleAddScore = () => {
-        console.log("Score 1: ", +scoreOne)
-        if (validScore()){
+        console.log("Score 1: ", +scoreOne);
+        if (validScore()) {
             const matchData = {
-                uId:user.uid,
-                leagueId, 
+                uId: user.uid,
+                leagueId,
                 matchObject: {
                     leagueId,
                     data: [
                         {
-                            uid:playerOne.userId,
-                            result:+scoreOne > +scoreTwo ? 'W' : 'L',
-                            score:+scoreOne,
-                            team:'Team 1',
+                            uid: playerOne.userId,
+                            result: +scoreOne > +scoreTwo ? "W" : "L",
+                            score: +scoreOne,
+                            team: "Team 1",
                         },
                         {
-                            uid:playerTwo.userId,
-                            result:+scoreOne < +scoreTwo ? 'W' : 'L',
-                            score:+scoreTwo,
-                            team:'Team 2',
+                            uid: playerTwo.userId,
+                            result: +scoreOne < +scoreTwo ? "W" : "L",
+                            score: +scoreTwo,
+                            team: "Team 2",
                         },
-                    ]
-                }
-            }
-            postScore(matchData).then((res) => {
-                setFetched(false)
-                navigation.navigate("Home");
-                setTimeout(() => {
-                    handleTryAgain()
-                }, "2000")
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-            }
-    }
-
+                    ],
+                },
+            };
+            postScore(matchData)
+                .then((res) => {
+                    setFetched(false);
+                    navigation.navigate("Home");
+                    setTimeout(() => {
+                        handleTryAgain();
+                    }, "2000");
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
+    };
 
     const handleSelectPlayer = (player) => {
-        setSelecting(true)
-        setSelectingPlayer(player)
-    }
+        setSelecting(true);
+        setSelectingPlayer(player);
+    };
     /**
      * Holds either add user icon or selected user's image, depending on whether the user has been chosen and whether the user has a picture.
      */
-    const PlayerPicture = ({player}) => {
-        if (player === 'One' && playerOne.displayName){
-            return <DefaultImage user={playerOne.displayName}/>
+    const PlayerPicture = ({ player }) => {
+        if (player === "One" && playerOne.displayName) {
+            return <DefaultImage user={playerOne.displayName} />;
         }
-        if (player === 'Two' && playerTwo.displayName){
-            return <DefaultImage user={playerTwo.displayName}/>
+        if (player === "Two" && playerTwo.displayName) {
+            return <DefaultImage user={playerTwo.displayName} />;
         }
-        return <MaterialCommunityIcons name='account-plus' style={{color:'white', fontSize:50, }}/> 
+        return (
+            <MaterialCommunityIcons
+                name="account-plus"
+                style={{ color: "white", fontSize: 50 }}
+            />
+        );
 
         //return <MaterialCommunityIcons name='account-plus' style={{color:'white', fontSize:'30'}}></MaterialCommunityIcons>
-    }
+    };
     /**
      * Displays the players picture.
-     * @param url - Picture uri string 
+     * @param url - Picture uri string
      * @returns <Image/> - Image component
      */
-    const PictureDisplay = ({player}) => {
-        const playerSide = player === 'One' ? playerOne : playerTwo
+    const PictureDisplay = ({ player }) => {
+        const playerSide = player === "One" ? playerOne : playerTwo;
         return (
-            <TouchableOpacity onPress={() => {handleSelectPlayer(player)}} style={styles.picContainer}>
-                <View style={{borderWidth:'0', borderRadius:10}}>
+            <TouchableOpacity
+                onPress={() => {
+                    handleSelectPlayer(player);
+                }}
+                style={styles.picContainer}
+            >
+                <View style={{ borderWidth: "0", borderRadius: 10 }}>
                     <PlayerPicture player={player} />
                 </View>
-                {<Text style={{color: playerSide.displayName ? '#fffffe' : '#7f5af0', marginBottom:10, fontWeight:'500', textAlign:'center', marginTop:5}}>{playerSide.displayName ? playerSide.displayName.split(' ')[0] : 'Add Player'}</Text>}
+                {
+                    <Text
+                        style={{
+                            color: playerSide.displayName
+                                ? "#fffffe"
+                                : "#7f5af0",
+                            marginBottom: 10,
+                            fontWeight: "500",
+                            textAlign: "center",
+                            marginTop: 5,
+                        }}
+                    >
+                        {playerSide.displayName
+                            ? playerSide.displayName.split(" ")[0]
+                            : "Add Player"}
+                    </Text>
+                }
             </TouchableOpacity>
-        )
-    }
+        );
+    };
     return (
         <SafeAreaView style={styles.container}>
-            <NavBar backButton='Back' title='New Score' actionButton='Add' handleAction={handleAddScore} validAction={validScore} navigation={navigation}></NavBar>
-            <TouchableWithoutFeedback style={{height:200, width:500}} onPress={()=>Keyboard.dismiss()}></TouchableWithoutFeedback>
+            <NavBar
+                backButton="Back"
+                title="New Score"
+                actionButton="Add"
+                handleAction={handleAddScore}
+                validAction={validScore}
+                navigation={navigation}
+            ></NavBar>
+            <TouchableWithoutFeedback
+                style={{ height: 200, width: 500 }}
+                onPress={() => Keyboard.dismiss()}
+            ></TouchableWithoutFeedback>
             <View style={styles.view}>
-                <View style={styles.player} >
-                    <PictureDisplay url={''} player={'One'}></PictureDisplay>
-                    <View style={styles['left']} >
+                <View style={styles.player}>
+                    <PictureDisplay url={""} player={"One"}></PictureDisplay>
+                    <View style={styles["left"]}>
                         <Text style={styles.h2}>Player A</Text>
                         <Text style={styles.h3}>Points</Text>
-                        <TextInput 
+                        <TextInput
                             maxLength={7}
-                            value={scoreOne} 
-                            placeholder={'0'}
-                            style={{...styles[+scoreOne > +scoreTwo ? 'winner' : 'loser'], textAlign:'right',}}
+                            value={scoreOne}
+                            placeholder={"0"}
+                            style={{
+                                ...styles[
+                                    +scoreOne > +scoreTwo ? "winner" : "loser"
+                                ],
+                                textAlign: "right",
+                            }}
                             onChangeText={setScoreOne}
-                            keyboardType='number-pad'
-                            returnKeyType='done'
-                        >
-                        </TextInput>
+                            keyboardType="number-pad"
+                            returnKeyType="done"
+                        ></TextInput>
                     </View>
                 </View>
-                    <View style={styles.player}>
-                        <View style={styles['right']} >
-                            <Text style={styles.h2}>Player B</Text>
-                            <Text style={styles.h3}>Points</Text>
-                            <TextInput 
-                                maxLength={7}
-                                value={scoreTwo} 
-                                placeholder={'0'}
-                                style={{...styles[+scoreOne < +scoreTwo ? 'winner' : 'loser'], textAlign:'left',}}
-                                onChangeText={setScoreTwo}
-                                keyboardType='number-pad'
-                                returnKeyType='done'
-                            >
-                            </TextInput>
-                        </View>
-                        <PictureDisplay url={''} player={'Two'}></PictureDisplay>
+                <View style={styles.player}>
+                    <View style={styles["right"]}>
+                        <Text style={styles.h2}>Player B</Text>
+                        <Text style={styles.h3}>Points</Text>
+                        <TextInput
+                            maxLength={7}
+                            value={scoreTwo}
+                            placeholder={"0"}
+                            style={{
+                                ...styles[
+                                    +scoreOne < +scoreTwo ? "winner" : "loser"
+                                ],
+                                textAlign: "left",
+                            }}
+                            onChangeText={setScoreTwo}
+                            keyboardType="number-pad"
+                            returnKeyType="done"
+                        ></TextInput>
+                    </View>
+                    <PictureDisplay url={""} player={"Two"}></PictureDisplay>
                 </View>
             </View>
-            <TouchableOpacity style={styles[validScore() ? 'chunkyButtonValid' : 'chunkyButton']} onPress={() => {
-                Keyboard.dismiss()
-                handleAddScore()
-            }}>
-                    <Text style={styles.addScoreText}>Add Score</Text>
+            <TouchableOpacity
+                style={
+                    styles[validScore() ? "chunkyButtonValid" : "chunkyButton"]
+                }
+                onPress={() => {
+                    Keyboard.dismiss();
+                    handleAddScore();
+                }}
+            >
+                <Text style={styles.addScoreText}>Add Score</Text>
             </TouchableOpacity>
-            <SelectPlayer selectingPlayer={selectingPlayer} setPlayerOne={setPlayerOne} setPlayerTwo={setPlayerTwo} selecting={selecting} setSelecting={setSelecting} users={users}/>
-
+            <SelectPlayer
+                selectingPlayer={selectingPlayer}
+                setPlayerOne={setPlayerOne}
+                setPlayerTwo={setPlayerTwo}
+                selecting={selecting}
+                setSelecting={setSelecting}
+                users={users}
+            />
         </SafeAreaView>
-    )
-}
-
+    );
+};
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        borderRadius:8,
-        flexDirection:'column',
-        justifyContent:'flex-end',
-        alignItems: 'center',
-        width:'100%',
-        borderBottomColor: 'rgba(256,256,256,0.1)',
-        borderBottomWidth:0.5,
-
+        borderRadius: 8,
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        width: "100%",
+        borderBottomColor: "rgba(256,256,256,0.1)",
+        borderBottomWidth: 0.5,
     },
     view: {
         flex: 1,
-        display:'flex',
-        flexDirection:'row',
-        justifyContent: 'center',
-        alignItems:'center',
-        borderWidth:0,
-        paddingVertical:0,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 0,
+        paddingVertical: 0,
         marginHorizontal: 30,
-        width:'100%',
-        marginBottom:10
+        width: "100%",
+        marginBottom: 10,
     },
     h3: {
         color: "rgba(256,256,256,0.5)",
@@ -233,100 +318,98 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: "center",
     },
-    left:{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems: 'flex-end',
-        height:80,
-        marginHorizontal:10,
-        flex:1
-    },
-    right:{
-        flex:1,
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems: 'baseline',
+    left: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-end",
         height: 80,
-        marginHorizontal:10,
+        marginHorizontal: 10,
+        flex: 1,
+    },
+    right: {
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "baseline",
+        height: 80,
+        marginHorizontal: 10,
     },
     itemPhoto: {
-        width: 60, 
-        height:60, 
-        borderRadius: 60/ 2,
-        borderColor:'rgba(256, 256, 256, 0.5)',
-        borderWidth:1,
-       
-      },
+        width: 60,
+        height: 60,
+        borderRadius: 60 / 2,
+        borderColor: "rgba(256, 256, 256, 0.5)",
+        borderWidth: 1,
+    },
     winner: {
         fontSize: 50,
         fontWeight: "600",
-        textAlign:'right',
+        textAlign: "right",
         //color: "#DBFF00",
         color: "white",
         height: 40,
         //shadowColor:"#DBFF00",
-        shadowColor:"white",
-        shadowOpacity:0.2,
-        shadowRadius:10,
-        width:80
+        shadowColor: "white",
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+        width: 80,
     },
     loser: {
-        textAlign:'left',
+        textAlign: "left",
         fontSize: 50,
         fontWeight: "600",
-        color: 'rgba(256,256,256,0.2)',
+        color: "rgba(256,256,256,0.2)",
         height: 40,
-        width:100
+        width: 100,
     },
     picContainer: {
         height: 50,
-        marginHorizontal:20,
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'flex-end',
-        shadowColor:"black",
-        shadowOpacity:0.2,
-        shadowRadius:4, 
+        marginHorizontal: 20,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        shadowColor: "black",
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
     },
-    player:{
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems: 'center',
-        flex:1
+    player: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flex: 1,
     },
-    chunkyButton:{
-        backgroundColor:'grey',
-        width:200,
-        height:50,
-        borderRadius:8,
-        borderColor:'black',
-        borderWidth:2,
-        justifyContent:'center',
-        alignItems:'center',
-        marginBottom:200,
+    chunkyButton: {
+        backgroundColor: "grey",
+        width: 200,
+        height: 50,
+        borderRadius: 8,
+        borderColor: "black",
+        borderWidth: 2,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 200,
     },
-    chunkyButtonValid:{
-        backgroundColor:'#7f5af0',
-        width:200,
-        height:50,
-        borderRadius:8,
-        borderColor:'black',
-        borderWidth:2,
-        shadowColor:"black",
-        shadowOpacity:10,
-        shadowRadius:0,
-        shadowOffset: {width: 3,height: 8},
-        justifyContent:'center',
-        alignItems:'center',
-        marginBottom:200,
+    chunkyButtonValid: {
+        backgroundColor: "#7f5af0",
+        width: 200,
+        height: 50,
+        borderRadius: 8,
+        borderColor: "black",
+        borderWidth: 2,
+        shadowColor: "black",
+        shadowOpacity: 10,
+        shadowRadius: 0,
+        shadowOffset: { width: 3, height: 8 },
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 200,
     },
-    addScoreText:{
-        color:'white',
-        fontSize:16,
-        fontWeight:'500',
-    }
-
+    addScoreText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "500",
+    },
 });

@@ -31,6 +31,7 @@ export default function RegisterForm({
                 alignItems: "center",
             }}
         >
+            <Text style={styles.title}>Rankd</Text>
             <Text style={styles.text}> Sign up with your email</Text>
             <TextInput
                 keyboardType="email-address"
@@ -69,8 +70,15 @@ export default function RegisterForm({
                 title="Sign Up"
                 onPress={() => {
                     if (password == passwordCheck) {
-                        console.log("Reached");
-                        handleSignUp();
+                        console.log(password.length);
+                        if (password.length >= 6) {
+                            handleSignUp();
+                        } else {
+                            Alert.alert(
+                                "Short Password",
+                                "Password must be 6 characters or longer"
+                            );
+                        }
                     } else {
                         Alert.alert(
                             "Incorrect password",
@@ -156,5 +164,11 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 22,
         marginBottom: 15,
+    },
+    title: {
+        fontSize: 80,
+        color: "white",
+        fontFamily: "AppleSDGothicNeo-UltraLight",
+        paddingBottom: 20,
     },
 });

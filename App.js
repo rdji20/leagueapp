@@ -79,12 +79,12 @@ export default function App() {
                             "Authorization"
                         ] = `Bearer ${idToken}`;
                     })
-                    .then(() => {
-                        setIsLoggedIn(true);
-                    })
                     .catch((e) => {
                         console.log(e);
                     });
+            })
+            .then(() => {
+                setIsLoggedIn(true);
             })
             .catch((error) => {
                 const errorCode = error.code;

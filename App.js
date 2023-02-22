@@ -68,10 +68,6 @@ export default function App() {
                 const thisUser = userCredential.user;
                 setUser(userCredential.user);
                 console.log("Test before rerquestManger", newUserName);
-                RequestManager.userCreation(thisUser, newUserName);
-                // ...
-            })
-            .then(() => {
                 auth.currentUser
                     .getIdToken(true)
                     .then((idToken) => {
@@ -79,12 +75,18 @@ export default function App() {
                             "Authorization"
                         ] = `Bearer ${idToken}`;
                     })
+                    .then(() => {
+                        RequestManager.userCreation(thisUser, newUserName).then(
+                            (res) => {
+                                console.log("userCreation response", res);
+                                setIsLoggedIn(true);
+                            }
+                        );
+                    })
                     .catch((e) => {
                         console.log(e);
                     });
-            })
-            .then(() => {
-                setIsLoggedIn(true);
+                // ...
             })
             .catch((error) => {
                 const errorCode = error.code;

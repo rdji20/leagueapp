@@ -22,7 +22,6 @@ import { compare } from "../utils/helperFunctions";
 import { firstName } from "../utils/helperFunctions";
 import { Description } from "./description";
 
-
 export const LeagueHome = ({
     navigation,
     league,
@@ -37,14 +36,17 @@ export const LeagueHome = ({
     leagueUsers.sort(compare).reverse(); //Ordering User List by V0 criterion
 
     const includeAddUserButton = (users) => {
-        return [{
-            button:true,
-            uId: user.uid,
-            leagueId,
-            setFetched,
-            handleTryAgain,
-        },...league.users]
-    }
+        return [
+            {
+                button: true,
+                uId: user.uid,
+                leagueId,
+                setFetched,
+                handleTryAgain,
+            },
+            ...league.users,
+        ];
+    };
 
     useEffect(() => {
         getMatches(leagueId)
@@ -93,11 +95,23 @@ export const LeagueHome = ({
                     />
                 </View>
                 <GenerateTitle />
-                <Description numMatches={matches.length} numPlayers={league.users.length} topPlayer={firstName(leagueUsers[0].displayName)}/>
+                <Description
+                    numMatches={matches.length}
+                    numPlayers={league.users.length}
+                    topPlayer={firstName(leagueUsers[0].displayName)}
+                />
             </View>
-            <DisplayUsers users={includeAddUserButton(league.users)} navigation={navigation}/>
+            <DisplayUsers
+                users={includeAddUserButton(league.users)}
+                navigation={navigation}
+            />
             <Text style={styles.h2}>Leaderboard</Text>
-            <LeagueStandings users={leagueUsers} userId={user.uid}></LeagueStandings>
+            <View style={{ alignSelf: "center" }}>
+                <LeagueStandings
+                    users={leagueUsers}
+                    userId={user.uid}
+                ></LeagueStandings>
+            </View>
             <View style={styles.recentMatches}>
                 {/* <TouchableOpacity
                     onPress={() =>
@@ -215,8 +229,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     descriptionText: {
-        color:'#94a1b2',
-        fontWeight:'300'
+        color: "#94a1b2",
+        fontWeight: "300",
     },
     icon: {
         fontSize: 40,
